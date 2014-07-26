@@ -28,6 +28,20 @@ var TowerDefense = TowerDefense || {
 
         });
 
+    },
+
+    deselectAll: function() {
+
+        this.objects.forEach(function(object, index) {
+
+            if (typeof object.deselect == 'function') {
+
+                object.deselect();
+
+            }
+
+        });
+
     }
 
 }

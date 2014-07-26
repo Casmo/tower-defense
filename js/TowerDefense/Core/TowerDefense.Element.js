@@ -7,7 +7,7 @@ TowerDefense.Element = function () {
     /**
      * The unique id of the object
      */
-    this.id = TowerDefense.elementCount++,
+    this.id = TowerDefense.elementCount++;
 
     /**
      * Holds the 3D (Three) mesh
@@ -18,10 +18,9 @@ TowerDefense.Element = function () {
      * Current object is selected
      * @type {boolean}
      */
-    this.selected = false
+    this.selected = false;
 
 }
-
 
 TowerDefense.Element.prototype = {
 
@@ -48,20 +47,6 @@ TowerDefense.Element.prototype = {
      * Logical callback after object is deselected
      */
     deselect: function() {
-
-    },
-
-    __deselectAll: function() {
-
-        TowerDefense.objects.forEach(function(object, index) {
-
-            if (typeof object.deselect == 'function') {
-
-                object.deselect();
-
-            }
-
-        });
 
     }
 
