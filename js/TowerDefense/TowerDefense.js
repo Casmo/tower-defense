@@ -22,11 +22,9 @@ var TowerDefense = TowerDefense || {
 
     update: function() {
 
-        TowerDefense.objects.forEach( function(object) {
+        this.objects.forEach( function(object) {
 
-            if (typeof object.update == 'function') {
-                object.update();
-            }
+            object.update();
 
         });
 

@@ -33,6 +33,7 @@ TowerDefense.Ui = {
         var intersects = ray.intersectObjects(objects, true);
         if (intersects.length > 0) {
             if (typeof TowerDefense.objects[intersects[0].object.objectIndex].select == 'function') {
+                TowerDefense.Element.prototype.__deselectAll();
                 TowerDefense.objects[intersects[0].object.objectIndex].select();
             }
         }

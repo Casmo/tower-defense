@@ -1,13 +1,14 @@
-TowerDefense.Tile = function () {
+TowerDefense.BasicTile = function () {
 
-    TowerDefense.Element.call( this );
+    TowerDefense.Tile.call( this );
+    this.object = {};
     this.position = { x: 0, y: 0, z: 0 };
     this.material = new THREE.MeshBasicMaterial( { color: 0x5e370e } );
     this.geometry = new THREE.PlaneGeometry( .9, .9 );
 
 }
 
-TowerDefense.Tile.prototype = Object.create( TowerDefense.Element.prototype );
+TowerDefense.BasicTile.prototype = Object.create( TowerDefense.Tile.prototype );
 
 TowerDefense.Tile.prototype = {
 
@@ -25,19 +26,6 @@ TowerDefense.Tile.prototype = {
     add: function() {
 
         TowerDefense.__addObject( this );
-
-    },
-
-    select: function() {
-
-        this.selected = true;
-
-    },
-
-    deselect: function() {
-
-        this.selected = false;
-        this.object.rotation.z = 0;
 
     },
 
