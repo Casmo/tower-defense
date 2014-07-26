@@ -9,44 +9,40 @@ TowerDefense.Tile = function () {
 
 TowerDefense.Tile.prototype = Object.create( TowerDefense.Element.prototype );
 
-TowerDefense.Tile.prototype = {
+TowerDefense.Tile.prototype.constructor = TowerDefense.Tile;
 
-    constructor: TowerDefense.Tile,
+TowerDefense.Tile.prototype.create = function() {
 
-    create: function() {
+    this.object = new THREE.Mesh( this.geometry, this.material );
+    this.object.position = this.position;
+    this.add();
+    return this.object;
 
-        this.object = new THREE.Mesh( this.geometry, this.material );
-        this.object.position = this.position;
-        this.add();
-        return this.object;
+};
 
-    },
+TowerDefense.Tile.prototype.add = function() {
 
-    add: function() {
+    TowerDefense.__addObject(this);
 
-        TowerDefense.__addObject( this );
+};
 
-    },
+TowerDefense.Tile.prototype.select = function() {
 
-    select: function() {
+    this.selected = true;
 
-        this.selected = true;
+};
 
-    },
+TowerDefense.Tile.prototype.deselect = function() {
 
-    deselect: function() {
+    this.object.rotation.z = 0;
+    this.selected = false;
 
-        this.selected = false;
-        this.object.rotation.z = 0;
+};
 
-    },
+TowerDefense.Tile.prototype.update = function() {
 
-    update: function() {
-
-        if (this.selected == true) {
-            this.object.rotation.z += .025;
-        }
-
+    if (this.selected == true) {
+        this.object.rotation.z += .025;
     }
 
-}
+};
