@@ -1,9 +1,5 @@
 TowerDefense.Tower = function () {
 
-    this.position = { x: 0, y: 0, z: 0 };
-    this.material = new THREE.MeshBasicMaterial( { color: 0xff9900 } );
-    this.geometry = new THREE.BoxGeometry( 1, 1, 1 );
-
 }
 // @todo create prototype
 //TowerDefense.Tower.prototype = Object.create( TowerDefense.prototype );

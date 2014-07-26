@@ -7,11 +7,19 @@ var TowerDefense = TowerDefense || {
     gameWidth: 640,
     gameHeight: 480,
     objects: [],
+
+    initialize: function() {
+
+        TowerDefense.Ui.initialize();
+
+    },
+
     __addObject: function (object) {
 
         this.objects.push(object);
 
     },
+
     update: function() {
 
         TowerDefense.objects.forEach( function(object) {
