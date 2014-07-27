@@ -32,9 +32,12 @@ TowerDefense.Ui = {
         var ray = new THREE.Raycaster(camera.position, vector.sub(camera.position).normalize());
         var intersects = ray.intersectObjects(objects, true);
         if (intersects.length > 0) {
-            if (typeof TowerDefense.objects[intersects[0].object.objectIndex].select == 'function') {
-                TowerDefense.deselectAll();
-                TowerDefense.objects[intersects[0].object.objectIndex].select();
+            for (var i = 0; i < intersects.length; i++) {
+                var currentObject = TowerDefense.objects[intersects[i].object.objectIndex];
+                if (currentObject.selectable == true && typeof currentObject.select == 'function') {
+                    TowerDefense.deselectAll();
+                    currentObject.select();
+                }
             }
         }
     },

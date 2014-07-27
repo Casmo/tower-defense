@@ -21,6 +21,12 @@ TowerDefense.Element = function () {
     this.selected = false;
 
     /**
+     * Whether the current object is selectable
+     * @type {boolean}
+     */
+    this.selectable = false;
+
+    /**
      * Holds the current selected Object
      */
     this.selectedObject = {};
