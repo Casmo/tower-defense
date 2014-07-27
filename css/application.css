@@ -63,3 +63,7 @@ body {
 #menu-container #menu a:hover {
     color: #fff;
 }
+
+#buildmenu {
+    display: none;
+}

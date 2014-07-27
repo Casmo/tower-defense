@@ -29,6 +29,8 @@ TowerDefense.Tile.prototype.add = function() {
 TowerDefense.Tile.prototype.select = function() {
 
     this.selected = true;
+    TowerDefense.Element.selectedObject = this;
+    TowerDefense.Ui.showBuildMenu();
 
 };
 

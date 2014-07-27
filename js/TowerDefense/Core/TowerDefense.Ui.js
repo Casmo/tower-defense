@@ -37,6 +37,28 @@ TowerDefense.Ui = {
                 TowerDefense.objects[intersects[0].object.objectIndex].select();
             }
         }
+    },
+
+    /**
+     * Displays available towers to place on the selected tile
+     */
+    showBuildMenu: function() {
+        $('#buildmenu').style.display = 'block';
+    },
+
+    hideBuildMenu: function() {
+        $('#buildmenu').style.display = 'none';
+    },
+
+    buildTower: function (towerId) {
+        // @todo do some thing with towerId
+        var tower = new TowerDefense.Tower();
+        tower.position.x = TowerDefense.Element.selectedObject.object.position.x;
+        tower.position.y = TowerDefense.Element.selectedObject.object.position.y;
+        var mesh = tower.create();
+        scene.add(mesh);
+        this.hideBuildMenu();
+        TowerDefense.deselectAll();
     }
 
 }

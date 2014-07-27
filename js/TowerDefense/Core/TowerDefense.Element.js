@@ -20,6 +20,11 @@ TowerDefense.Element = function () {
      */
     this.selected = false;
 
+    /**
+     * Holds the current selected Object
+     */
+    this.selectedObject = {};
+
 }
 
 TowerDefense.Element.prototype = {
