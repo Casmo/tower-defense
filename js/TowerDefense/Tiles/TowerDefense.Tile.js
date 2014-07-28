@@ -1,6 +1,10 @@
 TowerDefense.Tile = function () {
 
     TowerDefense.Element.call( this );
+    /**
+     * Enable this to make this tile a spawn point for enemies
+     * @type {boolean}
+     */
     this.position = { x: 0, y: 0, z: 0 };
     this.material = new THREE.MeshBasicMaterial( { color: 0x5e370e } );
     this.geometry = new THREE.PlaneGeometry( .9, .9 );

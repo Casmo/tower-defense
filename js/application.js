@@ -38,9 +38,17 @@ function newGame() {
 function level1() {
     var sizeX = 10;
     var sizeY = 10;
-    for (var i = 0; i < sizeX; i++ ) {
-        for (var j = 0; j < sizeY; j++) {
-            var tile = new TowerDefense.BasicTile();
+    for (var i = 0; i <= sizeX; i++ ) {
+        for (var j = 0; j <= sizeY; j++) {
+            if (i == 0 && j == 0) {
+                var tile = new TowerDefense.StartTile();
+            }
+            else if (i == sizeX && j == sizeY) {
+                var tile = new TowerDefense.EndTile();
+            }
+            else {
+                var tile = new TowerDefense.BasicTile();
+            }
             var mesh = tile.create();
             var positionX = -(sizeX / 2) + (i * 1);
             var positionY = -(sizeY / 2) + (j * 1);
