@@ -18,8 +18,12 @@ function init() {
 function newGame() {
 
     scene = new THREE.Scene();
-    camera = new THREE.PerspectiveCamera( 75, TowerDefense.gameWidth / TowerDefense.gameHeight, 0.1, 1000 );
-    camera.position.z = 10;
+    camera = new THREE.PerspectiveCamera( 40, TowerDefense.gameWidth / TowerDefense.gameHeight, 0.1, 1000 );
+    camera.position.x = 10;
+    camera.position.y = -10;
+    camera.position.z = 20;
+    camera.up = new THREE.Vector3(0,0,1);
+    camera.lookAt(new THREE.Vector3(0,0,0));
     renderer = new THREE.WebGLRenderer();
     renderer.setSize( TowerDefense.gameWidth, TowerDefense.gameHeight );
     projector = new THREE.Projector();

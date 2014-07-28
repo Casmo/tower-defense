@@ -25,12 +25,6 @@ TowerDefense.Tile.prototype.create = function() {
 
 };
 
-TowerDefense.Tile.prototype.add = function() {
-
-    TowerDefense.__addObject(this);
-
-};
-
 TowerDefense.Tile.prototype.select = function() {
 
     this.selected = true;
