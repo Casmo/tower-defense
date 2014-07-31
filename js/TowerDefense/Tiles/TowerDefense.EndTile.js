@@ -15,3 +15,13 @@ TowerDefense.EndTile.prototype.select = function() {
     TowerDefense.Ui.hideBuildMenu();
     return false;
 }
+
+TowerDefense.EndTile.prototype.create = function() {
+
+    this.object = new THREE.Mesh( this.geometry, this.material );
+    this.object.position = this.position;
+    this.add();
+    TowerDefense.Element.endTile = this;
+    return this.object;
+
+};
