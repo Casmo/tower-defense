@@ -15,13 +15,3 @@ TowerDefense.StartTile.prototype.select = function() {
     TowerDefense.Ui.hideBuildMenu();
     return false;
 }
-
-TowerDefense.StartTile.prototype.create = function() {
-
-    this.object = new THREE.Mesh( this.geometry, this.material );
-    this.object.position = this.position;
-    this.add();
-    TowerDefense.Element.startTile = this;
-    return this.object;
-
-};

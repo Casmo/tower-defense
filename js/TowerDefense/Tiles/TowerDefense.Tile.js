@@ -1,15 +1,11 @@
 TowerDefense.Tile = function () {
 
     TowerDefense.Element.call( this );
-    /**
-     * Enable this to make this tile a spawn point for enemies
-     * @type {boolean}
-     */
+    this.gridPosition = { x: 0, y: 0, open: true }; // Holds the position for calculating rout
     this.position = { x: 0, y: 0, z: 0 };
     this.material = new THREE.MeshBasicMaterial( { color: 0x5e370e } );
     this.geometry = new THREE.PlaneGeometry( .9, .9 );
     this.selectable = true;
-
 }
 
 TowerDefense.Tile.prototype = Object.create( TowerDefense.Element.prototype );

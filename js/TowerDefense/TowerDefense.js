@@ -7,6 +7,19 @@ var TowerDefense = TowerDefense || {
     gameWidth: 640,
     gameHeight: 480,
     objects: [],
+    grid: [], // holds the x, y position of each tile
+
+    /**
+     * Holds the tile where monsters will spawn
+     * @type {{}}
+     */
+    startTile: {},
+
+    /**
+     * Holds the tile where monsters will despawn
+     * @type {{}}
+     */
+    endTile: {},
 
     initialize: function() {
 

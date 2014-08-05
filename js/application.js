@@ -42,7 +42,11 @@ function newGame() {
 function level1() {
     var sizeX = 10;
     var sizeY = 10;
+    var x = 1;
+    var y = 1;
     for (var i = 0; i <= sizeX; i++ ) {
+        x = i + 1;
+        TowerDefense.grid[x] = [];
         for (var j = 0; j <= sizeY; j++) {
             if (i == 0 && j == 0) {
                 var tile = new TowerDefense.StartTile();
@@ -58,9 +62,15 @@ function level1() {
             var positionY = -(sizeY / 2) + (j * 1);
             mesh.position.x = positionX;
             mesh.position.y = positionY;
+            y = j + 1;
+            TowerDefense.grid[x][y] = tile;
             scene.add(mesh);
         }
     }
+}
+
+function spawnEnemy() {
+
 }
 
 function showMenu() {

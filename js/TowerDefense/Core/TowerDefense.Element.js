@@ -30,18 +30,6 @@ TowerDefense.Element = function () {
      * Holds the current selected Object
      */
     this.selectedObject = {};
-
-    /**
-     * Holds the tile where monsters will spawn
-     * @type {{}}
-     */
-    this.startTile = {};
-
-    /**
-     * Holds the tile where monsters will despawn
-     * @type {{}}
-     */
-    this.endTile = {};
 }
 
 TowerDefense.Element.prototype = {
