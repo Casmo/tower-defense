@@ -1,11 +1,12 @@
 TowerDefense.Tile = function () {
 
     TowerDefense.Element.call( this );
-    this.gridPosition = { x: 0, y: 0, open: true }; // Holds the position for calculating rout
     this.position = { x: 0, y: 0, z: 0 };
+    this.gridPosition = { x: 1, y: 1 };
     this.material = new THREE.MeshBasicMaterial( { color: 0x5e370e } );
     this.geometry = new THREE.PlaneGeometry( .9, .9 );
     this.selectable = true;
+    this.open = true; // open or closed for enemy traffic
 }
 
 TowerDefense.Tile.prototype = Object.create( TowerDefense.Element.prototype );

@@ -55,6 +55,7 @@ TowerDefense.Ui = {
 
     buildTower: function (towerId) {
         // @todo do some thing with towerId
+        // @todo check if it is allowed here to add a dummy route from startTile to endTile
         var tower = new TowerDefense.BasicTower();
         tower.position.x = TowerDefense.Element.selectedObject.object.position.x;
         tower.position.y = TowerDefense.Element.selectedObject.object.position.y;

@@ -42,35 +42,41 @@ function newGame() {
 function level1() {
     var sizeX = 10;
     var sizeY = 10;
-    var x = 1;
-    var y = 1;
     for (var i = 0; i <= sizeX; i++ ) {
-        x = i + 1;
+        var x = i + 1;
         TowerDefense.grid[x] = [];
         for (var j = 0; j <= sizeY; j++) {
             if (i == 0 && j == 0) {
                 var tile = new TowerDefense.StartTile();
+                TowerDefense.startTile = tile;
             }
             else if (i == sizeX && j == sizeY) {
                 var tile = new TowerDefense.EndTile();
+                TowerDefense.endTile = tile;
             }
             else {
                 var tile = new TowerDefense.BasicTile();
             }
+            var y = j + 1;
+            tile.gridPosition = { x: x, y: y };
+            TowerDefense.grid[x][y] = tile;
             var mesh = tile.create();
             var positionX = -(sizeX / 2) + (i * 1);
             var positionY = -(sizeY / 2) + (j * 1);
             mesh.position.x = positionX;
             mesh.position.y = positionY;
-            y = j + 1;
-            TowerDefense.grid[x][y] = tile;
             scene.add(mesh);
         }
     }
 }
 
 function spawnEnemy() {
-
+    var enemy = new TowerDefense.BasicEnemy();
+    var mesh = enemy.create();
+    mesh.position.x = TowerDefense.startTile.object.position.x;
+    mesh.position.y = TowerDefense.startTile.object.position.y;
+    scene.add(mesh);
+    enemy.setPath();
 }
 
 function showMenu() {
