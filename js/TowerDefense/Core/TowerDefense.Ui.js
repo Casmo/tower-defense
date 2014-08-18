@@ -57,9 +57,7 @@ TowerDefense.Ui = {
         // @todo do some thing with towerId
         // @todo check if it is allowed here to add a dummy route from startTile to endTile
         var tower = new TowerDefense.BasicTower();
-        tower.position.x = TowerDefense.Element.selectedObject.object.position.x;
-        tower.position.y = TowerDefense.Element.selectedObject.object.position.y;
-        var mesh = tower.create();
+        var mesh = tower.create(TowerDefense.Element.selectedObject);
         scene.add(mesh);
         this.hideBuildMenu();
         TowerDefense.deselectAll();

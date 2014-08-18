@@ -2,7 +2,7 @@ TowerDefense.Tile = function () {
 
     TowerDefense.Element.call( this );
     this.position = { x: 0, y: 0, z: 0 };
-    this.gridPosition = { x: 1, y: 1 };
+    this.gridPosition = { x: 0, y: 0 };
     this.material = new THREE.MeshBasicMaterial( { color: 0x5e370e } );
     this.geometry = new THREE.PlaneGeometry( .9, .9 );
     this.selectable = true;

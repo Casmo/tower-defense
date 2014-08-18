@@ -43,7 +43,7 @@ function level1() {
     var sizeX = 10;
     var sizeY = 10;
     for (var i = 0; i <= sizeX; i++ ) {
-        var x = i + 1;
+        var x = i;
         TowerDefense.grid[x] = [];
         for (var j = 0; j <= sizeY; j++) {
             if (i == 0 && j == 0) {
@@ -57,7 +57,7 @@ function level1() {
             else {
                 var tile = new TowerDefense.BasicTile();
             }
-            var y = j + 1;
+            var y = j;
             tile.gridPosition = { x: x, y: y };
             TowerDefense.grid[x][y] = tile;
             var mesh = tile.create();
