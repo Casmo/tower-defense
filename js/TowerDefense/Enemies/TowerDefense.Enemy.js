@@ -26,7 +26,6 @@ TowerDefense.Enemy = function () {
     this.speed = 0.01;
     this.material = new THREE.MeshBasicMaterial( { color: 0xff0000 } );
     this.geometry = new THREE.BoxGeometry( .85, .85, 2 );
-    this.tween = {};
 
 }
 

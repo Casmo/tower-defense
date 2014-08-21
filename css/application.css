@@ -5,7 +5,9 @@ body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 16px;
     color: #fff;
-    background-image: url(../assets/ui/dark-wood.png);
+    background-image: url(../assets/ui/background.jpg);
+    background-size: cover;
+    background-position: center center;
 }
 
 
@@ -15,7 +17,6 @@ body {
     position: absolute;
     left: 50%;
     top: 50%;
-    box-shadow: 0 0 20px rgba(0,0,0,.9);
     background-color: #000;
 }
 

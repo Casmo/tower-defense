@@ -30,6 +30,13 @@ TowerDefense.Element = function () {
      * Holds the current selected Object
      */
     this.selectedObject = {};
+
+    /**
+     * Holds the tween for animation
+     * @type {{}}
+     */
+    this.tween = {};
+
 }
 
 TowerDefense.Element.prototype = {
@@ -59,7 +66,6 @@ TowerDefense.Element.prototype = {
     deselect: function() {
 
     }
-
 }
 
 TowerDefense.elementCount = 0;

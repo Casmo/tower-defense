@@ -53,6 +53,11 @@ TowerDefense.Ui = {
         $('#buildmenu').style.display = 'none';
     },
 
+    /**
+     * Creates a new tower on the selected tile. Returns false if the tower is failed to
+     * build.
+     * @param towerId
+     */
     buildTower: function (towerId) {
         // @todo do some thing with towerId
         // @todo check if it is allowed here to add a dummy route from startTile to endTile
