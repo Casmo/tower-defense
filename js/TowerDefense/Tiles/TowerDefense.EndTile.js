@@ -5,7 +5,7 @@
 TowerDefense.EndTile = function () {
 
     TowerDefense.Tile.call( this );
-    this.material = new THREE.MeshBasicMaterial( { color: 0xff0000 } );
+    this.material = new THREE.MeshPhongMaterial( { color: 0xff0000 } );
 
 }
 
