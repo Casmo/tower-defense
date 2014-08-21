@@ -16,6 +16,7 @@ TowerDefense.Tile.prototype.constructor = TowerDefense.Tile;
 TowerDefense.Tile.prototype.create = function() {
 
     this.object = new THREE.Mesh( this.geometry, this.material );
+    this.object.receiveShadow = true;
     this.object.position = this.position;
     this.add();
     return this.object;

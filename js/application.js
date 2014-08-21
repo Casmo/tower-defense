@@ -98,8 +98,18 @@ function level1() {
     dirLight.shadowBias = -0.0001;
     dirLight.shadowDarkness = 0.35;
     dirLight.shadowCameraVisible = true;
+
+    var dummyEnemy = new TowerDefense.DummyEnemy();
+    var mesh = dummyEnemy.create();
+    mesh.position.x = TowerDefense.startTile.object.position.x;
+    mesh.position.y = TowerDefense.startTile.object.position.y;
+    scene.add(mesh);
+    dummyEnemy.setPath();
 }
 
+/**
+ * Temporary function to add an enemy in the scene.
+ */
 function spawnEnemy() {
     var enemy = new TowerDefense.BasicEnemy();
     var mesh = enemy.create();

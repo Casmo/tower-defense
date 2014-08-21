@@ -2,7 +2,7 @@ TowerDefense.Tower = function () {
 
     TowerDefense.Element.call( this );
     this.position = { x: 0, y: 0, z: 1 };
-    this.material = new THREE.MeshBasicMaterial( { color: 0x368218 } );
+    this.material = new THREE.MeshPhongMaterial( { color: 0x368218 } );
     this.geometry = new THREE.BoxGeometry( .85, .85, 2 );
 
     /**
@@ -23,7 +23,7 @@ TowerDefense.Tower.prototype.create = function(tileObject) {
         return console.log('Cannot build tower on the selected tile.');
     }
     this.object = new THREE.Mesh( this.geometry, this.material );
-
+    this.object.receiveShadow = true;
     this.object.position.x = tileObject.object.position.x;
     this.object.position.y = tileObject.object.position.y;
     this.object.position.z = this.position.z;
