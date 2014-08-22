@@ -5,7 +5,7 @@
 TowerDefense.StartTile = function () {
 
     TowerDefense.Tile.call( this );
-    this.material = new THREE.MeshPhongMaterial( { color: 0x1eff00 } );
+    this.material = new THREE.MeshLambertMaterial( { color: 0x1eff00 } );
 
 }
 

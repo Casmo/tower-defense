@@ -26,6 +26,19 @@ function newGame() {
     camera.lookAt(new THREE.Vector3(0,0,0));
     renderer = new THREE.WebGLRenderer();
     renderer.setSize( TowerDefense.gameWidth, TowerDefense.gameHeight );
+
+    renderer.shadowMapEnabled = true;
+    renderer.shadowMapSoft = true;
+
+    renderer.shadowCameraNear = 3;
+    renderer.shadowCameraFar = camera.far;
+    renderer.shadowCameraFov = 50;
+
+    renderer.shadowMapBias = 0.0039;
+    renderer.shadowMapDarkness = 0.5;
+    renderer.shadowMapWidth = 1024;
+    renderer.shadowMapHeight = 1024;
+
     projector = new THREE.Projector();
     $('#game').style.marginLeft = -(TowerDefense.gameWidth / 2) + 'px';
     $('#game').style.marginTop = -(TowerDefense.gameHeight / 2) + 'px';
@@ -75,35 +88,17 @@ function level1() {
     hemiLight.position.set( 0, 500, 0 );
     scene.add( hemiLight );
 
-
     var dirLight = new THREE.DirectionalLight( 0xffffff, 1 );
     dirLight.color.setHSL( 0.1, 1, 0.95 );
     dirLight.position.set( -1, 1.75, 1 );
     dirLight.position.multiplyScalar( 50 );
     scene.add( dirLight );
 
-    dirLight.castShadow = true;
-
-    dirLight.shadowMapWidth = 2048;
-    dirLight.shadowMapHeight = 2048;
-
-    var d = 50;
-
-    dirLight.shadowCameraLeft = -d;
-    dirLight.shadowCameraRight = d;
-    dirLight.shadowCameraTop = d;
-    dirLight.shadowCameraBottom = -d;
-
-    dirLight.shadowCameraFar = 3500;
-    dirLight.shadowBias = -0.0001;
-    dirLight.shadowDarkness = 0.35;
-    dirLight.shadowCameraVisible = true;
-
     var dummyEnemy = new TowerDefense.DummyEnemy();
-    var mesh = dummyEnemy.create();
-    mesh.position.x = TowerDefense.startTile.object.position.x;
-    mesh.position.y = TowerDefense.startTile.object.position.y;
-    scene.add(mesh);
+    var dummyMesh = dummyEnemy.create();
+    scene.add(dummyMesh);
+    dummyMesh.position.x = TowerDefense.startTile.object.position.x;
+    dummyMesh.position.y = TowerDefense.startTile.object.position.y;
     dummyEnemy.setPath();
 }
 

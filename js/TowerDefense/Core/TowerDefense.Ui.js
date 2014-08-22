@@ -9,6 +9,7 @@ TowerDefense.Ui = {
     initialize: function() {
 
         $('#game').addEventListener('click', this.click, false);
+        document.addEventListener('keypress', this.keypress, false);
 
     },
 
@@ -49,6 +50,14 @@ TowerDefense.Ui = {
         }
     },
 
+    keypress: function(event) {
+        // 1
+        if (event.keyCode == 49) {
+            TowerDefense.Ui.buildTower(1);
+        }
+        console.log(event.keyCode);
+    },
+
     /**
      * Displays available towers to place on the selected tile
      */
@@ -66,6 +75,9 @@ TowerDefense.Ui = {
      * @param towerId
      */
     buildTower: function (towerId) {
+        if (TowerDefense.Element == null || TowerDefense.Element.selectedObject == null) {
+            return;
+        }
         // @todo do some thing with towerId
         // @todo check if it is allowed here to add a dummy route from startTile to endTile
         var tower = new TowerDefense.BasicTower();
