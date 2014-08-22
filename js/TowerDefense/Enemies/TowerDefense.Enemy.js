@@ -90,7 +90,7 @@ TowerDefense.Enemy.prototype.setPath = function () {
     this.tween = new TWEEN.Tween( dummy )
       .to( { p: 1 },
       duration ).easing( TWEEN.Easing.Linear.None ).onUpdate( function() {
-          position = spline.get2DPoint( self.path, this.p );
+          var position = spline.get2DPoint( self.path, this.p );
           self.object.position.x = position.x;
           self.object.position.y = position.y;
       })
@@ -111,5 +111,8 @@ TowerDefense.Enemy.prototype.update = function() {
  */
 TowerDefense.Enemy.prototype.endPath = function() {
     // Fix that only the current enemy will deletes it's tween.
-    TWEEN.remove(this.tween);
+    TWEEN.remove(self.tween);
+    scene.remove(this.object);
+    delete(this);
+    delete(self);
 }
