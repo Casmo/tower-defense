@@ -94,6 +94,10 @@ function level1() {
     dirLight.position.multiplyScalar( 50 );
     scene.add( dirLight );
 
+    spawnDummy();
+}
+
+function spawnDummy() {
     var dummyEnemy = new TowerDefense.DummyEnemy();
     var dummyMesh = dummyEnemy.create();
     scene.add(dummyMesh);

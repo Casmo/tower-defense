@@ -6,6 +6,7 @@
  */
 TowerDefense.DummyEnemy = function () {
 
+    this.isDummy = true;
     TowerDefense.Enemy.call( this );
     this.speed = .1;
 
@@ -31,7 +32,7 @@ TowerDefense.DummyEnemy.prototype.create = function() {
     this.object.add( new THREE.Mesh( sphere, new THREE.MeshBasicMaterial( { color: 0xff0040 } ) ) );
     this.object.position.x = this.position.x;
     this.object.position.y = this.position.y;
-    this.object.position.z = 2;//this.position.z;
+    this.object.position.z = .15;//this.position.z;
     this.add();
     return this.object;
 

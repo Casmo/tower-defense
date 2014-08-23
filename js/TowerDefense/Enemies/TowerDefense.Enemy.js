@@ -75,8 +75,13 @@ TowerDefense.Enemy.prototype.setPath = function () {
 
     // Add the results into a tween
     this.path = [];
+    var position = { x: 0, y: 0 };
+    // Get the 3D position of the current result
+    position.x = TowerDefense.grid[start.x][start.y].object.position.x;
+    position.y = TowerDefense.grid[start.x][start.y].object.position.y;
+    this.path.push(position);
     for (i = 0; i < result.length; i++) {
-        var position = { x: 0, y: 0 };
+        position = { x: 0, y: 0 };
         // Get the 3D position of the current result
         position.x = TowerDefense.grid[result[i].x][result[i].y].object.position.x;
         position.y = TowerDefense.grid[result[i].x][result[i].y].object.position.y;
