@@ -133,9 +133,12 @@ TowerDefense.Enemy.prototype.endPath = function() {
 
 }
 
+/**
+ * @todo Some enemy Objects remove the tweens from other enemies/objects. Fix!
+ */
 TowerDefense.Enemy.prototype.removeTween = function() {
 
+    console.log(this);
     TWEEN.remove(this.tween);
-
 
 }
