@@ -88,6 +88,21 @@ var TowerDefense = TowerDefense || {
 
     },
 
+    /**
+     * Loops through all enemies and update the path. Usefull after building a tower.
+     */
+    updateEnemyMovements: function() {
+
+        this.objects.forEach( function(object) {
+
+            if (object.type != null && object.type == 'ENEMY') {
+                object.setPath();
+            }
+
+        });
+
+    },
+
     Spline: function () {
         var c = [], v2 = { x: 0, y: 0, z: 0 },
           point, intPoint, weight;
@@ -102,6 +117,8 @@ var TowerDefense = TowerDefense || {
             v2.x = interpolate( points[ c[ 0 ] ].x, points[ c[ 1 ] ].x, points[ c[ 2 ] ].x, points[ c[ 3 ] ].x, weight );
             v2.y = interpolate( points[ c[ 0 ] ].y, points[ c[ 1 ] ].y, points[ c[ 2 ] ].y, points[ c[ 3 ] ].y, weight );
             v2.z = interpolate( points[ c[ 0 ] ].z, points[ c[ 1 ] ].z, points[ c[ 2 ] ].z, points[ c[ 3 ] ].z, weight );
+            // Get current point
+            v2.gridPosition = points[c[1]].gridPosition;
             return v2;
         }
         // Catmull-Rom

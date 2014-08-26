@@ -85,6 +85,7 @@ TowerDefense.Ui = {
         //scene.add(mesh);
         this.hideBuildMenu();
         TowerDefense.deselectAll();
+        TowerDefense.updateEnemyMovements();
     }
 
 }

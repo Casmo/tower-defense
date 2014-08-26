@@ -10,6 +10,12 @@ TowerDefense.Element = function () {
     this.id = TowerDefense.elementCount++;
 
     /**
+     * Type of the current object. e.g. TOWER or ENEMY
+     * @type {string}
+     */
+    this.type = '';
+
+    /**
      * Holds the 3D (Three) mesh
      */
     this.object = {};

@@ -1,6 +1,9 @@
 TowerDefense.Enemy = function () {
 
     TowerDefense.Element.call( this );
+
+    this.type = 'ENEMY';
+
     /**
      * Current 3D position in the world
      * @type {{x: number, y: number, z: number}}
@@ -36,6 +39,8 @@ TowerDefense.Enemy.prototype.constructor = TowerDefense.Enemy;
 TowerDefense.Enemy.prototype.reset = function() {
 
     this.gridPosition = { x: -1, y: -1 };
+    this.object.position.x = TowerDefense.startTile.object.position.x;
+    this.object.position.y = TowerDefense.startTile.object.position.y;
     this.tween = {};
 
 }
@@ -45,8 +50,9 @@ TowerDefense.Enemy.prototype.create = function() {
     this.object = new THREE.Mesh( this.geometry, this.material );
     this.object.receiveShadow = true;
     this.object.castShadow = true;
-    this.object.position.x = this.position.x;
-    this.object.position.y = this.position.y;
+
+    this.object.position.x = TowerDefense.startTile.object.position.x;
+    this.object.position.y = TowerDefense.startTile.object.position.y;
     this.object.position.z = this.position.z;
     this.add();
     return this.object;
@@ -58,6 +64,8 @@ TowerDefense.Enemy.prototype.create = function() {
  * will follow this path with tweening (bezier curves) in the update() function.
  */
 TowerDefense.Enemy.prototype.setPath = function () {
+
+    this.removeTween();
     // Set the path from the current position (x, y) to the end position (x,y)
     if (this.gridPosition.x == -1) {
         this.gridPosition.x = TowerDefense.startTile.gridPosition.x;
@@ -77,32 +85,33 @@ TowerDefense.Enemy.prototype.setPath = function () {
 
     // Add the results into a tween
     this.path = [];
-    var position = { x: 0, y: 0 };
+    var position = { x: this.object.position.x, y: this.object.position.y };
     // Get the 3D position of the current result
-    position.x = TowerDefense.grid[start.x][start.y].object.position.x;
-    position.y = TowerDefense.grid[start.x][start.y].object.position.y;
+    position.gridPosition = { x: start.x, y: start.y };
     this.path.push(position);
     for (i = 0; i < result.length; i++) {
         position = { x: 0, y: 0 };
         // Get the 3D position of the current result
         position.x = TowerDefense.grid[result[i].x][result[i].y].object.position.x;
         position.y = TowerDefense.grid[result[i].x][result[i].y].object.position.y;
+        position.gridPosition = { x: result[i].x, y: result[i].y };
         this.path.push(position);
     }
     var duration = (this.path.length + 1) * this.speed;
     duration *= 1000;
-    var dummy = { p: 0 };
+    var dummy = { p: 0, object: this };
     var spline = new TowerDefense.Spline();
-    var self = this;
+//    var self = this;
     this.tween = new TWEEN.Tween( dummy )
       .to( { p: 1 },
       duration ).easing( TWEEN.Easing.Linear.None ).onUpdate( function() {
-          var position = spline.get2DPoint( self.path, this.p );
-          self.object.position.x = position.x;
-          self.object.position.y = position.y;
+          var position = spline.get2DPoint( this.object.path, this.p );
+          this.object.gridPosition = position.gridPosition;
+          this.object.object.position.x = position.x;
+          this.object.object.position.y = position.y;
       })
       .onComplete( function () {
-          self.endPath();
+          this.object.endPath();
       } )
       .start();
 }
@@ -117,9 +126,16 @@ TowerDefense.Enemy.prototype.update = function() {
  * @todo Remove a life or something.
  */
 TowerDefense.Enemy.prototype.endPath = function() {
+
     // Fix that only the current enemy will deletes it's tween.
-    TWEEN.remove(self.tween);
+    this.removeTween();
     scene.remove(this.object);
-    delete(this);
-    delete(self);
+
+}
+
+TowerDefense.Enemy.prototype.removeTween = function() {
+
+    TWEEN.remove(this.tween);
+
+
 }
