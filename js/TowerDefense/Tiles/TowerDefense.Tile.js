@@ -7,6 +7,7 @@ TowerDefense.Tile = function () {
     this.geometry = new THREE.BoxGeometry( .98, .98,.1 );
     this.selectable = true;
     this.open = true; // open or closed for enemy traffic
+    this.currentTower = {}; // Object with the current tower
 }
 
 TowerDefense.Tile.prototype = Object.create( TowerDefense.Element.prototype );

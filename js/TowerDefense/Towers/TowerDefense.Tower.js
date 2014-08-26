@@ -27,6 +27,9 @@ TowerDefense.Tower.prototype.create = function(tileObject) {
     if (tileObject == null) {
         return console.log('Cannot build tower on the selected tile.');
     }
+    if (tileObject.currentTower.id != null) {
+        return console.log('Already tower on this tile.');
+    }
     this.object = new THREE.Mesh( this.geometry, this.material );
     this.object.receiveShadow = true;
     this.object.castShadow = true;
@@ -37,6 +40,7 @@ TowerDefense.Tower.prototype.create = function(tileObject) {
     }
     tileObject.object.add(this.object);
     this.add();
+    tileObject.currentTower = this;
 
     return this.object;
 
