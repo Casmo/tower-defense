@@ -34,6 +34,7 @@ TowerDefense.Tile.prototype.select = function() {
 TowerDefense.Tile.prototype.deselect = function() {
 
     this.object.rotation.z = 0;
+    this.object.position.z = 0;
     this.selected = false;
 
 };
@@ -42,6 +43,8 @@ TowerDefense.Tile.prototype.update = function() {
 
     if (this.selected == true) {
         this.object.rotation.z += .025;
+        var activeTimer = Date.now() * 0.00525;
+        this.object.position.z = .5 + Math.sin(activeTimer) * .3;
     }
 
 };

@@ -24,7 +24,7 @@ TowerDefense.Enemy = function () {
      * @type {number}
      */
     this.speed = .5; // number of seconds per tile
-    this.material = new THREE.MeshBasicMaterial( { color: 0xff0000 } );
+    this.material = new THREE.MeshLambertMaterial( { color: 0xff0000 } );
     this.geometry = new THREE.BoxGeometry( .85, .85, 2 );
 
 }
@@ -43,6 +43,8 @@ TowerDefense.Enemy.prototype.reset = function() {
 TowerDefense.Enemy.prototype.create = function() {
 
     this.object = new THREE.Mesh( this.geometry, this.material );
+    this.object.receiveShadow = true;
+    this.object.castShadow = true;
     this.object.position.x = this.position.x;
     this.object.position.y = this.position.y;
     this.object.position.z = this.position.z;
