@@ -17,6 +17,11 @@ TowerDefense.Tower.prototype = Object.create( TowerDefense.Element.prototype );
 
 TowerDefense.Tower.prototype.constructor = TowerDefense.Tower;
 
+/**
+ * Creates a tower and add it to the selected tile object.
+ * @param tileObject
+ * @returns Three.js mesh
+ */
 TowerDefense.Tower.prototype.create = function(tileObject) {
 
     if (tileObject == null) {
@@ -25,14 +30,12 @@ TowerDefense.Tower.prototype.create = function(tileObject) {
     this.object = new THREE.Mesh( this.geometry, this.material );
     this.object.receiveShadow = true;
     this.object.castShadow = true;
-    this.object.position.x = tileObject.object.position.x;
-    this.object.position.y = tileObject.object.position.y;
     this.object.position.z = this.position.z;
 
     if (this.collisionable == true) {
         TowerDefense.grid[tileObject.gridPosition.x][tileObject.gridPosition.y].open = false;
     }
-
+    tileObject.object.add(this.object);
     this.add();
 
     return this.object;
