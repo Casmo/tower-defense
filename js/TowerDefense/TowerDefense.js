@@ -11,6 +11,7 @@ var TowerDefense = TowerDefense || {
     nodes: [], // Holds the x, y position and GraphNode object,
     scene: {}, // Holds the Three.js scene
     camera: {}, // Holds the game camera
+    renderer: {},
 
     /**
      * Holds all available towers to build with their info

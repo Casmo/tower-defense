@@ -1,10 +1,10 @@
-var renderer, projector, controls;
+var projector, controls;
 
 function render() {
 
     requestAnimationFrame(render, null);
     TowerDefense.update();
-    renderer.render(TowerDefense.scene, TowerDefense.camera);
+    TowerDefense.renderer.render(TowerDefense.scene, TowerDefense.camera);
 
 }
 
@@ -24,25 +24,25 @@ function newGame() {
     TowerDefense.camera.position.z = 20;
     TowerDefense.camera.up = new THREE.Vector3(0,0,1);
     TowerDefense.camera.lookAt(new THREE.Vector3(0,0,0));
-    renderer = new THREE.WebGLRenderer();
-    renderer.setSize( TowerDefense.gameWidth, TowerDefense.gameHeight );
+    TowerDefense.renderer = new THREE.WebGLRenderer();
+    TowerDefense.renderer.setSize( TowerDefense.gameWidth, TowerDefense.gameHeight );
 
-    renderer.shadowMapEnabled = true;
-    renderer.shadowMapSoft = true;
+    TowerDefense.renderer.shadowMapEnabled = true;
+    TowerDefense.renderer.shadowMapSoft = true;
 
-    renderer.shadowCameraNear = 3;
-    renderer.shadowCameraFar = TowerDefense.camera.far;
-    renderer.shadowCameraFov = 50;
+    TowerDefense.renderer.shadowCameraNear = 3;
+    TowerDefense.renderer.shadowCameraFar = TowerDefense.camera.far;
+    TowerDefense.renderer.shadowCameraFov = 50;
 
-    renderer.shadowMapBias = 0.0039;
-    renderer.shadowMapDarkness = 0.5;
-    renderer.shadowMapWidth = 1024;
-    renderer.shadowMapHeight = 1024;
+    TowerDefense.renderer.shadowMapBias = 0.0039;
+    TowerDefense.renderer.shadowMapDarkness = 0.5;
+    TowerDefense.renderer.shadowMapWidth = 1024;
+    TowerDefense.renderer.shadowMapHeight = 1024;
 
     projector = new THREE.Projector();
     $('#game').style.marginLeft = -(TowerDefense.gameWidth / 2) + 'px';
     $('#game').style.marginTop = -(TowerDefense.gameHeight / 2) + 'px';
-    $('#game').appendChild( renderer.domElement );
+    $('#game').appendChild( TowerDefense.renderer.domElement );
     $('#menu-container').style.display = 'none';
     level1();
     render();
