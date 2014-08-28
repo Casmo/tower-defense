@@ -28,17 +28,16 @@ TowerDefense.Tile.prototype.select = function() {
 
     this.selected = true;
     TowerDefense.Element.selectedObject = this;
+    // Display available towers
+    $('#build-options').innerHTML = '';
+    $('#build-info').innerHTML = '';
     if (this.currentTower.id == null) {
-        // Display available towers
-        $('#build-options').innerHTML = '';
-        $('#build-info').innerHTML = '';
         TowerDefense.availableTowers.forEach(function(tower, index) {
             var object = tower.object();
             var image = '<img src="assets/towers/' + object.icon +'" />';
             var link = '<a onclick="TowerDefense.Ui.selectTower('+ index +');">'+ image +'</a>';
             $('#build-options').innerHTML += link;
         });
-
     }
     TowerDefense.Ui.showBuildMenu();
 

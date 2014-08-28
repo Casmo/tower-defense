@@ -53,9 +53,8 @@ TowerDefense.Ui = {
     },
 
     keypress: function(event) {
-        // 1
         if (event.keyCode == 49) {
-            TowerDefense.Ui.buildTower(1);
+            spawnEnemy();
         }
         console.log('Keycode pressed: ' + event.keyCode);
     },

@@ -17,11 +17,11 @@ TowerDefense.DummyEnemy.prototype = Object.create( TowerDefense.Enemy.prototype 
 TowerDefense.DummyEnemy.prototype.create = function() {
 
     var sphere = new THREE.SphereGeometry( 0.1, 16, 8 );
-    this.object = new THREE.SpotLight( 0xffffff );
+    this.object = new THREE.PointLight( 0xffffff );
 
     this.object.target = TowerDefense.endTile.object;
 
-    this.object.castShadow = true;
+//    this.object.castShadow = true;
 
     this.object.shadowMapWidth = 1024;
     this.object.shadowMapHeight = 1024;
@@ -32,7 +32,7 @@ TowerDefense.DummyEnemy.prototype.create = function() {
     this.object.add( new THREE.Mesh( sphere, new THREE.MeshBasicMaterial( { color: 0xff0040 } ) ) );
     this.object.position.x = this.position.x;
     this.object.position.y = this.position.y;
-    this.object.position.z = .15;//this.position.z;
+    this.object.position.z = .5;//this.position.z;
     this.add();
     return this.object;
 

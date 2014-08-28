@@ -1,10 +1,10 @@
-var scene, camera, renderer, projector, controls;
+var camera, renderer, projector, controls;
 
 function render() {
 
     requestAnimationFrame(render, null);
     TowerDefense.update();
-    renderer.render(scene, camera);
+    renderer.render(TowerDefense.scene, camera);
 
 }
 
@@ -17,7 +17,7 @@ function init() {
 
 function newGame() {
 
-    scene = new THREE.Scene();
+    TowerDefense.scene = new THREE.Scene();
     camera = new THREE.PerspectiveCamera( 40, TowerDefense.gameWidth / TowerDefense.gameHeight, 0.1, 1000 );
     camera.position.x = 10;
     camera.position.y = -10;
@@ -79,20 +79,20 @@ function level1() {
             var positionY = -(sizeY / 2) + (j * 1);
             mesh.position.x = positionX;
             mesh.position.y = positionY;
-            scene.add(mesh);
+            TowerDefense.scene.add(mesh);
         }
     }
     var hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 );
     hemiLight.color.setHSL( 0.6, 1, 0.6 );
     hemiLight.groundColor.setHSL( 0.095, 1, 0.75 );
     hemiLight.position.set( 0, 500, 0 );
-    scene.add( hemiLight );
+    TowerDefense.scene.add( hemiLight );
 
     var dirLight = new THREE.DirectionalLight( 0xffffff, 1 );
     dirLight.color.setHSL( 0.1, 1, 0.95 );
     dirLight.position.set( -1, 1.75, 1 );
     dirLight.position.multiplyScalar( 50 );
-    scene.add( dirLight );
+    TowerDefense.scene.add( dirLight );
 
     spawnDummy();
 }
@@ -100,7 +100,7 @@ function level1() {
 function spawnDummy() {
     var dummyEnemy = new TowerDefense.DummyEnemy();
     var dummyMesh = dummyEnemy.create();
-    scene.add(dummyMesh);
+    TowerDefense.scene.add(dummyMesh);
     dummyMesh.position.x = TowerDefense.startTile.object.position.x;
     dummyMesh.position.y = TowerDefense.startTile.object.position.y;
     dummyEnemy.setPath();
@@ -114,7 +114,7 @@ function spawnEnemy() {
     var mesh = enemy.create();
     mesh.position.x = TowerDefense.startTile.object.position.x;
     mesh.position.y = TowerDefense.startTile.object.position.y;
-    scene.add(mesh);
+    TowerDefense.scene.add(mesh);
     enemy.setPath();
 }
 

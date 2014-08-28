@@ -8,7 +8,8 @@ var TowerDefense = TowerDefense || {
     gameHeight: 480,
     objects: [],
     grid: [], // holds the x, y position of each tile and it's tile object
-    nodes: [], // Holds the x, y position and GraphNode object
+    nodes: [], // Holds the x, y position and GraphNode object,
+    scene: {}, // Holds the Three.js scene
 
     /**
      * Holds all available towers to build with their info
