@@ -10,6 +10,7 @@ var TowerDefense = TowerDefense || {
     grid: [], // holds the x, y position of each tile and it's tile object
     nodes: [], // Holds the x, y position and GraphNode object,
     scene: {}, // Holds the Three.js scene
+    camera: {}, // Holds the game camera
 
     /**
      * Holds all available towers to build with their info

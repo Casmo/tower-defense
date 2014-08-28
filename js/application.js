@@ -1,10 +1,10 @@
-var camera, renderer, projector, controls;
+var renderer, projector, controls;
 
 function render() {
 
     requestAnimationFrame(render, null);
     TowerDefense.update();
-    renderer.render(TowerDefense.scene, camera);
+    renderer.render(TowerDefense.scene, TowerDefense.camera);
 
 }
 
@@ -18,12 +18,12 @@ function init() {
 function newGame() {
 
     TowerDefense.scene = new THREE.Scene();
-    camera = new THREE.PerspectiveCamera( 40, TowerDefense.gameWidth / TowerDefense.gameHeight, 0.1, 1000 );
-    camera.position.x = 10;
-    camera.position.y = -10;
-    camera.position.z = 20;
-    camera.up = new THREE.Vector3(0,0,1);
-    camera.lookAt(new THREE.Vector3(0,0,0));
+    TowerDefense.camera = new THREE.PerspectiveCamera( 40, TowerDefense.gameWidth / TowerDefense.gameHeight, 0.1, 1000 );
+    TowerDefense.camera.position.x = 10;
+    TowerDefense.camera.position.y = -10;
+    TowerDefense.camera.position.z = 20;
+    TowerDefense.camera.up = new THREE.Vector3(0,0,1);
+    TowerDefense.camera.lookAt(new THREE.Vector3(0,0,0));
     renderer = new THREE.WebGLRenderer();
     renderer.setSize( TowerDefense.gameWidth, TowerDefense.gameHeight );
 
@@ -31,7 +31,7 @@ function newGame() {
     renderer.shadowMapSoft = true;
 
     renderer.shadowCameraNear = 3;
-    renderer.shadowCameraFar = camera.far;
+    renderer.shadowCameraFar = TowerDefense.camera.far;
     renderer.shadowCameraFov = 50;
 
     renderer.shadowMapBias = 0.0039;
@@ -46,7 +46,7 @@ function newGame() {
     $('#menu-container').style.display = 'none';
     level1();
     render();
-    TowerDefense.Ui.initializeControls(camera);
+    TowerDefense.Ui.initializeControls(TowerDefense.camera);
 
 }
 
