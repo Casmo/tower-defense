@@ -1,15 +1,22 @@
-* { margin: 0; padding: 0; }
-html, body, #menu-container { width: 100%; height: 100%; }
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body, #menu-container {
+    width: 100%;
+    height: 100%;
+}
+
 body {
     overflow: hidden;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 16px;
     color: #fff;
-    background-image: url(../assets/ui/background.jpg);
     background-size: cover;
-    background-position: center center;
+    background: url(../assets/ui/background.jpg) center center;
+    cursor: default;
 }
-
 
 /*** UI ***/
 #game {
@@ -26,9 +33,10 @@ body {
     z-index: 102;
     position: absolute;
     width: 100%;
-    background-color: rgba(255,0,0,.2);
+    background-color: rgba(255, 0, 0, .2);
     height: 5px;
 }
+
 #loading-container #loading {
     position: absolute;
     left: 0;
@@ -39,10 +47,11 @@ body {
 
 /* In game menu */
 #menu-container {
-    background-color: rgba(0,0,0,.5);
+    background-color: rgba(0, 0, 0, .5);
     position: absolute;
-    z-index: 101;
+    z-index: 99;
 }
+
 #menu-container #menu {
     position: absolute;
     width: 200px;
@@ -52,6 +61,7 @@ body {
     margin-left: -100px;
     margin-top: -100px;
 }
+
 #menu-container #menu a {
     text-transform: uppercase;
     font-size: 26px;
@@ -61,10 +71,123 @@ body {
     color: #9EBE1A;
     margin-bottom: 10px;
 }
+
 #menu-container #menu a:hover {
     color: #fff;
 }
 
+/* Build menu (popup div) */
 #buildmenu {
     display: none;
+}
+.build-container {
+    z-index: 100;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 350px;
+    height: 350px;
+    margin-left: -175px;
+    margin-top: -175px;
+    border: 5px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 5px rgba(0, 0, 0, .8);
+    color: #555;
+}
+
+.build-contentcontainer {
+    height: 100%;
+    background-image: url(../assets/ui/creampaper.png);
+}
+
+.build-content {
+    padding: 10px;
+}
+
+.build-container .build-title {
+    position: absolute;
+    left: 50%;
+    width: 150px;
+    margin-left: -75px;
+    top: -16.5px;
+    line-height: 28px;
+    height: 28px;
+    text-align: center;
+    box-shadow: 0 0 5px rgba(0, 0, 0, .8);
+    border-radius: 5px;
+    background-image: url(../assets/ui/creampaper.png);
+    text-shadow: 0 0 1px rgba(0, 0, 0, .5);
+    font-weight: bold;
+}
+
+.build-options, .build-info {
+    background-color: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 5px rgba(0, 0, 0, .1);
+    padding: 10px;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.build-options a {
+    width: 64px;
+    height: 64px;
+    overflow: hidden;
+    display: inline-block;
+    background-color: #fff;
+    border-radius: 32px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+.build-options a img {
+    width: 100%;
+}
+.build-options a:hover {
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
+.build-options a:first-child, .build-options a:nth-child(5) {
+    margin-left: 0;
+}
+.build-buttons a {
+    display: inline-block;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    background-image: url(../assets/ui/grey_wash_wall.png);
+    height: 32px;
+    line-height: 32px;
+    margin-right: 15px;
+    font-weight: bold;
+    text-shadow: 0 0 1px rgba(0, 0, 0, .5);
+    min-width: 155px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, .1);
+}
+.build-buttons a:last-child {
+    margin-right: 0;
+}
+.build-buttons a span {
+    display: block;
+    height: 32px;
+    padding: 0 10px;
+    color: #ddd;
+    background: linear-gradient(to bottom,  rgba(255,255,255,0.1) 49%,rgba(255,255,255,0.2) 51%);
+}
+.build-buttons a:hover {
+    box-shadow: 0 0 3px rgba(0, 0, 0, .5);
+}
+.build-buttons a:hover span {
+    display: block;
+    height: 32px;
+    padding: 0 10px;
+    color: #fff;
+    background: linear-gradient(to bottom,  rgba(255,255,255,0.2) 49%,rgba(255,255,255,0.3) 51%);
+}
+.build-extra {
+    position: absolute;
+    right: 10px;
+    width: 150px;
+    bottom: -32px;
+    line-height: 28px;
+    height: 28px;
+    text-align: right;
+    font-weight: bold;
 }

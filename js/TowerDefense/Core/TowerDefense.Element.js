@@ -75,3 +75,13 @@ TowerDefense.Element.prototype = {
 }
 
 TowerDefense.elementCount = 0;
+
+
+/**
+ * @todo Some enemy Objects remove the tweens from other enemies/objects. Fix!
+ */
+TowerDefense.Element.prototype.removeTween = function() {
+
+    TWEEN.remove(this.tween);
+
+}

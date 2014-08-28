@@ -11,6 +11,15 @@ var TowerDefense = TowerDefense || {
     nodes: [], // Holds the x, y position and GraphNode object
 
     /**
+     * Holds all available towers to build with their info
+     */
+    availableTowers: [
+        {
+            object: function() { return new TowerDefense.BasicTower(); }
+        }
+    ],
+
+    /**
      * Holds the tile where monsters will spawn
      * @type {{}}
      */

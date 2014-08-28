@@ -28,13 +28,29 @@
             <div id="loading"></div>
         </div>
         <div id="menu-container">
-            <div id="menu">
-            </div>
+            <div id="menu"></div>
         </div>
         <div id="game"></div>
-        <div id="buildmenu">
-            <a href="#click" onclick="TowerDefense.Ui.buildTower(1);">Build Tower #1</a>
-            <a href="#click" onclick="spawnEnemy();">Spawn enemy</a>
+        <div id="buildmenu" class="build-container">
+            <div class="build-contentcontainer">
+                <div class="build-content">
+                    <div class="build-title">Build</div>
+                    <div class="build-options" id="build-options">
+                        <!--<a onclick="TowerDefense.Ui.buildTower(1);">Build Tower #1</a>-->
+                        <!--<a onclick="spawnEnemy();">Spawn enemy</a>-->
+                    </div>
+                    <div class="build-info" id="build-info">
+                        &nbsp;
+                    </div>
+                    <div class="build-buttons">
+                        <a onclick="TowerDefense.Ui.buildTower();"><span>Build</span></a>
+                        <a onclick="TowerDefense.Ui.hideBuildMenu();"><span>Close</span></a>
+                    </div>
+                    <div class="build-extra">
+                        Destroy
+                    </div>
+                </div>
+            </div>
         </div>
         <script src="js/application.js"></script>
     </body>

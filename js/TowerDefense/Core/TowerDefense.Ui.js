@@ -3,6 +3,8 @@ Logic Interaction with the game will be placed here.
 */
 TowerDefense.Ui = {
 
+    selectedTower: null,
+
     /**
      * Callback after the game is started.
      */
@@ -66,26 +68,42 @@ TowerDefense.Ui = {
     },
 
     hideBuildMenu: function() {
+        TowerDefense.deselectAll();
         $('#buildmenu').style.display = 'none';
+    },
+
+    /**
+     * Selects a  and display the information
+     * @param index the index of TowerDefense.availableTowers
+     */
+    selectTower: function (index) {
+        if (TowerDefense.Element == null || TowerDefense.Element.selectedObject == null) {
+            return;
+        }
+        var tower = new TowerDefense.availableTowers[index].object;
+        $('#build-info').innerHTML = tower.description;
+        this.selectedTower = index;
     },
 
     /**
      * Creates a new tower on the selected tile. Returns false if the tower is failed to
      * build.
-     * @param towerId
      */
-    buildTower: function (towerId) {
+    buildTower: function () {
+        if (this.selectedTower == null) {
+            $('#build-info').innerHTML = 'Select a tower to build.';
+            return;
+        }
         if (TowerDefense.Element == null || TowerDefense.Element.selectedObject == null) {
             return;
         }
-        // @todo do some thing with towerId
-        // @todo check if it is allowed here to add a dummy route from startTile to endTile
-        var tower = new TowerDefense.BasicTower();
-        var mesh = tower.create(TowerDefense.Element.selectedObject);
+        var tower = new TowerDefense.availableTowers[this.selectedTower].object;
+        tower.create(TowerDefense.Element.selectedObject);
         //scene.add(mesh);
         this.hideBuildMenu();
         TowerDefense.deselectAll();
         TowerDefense.updateEnemyMovements();
+        this.selectedTower = null;
     }
 
 }

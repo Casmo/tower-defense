@@ -1,6 +1,14 @@
 TowerDefense.Tower = function () {
 
     TowerDefense.Element.call( this );
+
+    this.name = ''; // Name of the tower
+    this.description = ''; // Description of the tower. May contain HTML
+    this.costs = 1; // Price to build
+    this.speed = 1; // Speed per bullet interval
+    this.range = 1; // Range in units
+    this.icon = 'default.png'; // Tower icon
+
     this.position = { x: 0, y: 0, z: 1 };
     this.material = new THREE.MeshLambertMaterial( { color: 0x368218 } );
     this.geometry = new THREE.BoxGeometry( .85, .85, 2 );
