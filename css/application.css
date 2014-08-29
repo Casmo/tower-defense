@@ -11,13 +11,27 @@ body {
     color: #fff;
     overflow: hidden;
 }
+a {
+    cursor: pointer;
+}
 #menu {
     position: absolute;
     top: 0;
 }
 #build-menu {
+    min-height: 188px;
+    border-top: 5px solid rgba(0,0,0,.5);
+    padding: 20px 0;
     position: absolute;
     bottom: 0;
     display: none;
     background-image: url(../assets/ui/dark-wood.png);
+}
+
+#build-options img {
+    width: 64px;
+    padding: 5px;
+    border: 3px solid rgba(0,0,0,.5);
+    background-color: rgba(0,0,0,0.5);
+    box-shadow: 0 0 5px rgba(0,0,0,.5);
 }

@@ -75,8 +75,8 @@ function level1() {
             TowerDefense.grid[x][y] = tile;
             TowerDefense.gridPath[x][y] = tile.open;
             var mesh = tile.create();
-            var positionX = -(sizeX / 2) + (i * 1);
-            var positionY = -(sizeY / 2) + (j * 1);
+            var positionX = -(sizeX / 2) + (i * Math.round(tile.squareSize));
+            var positionY = -(sizeY / 2) + (j * Math.round(tile.squareSize));
             mesh.position.x = positionX;
             mesh.position.y = positionY;
             TowerDefense.scene.add(mesh);

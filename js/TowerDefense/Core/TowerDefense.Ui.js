@@ -23,29 +23,31 @@ TowerDefense.Ui = {
     },
 
     click: function(event) {
-        // Put scene objects in an array
-        var objects = [];
-        TowerDefense.objects.forEach(function(object, index) {
-            if (object.object != null) {
-                object.object.objectIndex = index;
-                objects.push(object.object);
-            }
-        });
+        if (TowerDefense.projector.unprojectVector != null && TowerDefense.camera != null) {
+            // Put scene objects in an array
+            var objects = [];
+            TowerDefense.objects.forEach(function(object, index) {
+                if (object.object != null) {
+                    object.object.objectIndex = index;
+                    objects.push(object.object);
+                }
+            });
 
-        event.preventDefault();
-        var vector = new THREE.Vector3(
-          (event.pageX / TowerDefense.gameWidth) * 2 - 1,
-          - (event.pageY / TowerDefense.gameHeight) * 2 + 1,
-          0.5);
-        TowerDefense.projector.unprojectVector(vector, TowerDefense.camera);
-        var ray = new THREE.Raycaster(TowerDefense.camera.position, vector.sub(TowerDefense.camera.position).normalize());
-        var intersects = ray.intersectObjects(objects, true);
-        if (intersects.length > 0) {
-            for (var i = 0; i < intersects.length; i++) {
-                var currentObject = TowerDefense.objects[intersects[i].object.objectIndex];
-                if (currentObject.selectable == true && typeof currentObject.select == 'function' && currentObject.selected == false) {
-                    TowerDefense.deselectAll();
-                    currentObject.select();
+            event.preventDefault();
+            var vector = new THREE.Vector3(
+              (event.pageX / TowerDefense.gameWidth) * 2 - 1,
+              - (event.pageY / TowerDefense.gameHeight) * 2 + 1,
+              0.5);
+            TowerDefense.projector.unprojectVector(vector, TowerDefense.camera);
+            var ray = new THREE.Raycaster(TowerDefense.camera.position, vector.sub(TowerDefense.camera.position).normalize());
+            var intersects = ray.intersectObjects(objects, true);
+            if (intersects.length > 0) {
+                for (var i = 0; i < intersects.length; i++) {
+                    var currentObject = TowerDefense.objects[intersects[i].object.objectIndex];
+                    if (currentObject.selectable == true && typeof currentObject.select == 'function' && currentObject.selected == false) {
+                        TowerDefense.deselectAll();
+                        currentObject.select();
+                    }
                 }
             }
         }
@@ -62,6 +64,17 @@ TowerDefense.Ui = {
      * Displays available towers to place on the selected tile
      */
     showBuildMenu: function() {
+        // Display available towers
+        $('#build-options').innerHTML = '';
+        $('#build-info').innerHTML = '';
+        if (TowerDefense.Element.selectedObject.currentTower.id == null) {
+            TowerDefense.availableTowers.forEach(function(tower, index) {
+                var object = tower.object();
+                var image = '<img class="img-circle" src="assets/towers/' + object.icon +'" />';
+                var link = '<a onclick="TowerDefense.Ui.selectTower('+ index +');">'+ image +'</a>';
+                $('#build-options').innerHTML += link;
+            });
+        }
         $('#build-menu').style.display = 'block';
     },
 
@@ -97,7 +110,6 @@ TowerDefense.Ui = {
         }
         var tower = new TowerDefense.availableTowers[this.selectedTower].object;
         tower.create(TowerDefense.Element.selectedObject);
-        //scene.add(mesh);
         this.hideBuildMenu();
         TowerDefense.deselectAll();
         TowerDefense.updateEnemyMovements();
