@@ -23,7 +23,6 @@ TowerDefense.Ui = {
     },
 
     click: function(event) {
-
         // Put scene objects in an array
         var objects = [];
         TowerDefense.objects.forEach(function(object, index) {
@@ -35,8 +34,8 @@ TowerDefense.Ui = {
 
         event.preventDefault();
         var vector = new THREE.Vector3(
-          (event.offsetX / TowerDefense.gameWidth) * 2 - 1,
-          - (event.offsetY / TowerDefense.gameHeight) * 2 + 1,
+          (event.pageX / TowerDefense.gameWidth) * 2 - 1,
+          - (event.pageY / TowerDefense.gameHeight) * 2 + 1,
           0.5);
         projector.unprojectVector(vector, TowerDefense.camera);
         var ray = new THREE.Raycaster(TowerDefense.camera.position, vector.sub(TowerDefense.camera.position).normalize());
@@ -63,12 +62,12 @@ TowerDefense.Ui = {
      * Displays available towers to place on the selected tile
      */
     showBuildMenu: function() {
-        $('#buildmenu').style.display = 'block';
+        $('#build-menu').style.display = 'block';
     },
 
     hideBuildMenu: function() {
         TowerDefense.deselectAll();
-        $('#buildmenu').style.display = 'none';
+        $('#build-menu').style.display = 'none';
     },
 
     /**

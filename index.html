@@ -3,6 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <title>Tower Defense</title>
+        <link rel="stylesheet" href="css/bootstrap.min.css" />
         <link rel="stylesheet" href="css/application.css" />
         <script src="js/lib/dom.js"></script>
         <script src="js/lib/three.min.js"></script>
@@ -22,34 +23,45 @@
         <script src="js/TowerDefense/Enemies/TowerDefense.DummyEnemy.js"></script>
     </head>
     <body>
-        <div id="loading-container">
-            <div id="loading"></div>
-        </div>
-        <div id="menu-container">
-            <div id="menu"></div>
-        </div>
-        <div id="game"></div>
-        <div id="buildmenu" class="build-container">
-            <div class="build-contentcontainer">
-                <div class="build-content">
-                    <div class="build-title">Build</div>
-                    <div class="build-options" id="build-options">
-                        <!--<a onclick="TowerDefense.Ui.buildTower(1);">Build Tower #1</a>-->
-                        <!--<a onclick="spawnEnemy();">Spawn enemy</a>-->
+        <div class="container-fluid">
+            <div class="row" id="menu">
+                <div class="col-xs-6">
+                    <div class="btn-group">
+                       <a onclick="newGame();" class="btn btn-primary">New game</a>
                     </div>
-                    <div class="build-info" id="build-info">
-                        &nbsp;
+                </div>
+                <div class="col-xs-6">
+                    info Y
+                </div>
+            </div>
+            <div class="row" id="build-menu">
+                <div class="col-xs-4">
+                    Build Canvas
+                </div>
+                <div class="col-xs-4">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div id="build-info">
+                            </div>
+                        </div>
                     </div>
-                    <div class="build-buttons">
-                        <a onclick="TowerDefense.Ui.buildTower();"><span>Build</span></a>
-                        <a onclick="TowerDefense.Ui.hideBuildMenu();"><span>Close</span></a>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="btn-group btn-group-justified" id="build-buttons">
+                                <a onclick="TowerDefense.Ui.hideBuildMenu();" class="btn btn-default">Close</a>
+                                <a onclick="TowerDefense.Ui.buildTower();" class="btn btn-primary">Build</a>
+                            </div>
+                        </div>
                     </div>
-                    <div class="build-extra">
-                        Destroy
+                </div>
+                <div class="col-xs-4">
+                    <div id="build-options">
+
                     </div>
                 </div>
             </div>
         </div>
+        <div id="game"></div>
         <script src="js/application.js"></script>
     </body>
 </html>

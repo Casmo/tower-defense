@@ -4,8 +4,8 @@ var TowerDefense = TowerDefense || {
     __currentLevel: 1,
     __pause: true,
     __loading: false,
-    gameWidth: 640,
-    gameHeight: 480,
+    gameWidth: window.innerWidth,
+    gameHeight: window.innerHeight,
     objects: [],
     grid: [], // holds the x, y position of each tile and it's tile object
     gridPath: [], // holds the x, y position of each tile and a zero (open) or one (closed)

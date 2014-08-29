@@ -1,8 +1,8 @@
-var projector, controls;
+var projector, controls, gameRender;
 
 function render() {
 
-    requestAnimationFrame(render, null);
+    gameRender = requestAnimationFrame(render, null);
     TowerDefense.update();
     TowerDefense.renderer.render(TowerDefense.scene, TowerDefense.camera);
 
@@ -11,7 +11,6 @@ function render() {
 function init() {
 
     TowerDefense.initialize();
-    showMenu();
 
 }
 
@@ -40,10 +39,9 @@ function newGame() {
     TowerDefense.renderer.shadowMapHeight = 1024;
 
     projector = new THREE.Projector();
-    $('#game').style.marginLeft = -(TowerDefense.gameWidth / 2) + 'px';
-    $('#game').style.marginTop = -(TowerDefense.gameHeight / 2) + 'px';
+    cancelAnimationFrame(gameRender);
+    $('#game').innerHTML = '';
     $('#game').appendChild( TowerDefense.renderer.domElement );
-    $('#menu-container').style.display = 'none';
     level1();
     render();
     TowerDefense.Ui.initializeControls(TowerDefense.camera);
@@ -118,12 +116,6 @@ function spawnEnemy() {
     mesh.position.y = TowerDefense.startTile.object.position.y;
     TowerDefense.scene.add(mesh);
     enemy.setPath();
-}
-
-function showMenu() {
-
-    $('#menu').innerHTML += '<a href="#game" onclick="newGame();">Play game</a>';
-
 }
 
 init();
