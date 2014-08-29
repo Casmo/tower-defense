@@ -1,4 +1,4 @@
-var projector, controls, gameRender;
+var controls, gameRender;
 
 function render() {
 
@@ -38,7 +38,7 @@ function newGame() {
     TowerDefense.renderer.shadowMapWidth = 1024;
     TowerDefense.renderer.shadowMapHeight = 1024;
 
-    projector = new THREE.Projector();
+    TowerDefense.projector = new THREE.Projector();
     cancelAnimationFrame(gameRender);
     $('#game').innerHTML = '';
     $('#game').appendChild( TowerDefense.renderer.domElement );

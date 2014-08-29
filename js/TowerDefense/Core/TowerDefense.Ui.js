@@ -37,7 +37,7 @@ TowerDefense.Ui = {
           (event.pageX / TowerDefense.gameWidth) * 2 - 1,
           - (event.pageY / TowerDefense.gameHeight) * 2 + 1,
           0.5);
-        projector.unprojectVector(vector, TowerDefense.camera);
+        TowerDefense.projector.unprojectVector(vector, TowerDefense.camera);
         var ray = new THREE.Raycaster(TowerDefense.camera.position, vector.sub(TowerDefense.camera.position).normalize());
         var intersects = ray.intersectObjects(objects, true);
         if (intersects.length > 0) {

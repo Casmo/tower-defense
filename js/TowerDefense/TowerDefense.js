@@ -13,6 +13,7 @@ var TowerDefense = TowerDefense || {
     scene: {}, // Holds the Three.js scene
     camera: {}, // Holds the game camera
     renderer: {}, // Holds the game renderer
+    projector: {}, // Holds the Three projector
 
     /**
      * Holds all available towers to build with their info
