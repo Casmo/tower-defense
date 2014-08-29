@@ -67,7 +67,7 @@ TowerDefense.Ui = {
         // Display available towers
         $('#build-options').innerHTML = '';
         $('#build-info').innerHTML = '';
-        if (TowerDefense.Element.selectedObject.currentTower.id == null) {
+        if (TowerDefense.selectedObject.currentTower.id == null) {
             TowerDefense.availableTowers.forEach(function(tower, index) {
                 var object = tower.object();
                 var image = '<img class="img-circle" src="assets/towers/' + object.icon +'" />';
@@ -88,7 +88,7 @@ TowerDefense.Ui = {
      * @param index the index of TowerDefense.availableTowers
      */
     selectTower: function (index) {
-        if (TowerDefense.Element == null || TowerDefense.Element.selectedObject == null) {
+        if (TowerDefense.selectedObject.id == null) {
             return;
         }
         var tower = new TowerDefense.availableTowers[index].object;
@@ -105,11 +105,11 @@ TowerDefense.Ui = {
             $('#build-info').innerHTML = 'Select a tower to build.';
             return;
         }
-        if (TowerDefense.Element == null || TowerDefense.Element.selectedObject == null) {
+        if (TowerDefense.selectedObject.id == null) {
             return;
         }
         var tower = new TowerDefense.availableTowers[this.selectedTower].object;
-        tower.create(TowerDefense.Element.selectedObject);
+        tower.create(TowerDefense.selectedObject);
         this.hideBuildMenu();
         TowerDefense.deselectAll();
         TowerDefense.updateEnemyMovements();

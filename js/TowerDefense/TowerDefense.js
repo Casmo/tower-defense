@@ -38,6 +38,11 @@ var TowerDefense = TowerDefense || {
     endTile: {},
 
     /**
+     * Holds the current selected Object
+     */
+    selectedObject: {},
+
+    /**
      * Holds the a* object for calculating paths
      * @todo remove
      */

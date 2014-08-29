@@ -28,6 +28,14 @@ function ajax(url, callback, data, responseType) {
     }
 };
 
+/**
+ * Simplest dom selector. Return one (ore multiple) dom elements. id suppose to be one
+ * dom element while class selector return an array with dom elements.
+ * @param a
+ * @param b
+ * @returns {*} DOM element
+ * @example $('.class-name'); | $('#element-id');
+ */
 var $ = function(
   a, // take a simple selector like "name", "#name", or ".name", and
   b // an optional context, and
@@ -49,6 +57,9 @@ var $ = function(
       )
 }
 
+/**
+ * Allows removing of an dom element by simple calling .remove();
+ */
 Element.prototype.remove = function() {
     this.parentElement.removeChild(this);
 }

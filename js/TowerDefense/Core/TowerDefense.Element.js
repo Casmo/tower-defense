@@ -10,7 +10,8 @@ TowerDefense.Element = function () {
     this.id = TowerDefense.elementCount++;
 
     /**
-     * Type of the current object. e.g. TOWER or ENEMY
+     * Type of the current object. e.g. TOWER or ENEMY. Can be used to handle special
+     * actions.
      * @type {string}
      */
     this.type = '';
@@ -21,7 +22,7 @@ TowerDefense.Element = function () {
     this.object = {};
 
     /**
-     * Current object is selected
+     * Whether this object is selected or not
      * @type {boolean}
      */
     this.selected = false;
@@ -31,11 +32,6 @@ TowerDefense.Element = function () {
      * @type {boolean}
      */
     this.selectable = false;
-
-    /**
-     * Holds the current selected Object
-     */
-    this.selectedObject = {};
 
     /**
      * Holds the tween for animation
