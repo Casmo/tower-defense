@@ -91,12 +91,8 @@ TowerDefense.Enemy.prototype.move = function(result) {
 
     this.path = [];
 
-    var start = TowerDefense.nodes[this.gridPosition.x][this.gridPosition.y];
-    var end = TowerDefense.nodes[TowerDefense.endTile.gridPosition.x][TowerDefense.endTile.gridPosition.y];
-
     var position = { x: this.object.position.x, y: this.object.position.y };
     // Get the 3D position of the current result
-    position.gridPosition = { x: start.x, y: start.y };
     this.path.push(position);
     for (i = 0; i < result.length; i++) {
         position = { x: 0, y: 0 };

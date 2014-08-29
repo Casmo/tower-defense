@@ -3,10 +3,8 @@
  * @url https://developer.mozilla.org/en/docs/Web/Guide/Performance/Using_web_workers
  * @url http://en.wikipedia.org/wiki/A*_search_algorithm
  */
-
 self.addEventListener('message', function(e) {
     var data = e.data; // holds a json object with nodes, start, end
-
     var nodes = [];
     for (var x = 0; x < data.grid.length; x++) {
         nodes[x] = [];
@@ -14,7 +12,6 @@ self.addEventListener('message', function(e) {
             nodes[x][y] = new GraphNode(x, y, data.grid[x][y]);
         }
     }
-//    return self.postMessage(data);
     var result = astar.search(nodes, nodes[data.start.x][data.start.y], nodes[data.end.x][data.end.y]);
     self.postMessage(result);
     self.close();

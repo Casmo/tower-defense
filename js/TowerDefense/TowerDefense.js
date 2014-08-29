@@ -39,20 +39,17 @@ var TowerDefense = TowerDefense || {
      * Holds the a* object for calculating paths
      * @todo remove
      */
-    astar: {},
 
 
     initialize: function() {
 
         TowerDefense.Ui.initialize();
-        this.astar = astar;
 
     },
 
     __addObject: function (object) {
 
         this.objects[object.id] = object;
-        this.setGrid();
 
     },
 
@@ -89,27 +86,6 @@ var TowerDefense = TowerDefense || {
             }
 
         });
-
-    },
-
-    /**
-     * Set the (new) grid to this.grid and initialize the Grid a* module. Towers build on
-     * top of tiles are closed (except for @todo traps).
-     * @todo remove
-     */
-    setGrid: function() {
-
-        if (this.grid.length == 0) {
-            return console.log('Grid is empty.');
-        }
-
-        // Make nodes for astar
-        for (var x = 0; x < this.grid.length; x++) {
-            this.nodes[x] = [];
-            for (var y = 0; y < this.grid[x].length; y++) {
-                this.nodes[x][y] = new GraphNode(x, y, this.grid[x][y].open);
-            }
-        }
 
     },
 
