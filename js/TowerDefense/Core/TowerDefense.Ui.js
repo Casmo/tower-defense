@@ -17,8 +17,8 @@ TowerDefense.Ui = {
 
     initializeControls: function(camera) {
 
-        controls = new THREE.OrbitControls( camera );
-        controls.damping = 0.2;
+        TowerDefense.controls = new THREE.OrbitControls( camera );
+        TowerDefense.controls.damping = 0.2;
 
     },
 

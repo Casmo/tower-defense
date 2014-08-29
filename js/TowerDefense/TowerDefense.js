@@ -14,6 +14,7 @@ var TowerDefense = TowerDefense || {
     camera: {}, // Holds the game camera
     renderer: {}, // Holds the game renderer
     projector: {}, // Holds the Three projector
+    controls: {}, // Hold the controls for camera movement
 
     /**
      * Holds all available towers to build with their info

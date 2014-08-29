@@ -1,4 +1,4 @@
-var controls, gameRender;
+var gameRender;
 
 function render() {
 
