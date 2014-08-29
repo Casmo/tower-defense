@@ -21,7 +21,8 @@ var TowerDefense = TowerDefense || {
      */
     stats: {
         score: 0,
-        resources: 0
+        resources: 0,
+        lives: 50
     },
 
     /**
