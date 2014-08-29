@@ -28,16 +28,30 @@ TowerDefense.Tower.prototype.constructor = TowerDefense.Tower;
 /**
  * Creates a tower and add it to the selected tile object.
  * @param tileObject
- * @returns Three.js mesh
+ * @return boolean if it can be build or the Three.js mesh
  */
 TowerDefense.Tower.prototype.create = function(tileObject) {
 
     if (tileObject == null) {
-        return console.log('Cannot build tower on the selected tile.');
+        console.log('Cannot build tower on the selected tile.');
+        return false;
     }
     if (tileObject.currentTower.id != null) {
-        return console.log('Already tower on this tile.');
+        console.log('Already tower on this tile.');
+        return false;
     }
+
+    if (this.collisionable == true) {
+        // First check if it is allowed...
+        var testGrid = TowerDefense.grid;
+        testGrid[tileObject.gridPosition.x][tileObject.gridPosition.y].open = false;
+        //if (result == '') {
+          //  return false;
+       // }
+        TowerDefense.grid[tileObject.gridPosition.x][tileObject.gridPosition.y].open = false;
+        TowerDefense.gridPath[tileObject.gridPosition.x][tileObject.gridPosition.y] = false;
+    }
+
     this.object = new THREE.Mesh( this.geometry, this.material );
     this.object.receiveShadow = true;
     this.object.castShadow = true;

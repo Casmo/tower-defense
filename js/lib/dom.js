@@ -37,13 +37,11 @@ function ajax(url, callback, data, responseType) {
  * @example $('.class-name'); | $('#element-id');
  */
 var $ = function(
-  a, // take a simple selector like "name", "#name", or ".name", and
-  b // an optional context, and
+  a // take a simple selector like "name", "#name", or ".name", and
   ){
     a = a.match(/^(\W)?(.*)/); // split the selector into name and symbol.
     return( // return an element or list, from within the scope of
-      b // the passed context
-        || document // or document,
+        document // or document,
       )[
       "getElement" + ( // obtained by the appropriate method calculated by
         a[1]

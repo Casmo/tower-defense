@@ -11,7 +11,20 @@ TowerDefense.Ui = {
     initialize: function() {
 
         $('#game').addEventListener('click', this.click, false);
+        window.addEventListener("resize", this.windowResized, false);
         document.addEventListener('keypress', this.keypress, false);
+
+        /**
+         * Updates game stats and related dom elements if they exists.
+         * @todo do this with some sort of data binding attribute.
+         */
+        Object.observe(TowerDefense.stats, function (changes) {
+            changes.forEach(function(change) {
+                if ($('#game-' + change.name) != null) {
+                    $('#game-' + change.name).innerHTML = change.object[change.name];
+                }
+            });
+        });
 
     },
 
@@ -20,6 +33,14 @@ TowerDefense.Ui = {
         TowerDefense.controls = new THREE.OrbitControls( camera );
         TowerDefense.controls.damping = 0.2;
 
+    },
+
+    windowResized: function() {
+        if (TowerDefense.camera.updateProjectionMatrix != null) {
+            TowerDefense.camera.aspect = window.innerWidth / window.innerHeight;
+            TowerDefense.camera.updateProjectionMatrix();
+            TowerDefense.renderer.setSize( window.innerWidth, window.innerHeight );
+        }
     },
 
     click: function(event) {
@@ -70,7 +91,7 @@ TowerDefense.Ui = {
         if (TowerDefense.selectedObject.currentTower.id == null) {
             TowerDefense.availableTowers.forEach(function(tower, index) {
                 var object = tower.object();
-                var image = '<img class="img-circle" src="assets/towers/' + object.icon +'" />';
+                var image = '<img class="img-circle game-stat" src="assets/towers/' + object.icon +'" />';
                 var link = '<a onclick="TowerDefense.Ui.selectTower('+ index +');">'+ image +'</a>';
                 $('#build-options').innerHTML += link;
             });
@@ -109,7 +130,9 @@ TowerDefense.Ui = {
             return;
         }
         var tower = new TowerDefense.availableTowers[this.selectedTower].object;
-        tower.create(TowerDefense.selectedObject);
+        if (tower.create(TowerDefense.selectedObject) === false) {
+            return;
+        }
         this.hideBuildMenu();
         TowerDefense.deselectAll();
         TowerDefense.updateEnemyMovements();

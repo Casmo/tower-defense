@@ -17,6 +17,14 @@ var TowerDefense = TowerDefense || {
     controls: {}, // Hold the controls for camera movement
 
     /**
+     * Object with game stats like score, resources, etc
+     */
+    stats: {
+        score: 0,
+        resources: 0
+    },
+
+    /**
      * Holds all available towers to build with their info
      */
     availableTowers: [
