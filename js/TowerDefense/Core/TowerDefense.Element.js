@@ -55,6 +55,12 @@ TowerDefense.Element.prototype = {
 
     },
 
+    remove: function () {
+
+        TowerDefense.__removeObject(this);
+
+    },
+
     update: function() {
 
     },
@@ -72,6 +78,7 @@ TowerDefense.Element.prototype = {
     deselect: function() {
 
     }
+
 }
 
 TowerDefense.elementCount = 0;

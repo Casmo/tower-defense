@@ -45,6 +45,7 @@ TowerDefense.Tower.prototype.create = function(tileObject) {
 
     if (this.collisionable == true) {
         TowerDefense.grid[tileObject.gridPosition.x][tileObject.gridPosition.y].open = false;
+        TowerDefense.gridPath[tileObject.gridPosition.x][tileObject.gridPosition.y] = false;
     }
     tileObject.object.add(this.object);
     this.add();

@@ -29,7 +29,7 @@ TowerDefense.Enemy = function () {
     this.speed = .5; // number of seconds per tile
     this.material = new THREE.MeshLambertMaterial( { color: 0xff0000 } );
     this.geometry = new THREE.BoxGeometry( .85, .85, 2 );
-
+    this.FindPath = ''; // Holds a Web Worker
 }
 
 TowerDefense.Enemy.prototype = Object.create( TowerDefense.Element.prototype );
@@ -74,17 +74,26 @@ TowerDefense.Enemy.prototype.setPath = function () {
         this.gridPosition.y = TowerDefense.startTile.gridPosition.y;
     }
 
-    var start = TowerDefense.nodes[this.gridPosition.x][this.gridPosition.y];
-    var end = TowerDefense.nodes[TowerDefense.endTile.gridPosition.x][TowerDefense.endTile.gridPosition.y];
-    var result = TowerDefense.astar.search(TowerDefense.nodes, start, end);
+    this.FindPath = new Worker("js/TowerDefense/Core/Worker.PathFinder.js");
+    var self = this;
+    this.FindPath.addEventListener("message", function (oEvent) {
+        self.move(oEvent.data);
+    }, false);
+    this.FindPath.postMessage({grid: TowerDefense.gridPath, start: {x: this.gridPosition.x, y: this.gridPosition.y}, end: {x: TowerDefense.endTile.gridPosition.x, y: TowerDefense.endTile.gridPosition.y}});
 
-    if (result == '') {;
+}
+
+TowerDefense.Enemy.prototype.move = function(result) {
+    if (result == '') {
         console.log('Enemy path cannot be calculated.');
         return false;
     }
 
-    // Add the results into a tween
     this.path = [];
+
+    var start = TowerDefense.nodes[this.gridPosition.x][this.gridPosition.y];
+    var end = TowerDefense.nodes[TowerDefense.endTile.gridPosition.x][TowerDefense.endTile.gridPosition.y];
+
     var position = { x: this.object.position.x, y: this.object.position.y };
     // Get the 3D position of the current result
     position.gridPosition = { x: start.x, y: start.y };
@@ -128,7 +137,7 @@ TowerDefense.Enemy.prototype.update = function() {
 TowerDefense.Enemy.prototype.endPath = function() {
 
     // Fix that only the current enemy will deletes it's tween.
-    this.removeTween();
-    scene.remove(this.object);
+    //this.removeTween();
+    this.remove();
 
 }

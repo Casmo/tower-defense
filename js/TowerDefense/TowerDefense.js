@@ -8,10 +8,11 @@ var TowerDefense = TowerDefense || {
     gameHeight: 480,
     objects: [],
     grid: [], // holds the x, y position of each tile and it's tile object
+    gridPath: [], // holds the x, y position of each tile and a zero (open) or one (closed)
     nodes: [], // Holds the x, y position and GraphNode object,
     scene: {}, // Holds the Three.js scene
     camera: {}, // Holds the game camera
-    renderer: {},
+    renderer: {}, // Holds the game renderer
 
     /**
      * Holds all available towers to build with their info
@@ -36,6 +37,7 @@ var TowerDefense = TowerDefense || {
 
     /**
      * Holds the a* object for calculating paths
+     * @todo remove
      */
     astar: {},
 
@@ -49,8 +51,18 @@ var TowerDefense = TowerDefense || {
 
     __addObject: function (object) {
 
-        this.objects.push(object);
+        this.objects[object.id] = object;
         this.setGrid();
+
+    },
+
+    __removeObject: function (object) {
+
+        if (object.object != null) {
+            TowerDefense.scene.remove(object.object);
+        }
+        delete(this.objects[object.id]);
+        delete(object);
 
     },
 
@@ -83,6 +95,7 @@ var TowerDefense = TowerDefense || {
     /**
      * Set the (new) grid to this.grid and initialize the Grid a* module. Towers build on
      * top of tiles are closed (except for @todo traps).
+     * @todo remove
      */
     setGrid: function() {
 
