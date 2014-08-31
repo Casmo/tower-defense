@@ -233,9 +233,11 @@ TowerDefense.Ui = {
             return;
         }
         var tower = new TowerDefense.availableTowers[this.selectedTower].object;
-        if (tower.create(TowerDefense.selectedObject) === false) {
+        tower.create();
+        if (tower.spawn(TowerDefense.selectedObject) === false) {
             return;
         }
+        tower.add();
         this.hideBuildMenu();
         TowerDefense.deselectAll();
         TowerDefense.updateEnemyMovements();

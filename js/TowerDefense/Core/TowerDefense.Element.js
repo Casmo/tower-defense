@@ -16,6 +16,9 @@ TowerDefense.Element = function () {
      */
     this.type = '';
 
+    this.material = {};
+    this.geometry = {};
+
     /**
      * Holds the 3D (Three) mesh
      */
@@ -45,9 +48,23 @@ TowerDefense.Element.prototype = {
 
     constructor: TowerDefense.Element,
 
+    /**
+     * Creates the three.js mesh with this.material and this.geometry.
+     */
+    create: function() {
+
+    },
+
+    /**
+     * Spawn the object into the game.
+     */
+    spawn: function() {
+
+    },
+
     add: function () {
 
-        TowerDefense.__addObject(this);
+        return TowerDefense.__addObject(this);
 
     },
 

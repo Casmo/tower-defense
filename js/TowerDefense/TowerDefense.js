@@ -76,6 +76,7 @@ var TowerDefense = TowerDefense || {
     __addObject: function (object) {
 
         this.objects[object.id] = object;
+        return true;
 
     },
 

@@ -28,9 +28,25 @@ TowerDefense.Tower.prototype.constructor = TowerDefense.Tower;
 /**
  * Creates a tower and add it to the selected tile object.
  * @param tileObject
- * @return boolean if it can be build or the Three.js mesh
+ * @return the created mesh
  */
-TowerDefense.Tower.prototype.create = function(tileObject) {
+TowerDefense.Tower.prototype.create = function() {
+
+    this.object = new THREE.Mesh( this.geometry, this.material );
+    this.object.receiveShadow = true;
+    this.object.castShadow = true;
+    this.object.position.z = this.position.z;
+    return this.object;
+
+};
+
+/**
+ * Spawns the tower to the selected tileObject
+ * enemies. Traps for example will not close the current grid position.
+ * @param tileObject
+ * @returns boolean
+ */
+TowerDefense.Tower.prototype.spawn = function(tileObject) {
 
     if (tileObject == null) {
         console.log('Cannot build tower on the selected tile.');
@@ -41,30 +57,24 @@ TowerDefense.Tower.prototype.create = function(tileObject) {
         return false;
     }
 
-    if (this.collisionable == true) {
+    // @todo implement this
+    if (false && this.collisionable == true) {
         // First check if it is allowed...
         var testGrid = TowerDefense.grid;
         testGrid[tileObject.gridPosition.x][tileObject.gridPosition.y].open = false;
         //if (result == '') {
-          //  return false;
-       // }
+        //  return false;
+        // }
         TowerDefense.grid[tileObject.gridPosition.x][tileObject.gridPosition.y].open = false;
         TowerDefense.gridPath[tileObject.gridPosition.x][tileObject.gridPosition.y] = false;
     }
-
-    this.object = new THREE.Mesh( this.geometry, this.material );
-    this.object.receiveShadow = true;
-    this.object.castShadow = true;
-    this.object.position.z = this.position.z;
 
     if (this.collisionable == true) {
         TowerDefense.grid[tileObject.gridPosition.x][tileObject.gridPosition.y].open = false;
         TowerDefense.gridPath[tileObject.gridPosition.x][tileObject.gridPosition.y] = false;
     }
     tileObject.object.add(this.object);
-    this.add();
     tileObject.currentTower = this;
+    return true;
 
-    return this.object;
-
-};
+}
