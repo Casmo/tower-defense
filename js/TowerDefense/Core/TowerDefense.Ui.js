@@ -27,7 +27,7 @@ TowerDefense.Ui = {
 
         $('#game').addEventListener('click', this.click, false);
         window.addEventListener("resize", this.windowResized, false);
-        document.addEventListener('keypress', this.keypress, false);
+        document.addEventListener('keyup', this.keyup, false);
 
         /**
          * Updates game stats and related dom elements if they exists.
@@ -91,11 +91,17 @@ TowerDefense.Ui = {
         }
     },
 
-    keypress: function(event) {
-        if (event.keyCode == 49) {
+    keyup: function(event) {
+        var key = event.keyCode || event.which;
+        if (key == KeyEvent.DOM_VK_1) {
             spawnEnemy();
         }
-        console.log('Keycode pressed: ' + event.keyCode);
+        if (key == KeyEvent.DOM_VK_B) {
+            TowerDefense.Ui.buildTower();
+        }
+        if (key == KeyEvent.DOM_VK_C) {
+            TowerDefense.Ui.hideBuildMenu();
+        }
     },
 
     /**
@@ -156,8 +162,8 @@ TowerDefense.Ui = {
         this.scene = new THREE.Scene();
         this.camera = new THREE.PerspectiveCamera( 40, buildSizeWidth / buildSizeHeight, 0.1, 1000 );
         this.camera.position.x = 2.5;
-        this.camera.position.y = -3;
-        this.camera.position.z = .1;
+        this.camera.position.y = -4;
+        this.camera.position.z = 2;
         this.camera.up = new THREE.Vector3(0,0,1);
         this.camera.lookAt(new THREE.Vector3(0,0,0));
         this.renderer = new THREE.WebGLRenderer();
@@ -216,6 +222,16 @@ TowerDefense.Ui = {
                     object.update();
                 }
             });
+            // Update camera
+            var x = this.camera.position.x,
+              y = this.camera.position.y,
+              rotSpeed = .02;
+
+            this.camera.position.x = x * Math.cos(rotSpeed) - y * Math.sin(rotSpeed);
+            this.camera.position.y = y * Math.cos(rotSpeed) + x * Math.sin(rotSpeed);
+
+            this.camera.lookAt(this.scene.position);
+
             this.renderer.render(this.scene, this.camera);
         }
     },

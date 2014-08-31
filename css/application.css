@@ -15,6 +15,15 @@ body {
 a {
     cursor: pointer;
 }
+.key-code {
+    font-style: normal;
+}
+.key-code:before {
+    content: "[";
+}
+.key-code:after {
+    content: "]";
+}
 .inline {
     display: inline-block;
 }
