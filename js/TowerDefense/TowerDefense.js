@@ -6,14 +6,24 @@ var TowerDefense = TowerDefense || {
     __loading: false,
     gameWidth: window.innerWidth,
     gameHeight: window.innerHeight,
+    /**
+     * Holds all the game objects. The .update() function will be called for each main
+     * update.
+     */
     objects: [],
     grid: [], // holds the x, y position of each tile and it's tile object
     gridPath: [], // holds the x, y position of each tile and a zero (open) or one (closed)
     nodes: [], // Holds the x, y position and GraphNode object,
-    scene: {}, // Holds the Three.js scene
-    camera: {}, // Holds the game camera
-    renderer: {}, // Holds the game renderer
-    projector: {}, // Holds the Three projector
+
+    /**
+     * Holds THREE.js objects for rendering the WebGL canvas such as scene, camera and
+     * projector for the game.
+     */
+    scene: {},
+    camera: {},
+    renderer: {},
+    projector: {},
+
     controls: {}, // Hold the controls for camera movement
 
     /**
@@ -88,6 +98,8 @@ var TowerDefense = TowerDefense || {
         });
 
         TWEEN.update();
+
+        TowerDefense.Ui.update();
 
     },
 

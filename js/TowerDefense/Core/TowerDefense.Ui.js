@@ -6,6 +6,21 @@ TowerDefense.Ui = {
     selectedTower: null,
 
     /**
+     * Holds THREE.js objects for rendering the WebGL canvas such as scene, camera for the
+     * menu.
+     */
+    scene: {},
+    camera: {},
+    renderer: {},
+    projector: {},
+
+    /**
+     * Holds all the game objects. The .update() function will be called for each main
+     * update.
+     */
+    objects: [],
+
+    /**
      * Callback after the game is started.
      */
     initialize: function() {
@@ -40,6 +55,8 @@ TowerDefense.Ui = {
             TowerDefense.camera.aspect = window.innerWidth / window.innerHeight;
             TowerDefense.camera.updateProjectionMatrix();
             TowerDefense.renderer.setSize( window.innerWidth, window.innerHeight );
+            TowerDefense.gameWidth = window.innerWidth;
+            TowerDefense.gameHeight = window.innerHeight;
         }
     },
 
@@ -85,7 +102,10 @@ TowerDefense.Ui = {
      * Displays available towers to place on the selected tile
      */
     showBuildMenu: function() {
-        // Display available towers
+        $('#build-menu').style.display = 'block';
+        this.createScene();
+        this.clearScene();
+
         $('#build-options').innerHTML = '';
         $('#build-info').innerHTML = '';
         if (TowerDefense.selectedObject.currentTower.id == null) {
@@ -96,7 +116,6 @@ TowerDefense.Ui = {
                 $('#build-options').innerHTML += link;
             });
         }
-        $('#build-menu').style.display = 'block';
     },
 
     hideBuildMenu: function() {
@@ -112,9 +131,93 @@ TowerDefense.Ui = {
         if (TowerDefense.selectedObject.id == null) {
             return;
         }
+        this.clearScene();
         var tower = new TowerDefense.availableTowers[index].object;
+        var object = new THREE.Mesh( tower.geometry, tower.material );
+        this.objects.push(object);
+        this.scene.add(object);
+
         $('#build-info').innerHTML = tower.description;
         this.selectedTower = index;
+    },
+
+    /**
+     * Creates the scene for the build menu where selected towers will be placed.
+     */
+    createScene: function() {
+        if (this.scene.id  != null) {
+            return;
+        }
+        var buildSizeWidth = $('#build-canvas').clientWidth;
+        if (buildSizeWidth < 200) {
+            buildSizeWidth = 200;
+        }
+        var buildSizeHeight = buildSizeWidth / 16 * 9;
+        this.scene = new THREE.Scene();
+        this.camera = new THREE.PerspectiveCamera( 40, buildSizeWidth / buildSizeHeight, 0.1, 1000 );
+        this.camera.position.x = 2.5;
+        this.camera.position.y = -3;
+        this.camera.position.z = .1;
+        this.camera.up = new THREE.Vector3(0,0,1);
+        this.camera.lookAt(new THREE.Vector3(0,0,0));
+        this.renderer = new THREE.WebGLRenderer();
+        this.renderer.setSize( buildSizeWidth, buildSizeHeight );
+
+        this.renderer.shadowMapEnabled = true;
+        this.renderer.shadowMapSoft = true;
+
+        this.renderer.shadowCameraNear = 3;
+        this.renderer.shadowCameraFar = TowerDefense.camera.far;
+        this.renderer.shadowCameraFov = 50;
+
+        this.renderer.shadowMapBias = 0.0039;
+        this.renderer.shadowMapDarkness = 0.5;
+        this.renderer.shadowMapWidth = 1024;
+        this.renderer.shadowMapHeight = 1024;
+
+        // Light
+        var light = new THREE.PointLight( 0xffffff );
+        light.position.x = 1;
+        light.position.y = 1;
+        light.position.z = 2;
+        this.scene.add(light);
+
+        var hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 );
+        hemiLight.color.setHSL( 0.6, 1, 0.6 );
+        hemiLight.groundColor.setHSL( 0.095, 1, 0.75 );
+        hemiLight.position.set( 0, 500, 0 );
+        this.scene.add( hemiLight );
+
+        $('#build-canvas').innerHTML = '';
+        $('#build-canvas').appendChild( this.renderer.domElement );
+    },
+
+    /**
+     * Clears all objects from a scene
+     * @param scene (optional) the scene to clear. Will use this.scene by default
+     */
+    clearScene: function(scene) {
+        if (scene == null && this.scene != null && this.scene.id != null) {
+            scene = this.scene;
+        }
+        if (scene == null || scene.id == null) {
+            return;
+        }
+        var self = this;
+        this.objects.forEach(function (object) {
+            self.scene.remove(object);
+        });
+    },
+
+    update: function() {
+        if (this.scene.id != null) {
+            this.objects.forEach(function(object) {
+                if (typeof object.update == 'function') {
+                    object.update();
+                }
+            });
+            this.renderer.render(this.scene, this.camera);
+        }
     },
 
     /**

@@ -18,6 +18,9 @@ a {
 .inline {
     display: inline-block;
 }
+.top-buffer {
+    margin-top: 20px;
+}
 .game-stat {
     margin-left: 10px;
     padding: 5px;
@@ -34,6 +37,7 @@ a {
     background-image: url(../assets/ui/dark-wood.png);
 }
 #build-menu {
+    width: 100%;
     min-height: 188px;
     border-top: 5px solid rgba(0,0,0,.5);
     padding: 20px 0;
