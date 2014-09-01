@@ -41,15 +41,58 @@ function newGame() {
     TowerDefense.projector = new THREE.Projector();
     cancelAnimationFrame(gameRender);
     $('#game').innerHTML = '';
-    $('#game').appendChild( TowerDefense.renderer.domElement );
-    level1();
-    render();
-    TowerDefense.Ui.initializeControls(TowerDefense.camera);
+    preloadLevel1(
+      function() {
+          level1();
+          $('#game').appendChild( TowerDefense.renderer.domElement );
+          render();
+          TowerDefense.Ui.initializeControls(TowerDefense.camera);
+      }
+    );
+}
+
+/**
+ * Preloads all objects for level 1
+ * @param callback function
+ * @todo make it more OO
+ */
+function preloadLevel1(callback) {
+
+    TowerDefense.meshObjects = [
+        {
+            'key': 'tower-01',
+            'file': 'assets/towers/tower-01.obj'
+        },
+        {
+            'key': 'tower-02',
+            'file': 'assets/towers/tower-02.obj'
+        },
+        {
+            'key': 'tower-03',
+            'file': 'assets/towers/tower-03.obj'
+        }
+    ];
+    TowerDefense.meshTextures = [
+        {
+            'key': 'tower-01',
+            'file': 'assets/towers/tower-01.jpg'
+        },
+        {
+            'key': 'tower-02',
+            'file': 'assets/towers/tower-02.jpg'
+        },
+        {
+            'key': 'tower-03',
+            'file': 'assets/towers/tower-03.jpg'
+        }
+    ];
+    TowerDefense.loadObjects(callback);
 
 }
 
 /**
  * Creates level 1
+ * @todo make it OO
  */
 function level1() {
     var sizeX = 10;
@@ -93,8 +136,8 @@ function level1() {
     dirLight.position.set( -1, 1.75, 1 );
     dirLight.position.multiplyScalar( 50 );
     TowerDefense.scene.add( dirLight );
-
     spawnDummy();
+
 }
 
 function spawnDummy() {

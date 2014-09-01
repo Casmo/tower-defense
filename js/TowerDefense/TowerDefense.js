@@ -23,8 +23,12 @@ var TowerDefense = TowerDefense || {
     camera: {},
     renderer: {},
     projector: {},
+    manager: {}, // Holds three js loading manager
 
     controls: {}, // Hold the controls for camera movement
+
+    meshObjects: [], // List with key => array(file, key, mesh)
+    meshTextures: [], // list with key => array(file, key, texture)
 
     /**
      * Object with game stats like score, resources, etc
@@ -70,6 +74,69 @@ var TowerDefense = TowerDefense || {
     initialize: function() {
 
         TowerDefense.Ui.initialize();
+
+        this.manager = new THREE.LoadingManager();
+        this.onProgress = function ( item, loaded, total ) {
+
+            TowerDefense.Ui.loadingProgress(item, loaded, total);
+
+        };
+
+    },
+
+    /**
+     * Loops throught this.meshObjects and this.meshTextures and loads (and fills) the
+     * files.
+     * @param callback
+     */
+    loadObjects: function(callback) {
+
+        var meshLoader = new THREE.OBJLoader( this.manager );
+        var textureLoader = new THREE.ImageLoader( this.manager );
+
+        var totalLoaded = 0;
+
+        this.meshObjects.forEach (function (mesh) {
+            var key = mesh.key;
+            if (TowerDefense.meshObjects[key] == null) {
+                TowerDefense.meshObjects[key] = {};
+            }
+            if (mesh.object == null || mesh.object == '') {
+                totalLoaded++;
+                TowerDefense.meshObjects[key].object = '';
+                meshLoader.load( mesh.file, function ( object ) {
+                    TowerDefense.meshObjects[key].object = object.children[0];
+                    totalLoaded--;
+                    finishedLoading();
+                } );
+            }
+        });
+
+        this.meshTextures.forEach (function (texture) {
+            var key = texture.key;
+            if (TowerDefense.meshTextures[key] == null) {
+                TowerDefense.meshTextures[key] = {};
+            }
+            if (texture.texture == null || texture.texture == '') {
+                totalLoaded++;
+                TowerDefense.meshTextures[key].texture = new THREE.Texture();
+                textureLoader.load( texture.file, function ( image ) {
+
+                    TowerDefense.meshTextures[key].texture.image = image;
+                    TowerDefense.meshTextures[key].texture.needsUpdate = true;
+
+                    totalLoaded--;
+                    finishedLoading();
+                } );
+            }
+        });
+
+        var finishedLoading = function() {
+            if (totalLoaded <= 0 && typeof callback == 'function') {
+                callback();
+            }
+
+        }
 
     },
 

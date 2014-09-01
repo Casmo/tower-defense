@@ -104,6 +104,12 @@ TowerDefense.Ui = {
         }
     },
 
+    loadingProgress: function (item, loaded, total) {
+
+        console.log(item, loaded, total);
+
+    },
+
     /**
      * Displays available towers to place on the selected tile
      */
@@ -145,6 +151,44 @@ TowerDefense.Ui = {
 
         $('#build-info').innerHTML = tower.description;
         this.selectedTower = index;
+    },
+
+//    selectTower: function (index) {
+//        if (TowerDefense.selectedObject.id == null) {
+//            return;
+//        }
+//        this.clearScene();
+//        var tower = new TowerDefense.availableTowers[index].object();
+//        tower.create();
+//        this.objects.push(tower);
+//        this.scene.add(tower.object);
+//
+//        $('#build-info').innerHTML = tower.description;
+//        this.selectedTower = index;
+//    },
+
+    /**
+     * Creates a new tower on the selected tile. Returns false if the tower is failed to
+     * build.
+     */
+    buildTower: function () {
+        if (this.selectedTower == null) {
+            $('#build-info').innerHTML = 'Select a tower to build.';
+            return;
+        }
+        if (TowerDefense.selectedObject.id == null) {
+            return;
+        }
+        var tower = new TowerDefense.availableTowers[this.selectedTower].object;
+        tower.create();
+        if (tower.spawn(TowerDefense.selectedObject) === false) {
+            return;
+        }
+        tower.add();
+        this.hideBuildMenu();
+        TowerDefense.deselectAll();
+        TowerDefense.updateEnemyMovements();
+        this.selectedTower = null;
     },
 
     /**
@@ -234,30 +278,6 @@ TowerDefense.Ui = {
 
             this.renderer.render(this.scene, this.camera);
         }
-    },
-
-    /**
-     * Creates a new tower on the selected tile. Returns false if the tower is failed to
-     * build.
-     */
-    buildTower: function () {
-        if (this.selectedTower == null) {
-            $('#build-info').innerHTML = 'Select a tower to build.';
-            return;
-        }
-        if (TowerDefense.selectedObject.id == null) {
-            return;
-        }
-        var tower = new TowerDefense.availableTowers[this.selectedTower].object;
-        tower.create();
-        if (tower.spawn(TowerDefense.selectedObject) === false) {
-            return;
-        }
-        tower.add();
-        this.hideBuildMenu();
-        TowerDefense.deselectAll();
-        TowerDefense.updateEnemyMovements();
-        this.selectedTower = null;
     }
 
 }

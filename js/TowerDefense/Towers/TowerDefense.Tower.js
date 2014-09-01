@@ -26,21 +26,6 @@ TowerDefense.Tower.prototype = Object.create( TowerDefense.Element.prototype );
 TowerDefense.Tower.prototype.constructor = TowerDefense.Tower;
 
 /**
- * Creates a tower and add it to the selected tile object.
- * @param tileObject
- * @return the created mesh
- */
-TowerDefense.Tower.prototype.create = function() {
-
-    this.object = new THREE.Mesh( this.geometry, this.material );
-    this.object.receiveShadow = true;
-    this.object.castShadow = true;
-    this.object.position.z = this.position.z;
-    return this.object;
-
-};
-
-/**
  * Spawns the tower to the selected tileObject
  * enemies. Traps for example will not close the current grid position.
  * @param tileObject
