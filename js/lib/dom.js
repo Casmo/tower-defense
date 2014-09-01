@@ -1,3 +1,10 @@
+if (typeof Object.observe == "undefined") {
+    Object.prototype.observe = function() {
+        console.warn('Observe not supported by current browser.');
+        return false;
+    }
+}
+
 if (typeof KeyEvent == "undefined") {
     var KeyEvent = {
         DOM_VK_CANCEL: 3,
