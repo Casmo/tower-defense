@@ -71,6 +71,7 @@ TowerDefense.Element.prototype = {
             );
 
         }
+        this.geometry.computeVertexNormals();
 
         this.object = new THREE.Mesh( this.geometry, this.material );
         this.object.rotation.x = this.rotation.x;
