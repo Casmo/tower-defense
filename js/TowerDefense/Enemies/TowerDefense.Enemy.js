@@ -67,6 +67,10 @@ TowerDefense.Enemy.prototype.setPath = function () {
 
     this.removeTween();
     // Set the path from the current position (x, y) to the end position (x,y)
+    if (typeof this.gridPosition == 'undefined') {
+        console.log(this);
+        this.gridPosition = { x: -1, y: -1 };
+    }
     if (this.gridPosition.x == -1) {
         this.gridPosition.x = TowerDefense.startTile.gridPosition.x;
     }
