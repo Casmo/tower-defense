@@ -161,9 +161,12 @@ var TowerDefense = TowerDefense || {
 
         // Loop through already placed objects and updates them if needed for the lights.
         // https://github.com/mrdoob/three.js/wiki/Updates#materials
+        // @todo improve speed
         this.objects.forEach( function (object) {
-            if (object.material != null && object.material.map != null && object.material.map.needsUpdate == false) {
+            if (object.material != null) {
                 object.material.needsUpdate = true;
+            }
+            if (object.material.map != null) {
                 object.material.map.needsUpdate = true;
             }
         });

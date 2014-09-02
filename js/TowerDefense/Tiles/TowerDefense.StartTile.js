@@ -14,3 +14,6 @@ TowerDefense.StartTile.prototype = Object.create( TowerDefense.Tile.prototype );
 TowerDefense.StartTile.prototype.select = function() {
     return false;
 }
+TowerDefense.StartTile.prototype.deselect = function() {
+    return false;
+}

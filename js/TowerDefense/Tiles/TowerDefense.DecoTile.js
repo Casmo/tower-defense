@@ -6,8 +6,8 @@ TowerDefense.DecoTile = function () {
 
     TowerDefense.Tile.call( this );
     this.meshTexture = 'level-01';
-    this.geometry = new THREE.PlaneGeometry( 100, 100);
-    this.position = { x: 0, y: 0, z: -.1 };
+    this.geometry = new THREE.BoxGeometry( 100, 100, 1);
+    this.position = { x: 0, y: 0, z: -.6 };
     this.selectable = false;
 
 }

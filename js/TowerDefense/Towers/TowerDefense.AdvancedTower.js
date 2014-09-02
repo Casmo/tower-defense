@@ -25,12 +25,12 @@ TowerDefense.AdvancedTower.prototype.create = function () {
     // Add lights
     if (TowerDefense.settings.advancedLight == true) {
         var lightHeight = 2.1;
-        var light1 = new THREE.PointLight( 0xfffbd3,1.5, 12), light2, light3, light4, light5, light6;
+        var light1 = new THREE.PointLight( 0xfffbd3,1.5, 15), light2, light3, light4, light5, light6;
         light1.position.x = -1;
         light1.position.y = lightHeight;
         light1.position.z = 2.8;
         if (TowerDefense.settings.debug == true) {
-            light1.add(new THREE.Mesh (new THREE.BoxGeometry(.1,.1,.1), new THREE.MeshBasicMaterial ({color: 0xff0000 })));
+            light1.add(new THREE.Mesh (new THREE.BoxGeometry(.1,.1,.1), new THREE.MeshBasicMaterial ({color: 0xff9900})));
         }
         light2 = light1.clone();
         light3 = light1.clone();

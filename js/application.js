@@ -121,18 +121,20 @@ function level1() {
             tile.gridPosition = { x: x, y: y };
             TowerDefense.grid[x][y] = tile;
             TowerDefense.gridPath[x][y] = tile.open;
-            var mesh = tile.create();
+            tile.create();
+            tile.add();
             var positionX = -(sizeX * tile.squareSize / 2) + (i * Math.round(tile.squareSize));
             var positionY = -(sizeY * tile.squareSize / 2) + (j * Math.round(tile.squareSize));
-            mesh.position.x = positionX;
-            mesh.position.y = positionY;
-            TowerDefense.scene.add(mesh);
+            tile.object.position.x = positionX;
+            tile.object.position.y = positionY;
+            TowerDefense.scene.add(tile.object);
         }
     }
 
     var decoTile = new TowerDefense.DecoTile();
-    var mesh = decoTile.create();
-    TowerDefense.scene.add(mesh);
+    decoTile.create();
+    decoTile.add();
+    TowerDefense.scene.add(decoTile.object);
     var hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.3 );
     hemiLight.color.setHSL( 0.6, 1, 0.3 );
     hemiLight.groundColor.setHSL( 0.095, 1, 0.75 );
