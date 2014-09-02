@@ -61,6 +61,7 @@ TowerDefense.Element.prototype = {
             var refObject = TowerDefense.meshObjects[this.meshObject];
             this.geometry = refObject.object.geometry;
         }
+
         if (this.meshTexture != null && this.meshTexture != '') {
             var refObject = TowerDefense.meshTextures[this.meshTexture];
             this.material = new THREE.MeshLambertMaterial(

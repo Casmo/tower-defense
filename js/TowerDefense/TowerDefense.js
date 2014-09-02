@@ -76,7 +76,7 @@ var TowerDefense = TowerDefense || {
         TowerDefense.Ui.initialize();
 
         this.manager = new THREE.LoadingManager();
-        this.onProgress = function ( item, loaded, total ) {
+        this.manager.onProgress = function ( item, loaded, total ) {
 
             TowerDefense.Ui.loadingProgress(item, loaded, total);
 

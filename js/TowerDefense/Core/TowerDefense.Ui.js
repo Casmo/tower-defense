@@ -122,7 +122,7 @@ TowerDefense.Ui = {
         $('#build-info').innerHTML = '';
         if (TowerDefense.selectedObject.currentTower.id == null) {
             TowerDefense.availableTowers.forEach(function(tower, index) {
-                var object = tower.object();
+                var object = new TowerDefense.BasicTower();
                 var image = '<img class="img-circle game-stat" src="assets/towers/' + object.icon +'" />';
                 var link = '<a onclick="TowerDefense.Ui.selectTower('+ index +');">'+ image +'</a>';
                 $('#build-options').innerHTML += link;
@@ -144,28 +144,14 @@ TowerDefense.Ui = {
             return;
         }
         this.clearScene();
-        var tower = new TowerDefense.availableTowers[index].object;
-        var object = new THREE.Mesh( tower.geometry, tower.material );
-        this.objects.push(object);
-        this.scene.add(object);
+        var tower = new TowerDefense.BasicTower();
+//        tower.create();
+//        this.objects.push(tower);
+//        this.scene.add(tower.object);
 
         $('#build-info').innerHTML = tower.description;
         this.selectedTower = index;
     },
-
-//    selectTower: function (index) {
-//        if (TowerDefense.selectedObject.id == null) {
-//            return;
-//        }
-//        this.clearScene();
-//        var tower = new TowerDefense.availableTowers[index].object();
-//        tower.create();
-//        this.objects.push(tower);
-//        this.scene.add(tower.object);
-//
-//        $('#build-info').innerHTML = tower.description;
-//        this.selectedTower = index;
-//    },
 
     /**
      * Creates a new tower on the selected tile. Returns false if the tower is failed to
@@ -179,7 +165,8 @@ TowerDefense.Ui = {
         if (TowerDefense.selectedObject.id == null) {
             return;
         }
-        var tower = new TowerDefense.availableTowers[this.selectedTower].object;
+        this.clearScene();
+        var tower = new TowerDefense.BasicTower();
         tower.create();
         if (tower.spawn(TowerDefense.selectedObject) === false) {
             return;
@@ -253,9 +240,8 @@ TowerDefense.Ui = {
         if (scene == null || scene.id == null) {
             return;
         }
-        var self = this;
         this.objects.forEach(function (object) {
-            self.scene.remove(object);
+            scene.remove(object.object);
         });
     },
 
