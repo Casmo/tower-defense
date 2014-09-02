@@ -106,6 +106,32 @@ TowerDefense.Ui = {
 
     loadingProgress: function (item, loaded, total) {
 
+//        .loading-container {
+//            position: absolute;
+//            z-index: 1000;
+//            bottom: 0;
+//            width: 100%;
+//            height: 32px;
+//            line-height: 32px;
+//        }
+//        .loading-container #loading {
+        if (loaded < total) {
+            if (this.loadingFadeout != null) {
+                clearTimeout(this.loadingFadeout);
+            }
+            var percent = 100 / total * loaded;
+            console.log(percent);
+            $('#loading-container').style.display = 'block';
+            $('#loading').style.width = percent +'%';
+            $('#loading').innerHTML = item;
+        }
+        else {
+            $('#loading').style.width = '100%';
+            this.loadingFadeout = setTimeout(function() {
+                $('#loading-container').style.display = 'none';
+            }, 1000);
+
+        }
         console.log(item, loaded, total);
 
     },
@@ -144,7 +170,7 @@ TowerDefense.Ui = {
             return;
         }
         this.clearScene();
-        var tower = new TowerDefense.BasicTower();
+        var tower = TowerDefense.availableTowers[index].object();
 //        tower.create();
 //        this.objects.push(tower);
 //        this.scene.add(tower.object);
@@ -166,7 +192,7 @@ TowerDefense.Ui = {
             return;
         }
         this.clearScene();
-        var tower = new TowerDefense.BasicTower();
+        var tower = TowerDefense.availableTowers[this.selectedTower].object();
         tower.create();
         if (tower.spawn(TowerDefense.selectedObject) === false) {
             return;
@@ -246,6 +272,7 @@ TowerDefense.Ui = {
     },
 
     update: function() {
+        return; // @todo remove when WebGL can share resources over multiple context
         if (this.scene.id != null) {
             this.objects.forEach(function(object) {
                 if (typeof object.update == 'function') {

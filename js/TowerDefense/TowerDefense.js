@@ -45,6 +45,12 @@ var TowerDefense = TowerDefense || {
     availableTowers: [
         {
             object: function() { return new TowerDefense.BasicTower(); }
+        },
+        {
+            object: function() { return new TowerDefense.AdvancedTower(); }
+        },
+        {
+            object: function() { return new TowerDefense.BadAssTower(); }
         }
     ],
 
