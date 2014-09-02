@@ -12,6 +12,5 @@ TowerDefense.StartTile = function () {
 TowerDefense.StartTile.prototype = Object.create( TowerDefense.Tile.prototype );
 
 TowerDefense.StartTile.prototype.select = function() {
-    TowerDefense.Ui.hideBuildMenu();
     return false;
 }

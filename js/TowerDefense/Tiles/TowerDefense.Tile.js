@@ -3,9 +3,9 @@ TowerDefense.Tile = function () {
     TowerDefense.Element.call( this );
     this.position = { x: 0, y: 0, z: 0 };
     this.gridPosition = { x: 0, y: 0 };
-    this.material = new THREE.MeshLambertMaterial( { color: 0x5e370e } );
-    this.squareSize = 7.9;
-    this.geometry = new THREE.BoxGeometry( this.squareSize, this.squareSize, (this.squareSize / 10) );
+    this.material = new THREE.MeshBasicMaterial( { color: 0xffffff, transparent: true, opacity:.05 } );
+    this.squareSize = 8.9;
+    this.geometry = new THREE.PlaneGeometry( this.squareSize, this.squareSize);
     this.selectable = true;
     this.open = true; // open or closed for enemy traffic
     this.currentTower = {}; // Object with the current tower
@@ -16,14 +16,12 @@ TowerDefense.Tile.prototype = Object.create( TowerDefense.Element.prototype );
 TowerDefense.Tile.prototype.constructor = TowerDefense.Tile;
 
 /**
- * @todo remove the .add function here.
+ * @todo remove the .add function here. Use Element.create instead.
  * @returns {THREE.Mesh|*}
  */
 TowerDefense.Tile.prototype.create = function() {
 
-    this.object = new THREE.Mesh( this.geometry, this.material );
-    this.object.receiveShadow = true;
-    this.object.position = this.position;
+    TowerDefense.Element.prototype.create.call(this);
     this.add();
     return this.object;
 
@@ -40,7 +38,7 @@ TowerDefense.Tile.prototype.select = function() {
 TowerDefense.Tile.prototype.deselect = function() {
 
     this.object.rotation.z = 0;
-    this.object.position.z = 0;
+    this.object.position.z = this.position.z;
     this.selected = false;
 
 };

@@ -69,7 +69,6 @@ TowerDefense.Element.prototype = {
                   map: refObject.texture
               }
             );
-
         }
         this.geometry.computeVertexNormals();
 

@@ -18,9 +18,9 @@ function newGame() {
 
     TowerDefense.scene = new THREE.Scene();
     TowerDefense.camera = new THREE.PerspectiveCamera( 40, TowerDefense.gameWidth / TowerDefense.gameHeight, 0.1, 1000 );
-    TowerDefense.camera.position.x = 10;
-    TowerDefense.camera.position.y = -10;
-    TowerDefense.camera.position.z = 20;
+    TowerDefense.camera.position.x = 60;
+    TowerDefense.camera.position.y = -110;
+    TowerDefense.camera.position.z = 80;
     TowerDefense.camera.up = new THREE.Vector3(0,0,1);
     TowerDefense.camera.lookAt(new THREE.Vector3(0,0,0));
     TowerDefense.renderer = new THREE.WebGLRenderer();
@@ -84,6 +84,10 @@ function preloadLevel1(callback) {
         {
             'key': 'tower-03',
             'file': 'assets/towers/tower-03.jpg'
+        },
+        {
+            'key': 'level-01',
+            'file': 'assets/levels/level-01.jpg'
         }
     ];
     TowerDefense.loadObjects(callback);
@@ -118,13 +122,17 @@ function level1() {
             TowerDefense.grid[x][y] = tile;
             TowerDefense.gridPath[x][y] = tile.open;
             var mesh = tile.create();
-            var positionX = -(sizeX / 2) + (i * Math.round(tile.squareSize));
-            var positionY = -(sizeY / 2) + (j * Math.round(tile.squareSize));
+            var positionX = -(sizeX * tile.squareSize / 2) + (i * Math.round(tile.squareSize));
+            var positionY = -(sizeY * tile.squareSize / 2) + (j * Math.round(tile.squareSize));
             mesh.position.x = positionX;
             mesh.position.y = positionY;
             TowerDefense.scene.add(mesh);
         }
     }
+
+    var decoTile = new TowerDefense.DecoTile();
+    var mesh = decoTile.create();
+    TowerDefense.scene.add(mesh);
     var hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 );
     hemiLight.color.setHSL( 0.6, 1, 0.6 );
     hemiLight.groundColor.setHSL( 0.095, 1, 0.75 );

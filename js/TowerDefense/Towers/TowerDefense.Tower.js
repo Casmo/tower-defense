@@ -25,6 +25,12 @@ TowerDefense.Tower.prototype = Object.create( TowerDefense.Element.prototype );
 
 TowerDefense.Tower.prototype.constructor = TowerDefense.Tower;
 
+TowerDefense.Tower.prototype.create = function () {
+
+    TowerDefense.Element.prototype.create.call(this);
+
+}
+
 /**
  * Spawns the tower to the selected tileObject
  * enemies. Traps for example will not close the current grid position.
