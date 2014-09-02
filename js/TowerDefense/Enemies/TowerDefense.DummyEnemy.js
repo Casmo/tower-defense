@@ -9,13 +9,11 @@ TowerDefense.DummyEnemy = function () {
     this.isDummy = true;
     TowerDefense.Enemy.call( this );
     this.speed = .1;
-    this.geometry = new THREE.SphereGeometry( 0.5, 16, 16 );
-    this.material = new THREE.MeshBasicMaterial( { color: 0xff0040 } );
+    this.geometry = new THREE.SphereGeometry(.5, 16, 8 );
 
 }
 
 TowerDefense.DummyEnemy.prototype = Object.create( TowerDefense.Enemy.prototype );
-
 
 TowerDefense.DummyEnemy.prototype.endPath = function() {
     this.reset();

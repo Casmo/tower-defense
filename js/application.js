@@ -133,13 +133,13 @@ function level1() {
     var decoTile = new TowerDefense.DecoTile();
     var mesh = decoTile.create();
     TowerDefense.scene.add(mesh);
-    var hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 );
-    hemiLight.color.setHSL( 0.6, 1, 0.6 );
+    var hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.3 );
+    hemiLight.color.setHSL( 0.6, 1, 0.3 );
     hemiLight.groundColor.setHSL( 0.095, 1, 0.75 );
     hemiLight.position.set( 0, 500, 0 );
     TowerDefense.scene.add( hemiLight );
 
-    var dirLight = new THREE.DirectionalLight( 0xffffff, 1 );
+    var dirLight = new THREE.DirectionalLight( 0xffffff,.5 );
     dirLight.color.setHSL( 0.1, 1, 0.95 );
     dirLight.position.set( -1, 1.75, 1 );
     dirLight.position.multiplyScalar( 50 );

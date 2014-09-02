@@ -35,7 +35,7 @@ var TowerDefense = TowerDefense || {
      */
     settings: {
 
-        debug: true,
+        debug: false,
         advancedLight: true,
         advancedMaterials: true
 
