@@ -31,6 +31,17 @@ var TowerDefense = TowerDefense || {
     meshTextures: [], // list with key => array(file, key, texture)
 
     /**
+     * Settings for the game/objects
+     */
+    settings: {
+
+        debug: false,
+        advancedLight: true,
+        advancedMaterials: true
+
+    },
+
+    /**
      * Object with game stats like score, resources, etc
      */
     stats: {
