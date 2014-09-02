@@ -23,51 +23,34 @@ TowerDefense.AdvancedTower.prototype.create = function () {
     TowerDefense.Tower.prototype.create.call(this);
 
     // Add lights
-    // @todo settings check
-    var lightHeight = 2.1;
-    var light1 = new THREE.PointLight( 0xffffff,1.5, 15 );
-    light1.position.x = -1;
-    light1.position.y = lightHeight;
-    light1.position.z = 2.8;
-    light1.add(new THREE.Mesh (new THREE.BoxGeometry(.1,.1,.1), new THREE.MeshBasicMaterial ({color: 0xff9900 })));
+    if (TowerDefense.settings.advancedLight == true) {
+        var lightHeight = 2.1;
+        var light1 = new THREE.PointLight( 0xffffff,1.5, 15), light2, light3, light4, light5, light6;
+        light1.position.x = -1;
+        light1.position.y = lightHeight;
+        light1.position.z = 2.8;
+        if (TowerDefense.settings.debug == true) {
+            light1.add(new THREE.Mesh (new THREE.BoxGeometry(.1,.1,.1), new THREE.MeshBasicMaterial ({color: 0xff9900 })));
+        }
+        light2 = light1.clone();
+        light3 = light1.clone();
+        light4 = light1.clone();
+        light5 = light1.clone();
+        light6 = light1.clone();
 
-    var light2 = new THREE.PointLight( 0xffffff,1.5, 15 );
-    light2.position.x = -1;
-    light2.position.y = lightHeight;
-    light2.position.z = -2.8;
-    light2.add(new THREE.Mesh (new THREE.BoxGeometry(.1,.1,.1), new THREE.MeshBasicMaterial ({color: 0xff9900 })));
+        light2.position.x = -1;
+        light2.position.z = -2.8;
+        light3.position.x = -3.5;
+        light3.position.z = -1.5;
+        light4.position.x = -3.5;
+        light4.position.z = 1.5;
+        light5.position.x = 1.5;
+        light5.position.z = -1.5;
+        light6.position.x = 1.5;
+        light6.position.z = 1.5;
 
-    var light3 = new THREE.PointLight( 0xffffff,1.5, 15 );
-    light3.position.x = -3.5;
-    light3.position.y = lightHeight;
-    light3.position.z = -1.5;
-    light3.add(new THREE.Mesh (new THREE.BoxGeometry(.1,.1,.1), new THREE.MeshBasicMaterial ({color: 0xff9900 })));
-
-    var light4 = new THREE.PointLight( 0xffffff,1.5, 15 );
-    light4.position.x = -3.5;
-    light4.position.y = lightHeight;
-    light4.position.z = 1.5;
-    light4.add(new THREE.Mesh (new THREE.BoxGeometry(.1,.1,.1), new THREE.MeshBasicMaterial ({color: 0xff9900 })));
-
-    var light5 = new THREE.PointLight( 0xffffff,1.5, 15 );
-    light5.position.x = 1.5;
-    light5.position.y = lightHeight;
-    light5.position.z = -1.5;
-    light5.add(new THREE.Mesh (new THREE.BoxGeometry(.1,.1,.1), new THREE.MeshBasicMaterial ({color: 0xff9900 })));
-
-    var light6 = new THREE.PointLight( 0xffffff,1.5, 15 );
-    light6.position.x = 1.5;
-    light6.position.y = lightHeight;
-    light6.position.z = 1.5;
-    light6.add(new THREE.Mesh (new THREE.BoxGeometry(.1,.1,.1), new THREE.MeshBasicMaterial ({color: 0xff9900 })));
-
-
-    this.object.add( light1 );
-    this.object.add( light2 );
-    this.object.add( light3 );
-    this.object.add( light4 );
-    this.object.add( light5 );
-    this.object.add( light6 );
+        this.object.add( light1, light2, light3, light4, light5, light6 );
+    }
 
     return this.object;
 
