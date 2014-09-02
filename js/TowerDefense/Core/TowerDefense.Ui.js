@@ -79,12 +79,13 @@ TowerDefense.Ui = {
             TowerDefense.projector.unprojectVector(vector, TowerDefense.camera);
             var ray = new THREE.Raycaster(TowerDefense.camera.position, vector.sub(TowerDefense.camera.position).normalize());
             var intersects = ray.intersectObjects(objects, true);
+            TowerDefense.deselectAll();
             if (intersects.length > 0) {
                 for (var i = 0; i < intersects.length; i++) {
                     var currentObject = TowerDefense.objects[intersects[i].object.objectIndex];
                     if (currentObject.selectable == true && typeof currentObject.select == 'function' && currentObject.selected == false) {
-                        TowerDefense.deselectAll();
                         currentObject.select();
+                        break;
                     }
                 }
             }
@@ -106,21 +107,11 @@ TowerDefense.Ui = {
 
     loadingProgress: function (item, loaded, total) {
 
-//        .loading-container {
-//            position: absolute;
-//            z-index: 1000;
-//            bottom: 0;
-//            width: 100%;
-//            height: 32px;
-//            line-height: 32px;
-//        }
-//        .loading-container #loading {
         if (loaded < total) {
             if (this.loadingFadeout != null) {
                 clearTimeout(this.loadingFadeout);
             }
             var percent = 100 / total * loaded;
-            console.log(percent);
             $('#loading-container').style.display = 'block';
             $('#loading').style.width = percent +'%';
             $('#loading').innerHTML = item;
@@ -132,7 +123,6 @@ TowerDefense.Ui = {
             }, 1000);
 
         }
-        console.log(item, loaded, total);
 
     },
 
