@@ -35,7 +35,7 @@ var TowerDefense = TowerDefense || {
      */
     settings: {
 
-        debug: false,
+        debug: true,
         advancedLight: true,
         advancedMaterials: true
 
@@ -159,6 +159,14 @@ var TowerDefense = TowerDefense || {
 
     __addObject: function (object) {
 
+        // Loop through already placed objects and updates them if needed for the lights.
+        // https://github.com/mrdoob/three.js/wiki/Updates#materials
+        this.objects.forEach( function (object) {
+            if (object.material != null && object.material.map != null && object.material.map.needsUpdate == false) {
+                object.material.needsUpdate = true;
+                object.material.map.needsUpdate = true;
+            }
+        });
         this.objects[object.id] = object;
         return true;
 
