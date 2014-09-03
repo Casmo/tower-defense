@@ -83,7 +83,7 @@ TowerDefense.Ui = {
             if (intersects.length > 0) {
                 for (var i = 0; i < intersects.length; i++) {
                     var currentObject = TowerDefense.objects[intersects[i].object.objectIndex];
-                    if (currentObject.selectable == true && typeof currentObject.select == 'function' && currentObject.selected == false) {
+                    if (currentObject != null && currentObject.selectable == true && typeof currentObject.select == 'function' && currentObject.selected == false) {
                         currentObject.select();
                         break;
                     }

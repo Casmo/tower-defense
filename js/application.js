@@ -87,7 +87,23 @@ function preloadLevel1(callback) {
         },
         {
             'key': 'level-01',
-            'file': 'assets/levels/level-01.jpg'
+            'file': 'assets/levels/level-01_COLOR.png'
+        },
+        {
+            'key': 'level-01-disp',
+            'file': 'assets/levels/level-01_DISP.png'
+        },
+        {
+            'key': 'level-01-nrm',
+            'file': 'assets/levels/level-01_NRM.png'
+        },
+        {
+            'key': 'level-01-occ',
+            'file': 'assets/levels/level-01_OCC.png'
+        },
+        {
+            'key': 'level-01-spec',
+            'file': 'assets/levels/level-01_SPEC.png'
         }
     ];
     TowerDefense.loadObjects(callback);
@@ -135,22 +151,51 @@ function level1() {
     decoTile.create();
     decoTile.add();
     TowerDefense.scene.add(decoTile.object);
-    var hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.3 );
-    hemiLight.color.setHSL( 0.6, 1, 0.3 );
-    hemiLight.groundColor.setHSL( 0.095, 1, 0.75 );
-    hemiLight.position.set( 0, 500, 0 );
+//    var sunGeometry = new THREE.SphereGeometry (10, 20, 20);
+//    var sunMaterial = new THREE.MeshBasicMaterial ({color: 0xffff00 });
+//    var sunMesh = new THREE.Mesh (sunGeometry, sunMaterial );
+//    var sunLight = new THREE.SpotLight (0xffffea, 1);
+//    sunMesh.add(sunLight);
+//    sunMesh.position.y = 300;
+//    sunMesh.position.z = 100;
+//    TowerDefense.scene.add(sunMesh);
+
+    var hemiLight = new THREE.HemisphereLight( 0xf3fdff, 0xf7fff3, 0.6); // sky, ground, intensity
+    hemiLight.position.set( 0, 0, 50 );
     TowerDefense.scene.add( hemiLight );
 
-    var dirLight = new THREE.DirectionalLight( 0xffffff,.5 );
+    var dirLight = new THREE.DirectionalLight( 0xffffff,.7 );
     dirLight.color.setHSL( 0.1, 1, 0.95 );
-    dirLight.position.set( -1, 1.75, 1 );
-    dirLight.position.multiplyScalar( 50 );
+    dirLight.position.set( -1.1,1, 1.4 );
+    dirLight.position.multiplyScalar( 60 );
+
+    if (TowerDefense.settings.advancedLight == true) {
+        dirLight.castShadow = true;
+        dirLight.shadowMapWidth = 512;
+        dirLight.shadowMapHeight = 512;
+        var d = 60;
+        dirLight.shadowCameraLeft = -d;
+        dirLight.shadowCameraRight = d;
+        dirLight.shadowCameraTop = d;
+        dirLight.shadowCameraBottom = -d;
+        dirLight.shadowCameraFar = 250;
+        dirLight.shadowBias = -0.0001;
+        dirLight.shadowDarkness = 0.35;
+        dirLight.shadowCameraFov = 120;
+    }
+
+    if (TowerDefense.settings.debug == true) {
+        dirLight.shadowCameraVisible = true;
+    }
+
     TowerDefense.scene.add( dirLight );
+
     spawnDummy();
 
 }
 
 function spawnDummy() {
+    return;
     var dummyEnemy = new TowerDefense.DummyEnemy();
     var dummyMesh = dummyEnemy.create();
     TowerDefense.scene.add(dummyMesh);

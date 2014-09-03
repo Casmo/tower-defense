@@ -3,7 +3,7 @@ TowerDefense.Tile = function () {
     TowerDefense.Element.call( this );
     this.position = { x: 0, y: 0, z: 0 };
     this.gridPosition = { x: 0, y: 0 };
-    this.material = new THREE.MeshBasicMaterial( { color: 0xffffff, transparent: true, opacity: 0 } );
+    this.material = new THREE.MeshPhongMaterial( { color: 0xffffff, transparent: true, opacity:0 } );
     this.squareSize = 9;
     this.geometry = new THREE.PlaneGeometry( this.squareSize, this.squareSize);
     this.selectable = true;
@@ -20,7 +20,7 @@ TowerDefense.Tile.prototype.select = function() {
     this.selected = true;
     TowerDefense.selectedObject = this;
     TowerDefense.Ui.showBuildMenu();
-    this.object.material.opacity = .05;
+    this.object.material.opacity = .2;
 
 };
 
@@ -34,6 +34,7 @@ TowerDefense.Tile.prototype.deselect = function() {
 };
 
 TowerDefense.Tile.prototype.update = function() {
+
 
 //    if (this.selected == true) {
 //        this.object.rotation.z += .015;

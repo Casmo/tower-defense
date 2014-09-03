@@ -23,7 +23,12 @@ TowerDefense.Element = function () {
     this.material = {};
     this.geometry = {};
     this.meshTexture = ''; // Key with the texture. @see TowerDefense.meshTextures
+    this.meshTextureSpec = null;
+    this.meshTextureNormal = null;
+    this.phongMaterial = false;
     this.meshObject = ''; // Key with object. @see TowerDefense.meshObjects
+
+    this.materialEmissive = '0x000000';
 
     /**
      * Holds the 3D (Three) mesh
@@ -63,13 +68,40 @@ TowerDefense.Element.prototype = {
         }
 
         if (this.meshTexture != null && this.meshTexture != '') {
-            var refObject = TowerDefense.meshTextures[this.meshTexture];
-            this.material = new THREE.MeshLambertMaterial(
-              {
-                  map: refObject.texture
-              }
-            );
+            var texture = TowerDefense.meshTextures[this.meshTexture];
+            texture = texture.texture;
+            var spec = null;
+            if (this.meshTextureSpec != null) {
+                spec = TowerDefense.meshTextures[this.meshTextureSpec];
+                spec = spec.texture;
+            }
+            var normal = null;
+            if (this.meshTextureNormal != null) {
+                normal = TowerDefense.meshTextures[this.meshTextureNormal];
+                normal = normal.texture;
+            }
+            if (this.phongMaterial == true && TowerDefense.settings.advancedMaterials == true) {
+                this.material = new THREE.MeshPhongMaterial(
+                  {
+                      map: texture,
+                      emissive: parseInt(this.materialEmissive),
+                      specularMap: spec,
+                      normalMap: normal,
+                      shininess: 0
+                  }
+                );
+            }
+            else {
+                this.material = new THREE.MeshLambertMaterial(
+                  {
+                      map: texture,
+                      emissive: parseInt(this.materialEmissive),
+                      specularMap: spec
+                  }
+                );
+            }
         }
+
         this.geometry.computeVertexNormals();
 
         this.object = new THREE.Mesh( this.geometry, this.material );

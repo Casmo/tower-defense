@@ -163,10 +163,8 @@ var TowerDefense = TowerDefense || {
         // https://github.com/mrdoob/three.js/wiki/Updates#materials
         // @todo improve speed
         this.objects.forEach( function (object) {
-            if (object.material != null) {
+            if (object.material != null && object.material.map != null && object.material.map.needsUpdate == false) {
                 object.material.needsUpdate = true;
-            }
-            if (object.material.map != null) {
                 object.material.map.needsUpdate = true;
             }
         });
