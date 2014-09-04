@@ -4,9 +4,11 @@ TowerDefense.Tower = function () {
 
     this.name = ''; // Name of the tower
     this.description = ''; // Description of the tower. May contain HTML
-    this.costs = 1; // Price to build
-    this.speed = 1; // Speed per bullet interval
-    this.range = 1; // Range in units
+    this.stats = {
+        costs: 1,
+        speed: 1000, // Interval in ms. @todo Might wanna do this in fps 'time'
+        range: 30
+    }
     this.icon = 'default.png'; // Tower icon
 
     this.position = { x: 0, y: 0, z: 1 };
@@ -18,6 +20,14 @@ TowerDefense.Tower = function () {
      * @type {boolean}
      */
     this.collisionable = true;
+
+    /**
+     * Index of the TowerDefense.objects that this tower is shooting at.
+     * @type {number}
+     */
+    this.shootingTargetIndex = -1;
+    this.lastShot = Date.now();
+    this.bullet = function () { return new TowerDefense.Bullet(); };
 
 }
 // @todo create prototype
@@ -67,5 +77,46 @@ TowerDefense.Tower.prototype.spawn = function(tileObject) {
     tileObject.object.add(this.object);
     tileObject.currentTower = this;
     return true;
+
+}
+
+TowerDefense.Tower.prototype.update = function () {
+
+    if (this.lastShot + this.stats.speed < TowerDefense.time) {
+        this.shoot();
+    }
+
+}
+
+TowerDefense.Tower.prototype.shoot = function () {
+
+    this.lastShot = Date.now();
+
+    // We need the position of the parent (the tile)
+    if (TowerDefense.objects[this.shootingTargetIndex] == null || !TowerDefense.inRange(TowerDefense.objects[this.shootingTargetIndex].object.position, this.object.parent.position, this.stats.range)) {
+        // find target in range
+        this.shootingTargetIndex = TowerDefense.findEnemyInRage(this.object.parent.position, this.stats.range);
+    }
+
+    if (TowerDefense.objects[this.shootingTargetIndex] != null) {
+        var target = TowerDefense.objects[this.shootingTargetIndex];
+        var bullet = this.bullet();
+        bullet.create();
+        TowerDefense.scene.add(bullet.object);
+        TowerDefense.__addObject(bullet);
+        bullet.targetIndex = this.shootingTargetIndex;
+        bullet.object.position = { x: this.object.parent.position.x, y: this.object.parent.position.y, z: this.object.parent.position.z };
+        bullet.tween = new TWEEN.Tween( { bulletIndex: bullet.id, x: this.object.parent.position.x, y: this.object.parent.position.y, z: this.object.parent.position.z } )
+          .to( { x: target.object.position.x, y: target.object.position.y, z: target.object.position.z },
+          bullet.stats.speed ).easing( TWEEN.Easing.Linear.None ).onUpdate( function() {
+              TowerDefense.objects[this.bulletIndex].object.position.x = this.x;
+              TowerDefense.objects[this.bulletIndex].object.position.y = this.y;
+              TowerDefense.objects[this.bulletIndex].object.position.z = this.z;
+          })
+          .onComplete( function () {
+              TowerDefense.objects[this.bulletIndex].remove();
+          } )
+          .start();
+    }
 
 }

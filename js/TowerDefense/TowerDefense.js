@@ -11,6 +11,7 @@ var TowerDefense = TowerDefense || {
      * update.
      */
     objects: [],
+    enemyObjects: [], // List with id's of enemies for easy checking enemies in range
     grid: [], // holds the x, y position of each tile and it's tile object
     gridPath: [], // holds the x, y position of each tile and a zero (open) or one (closed)
     nodes: [], // Holds the x, y position and GraphNode object,
@@ -81,6 +82,11 @@ var TowerDefense = TowerDefense || {
      * Holds the current selected Object
      */
     selectedObject: {},
+
+    /**
+     * Current time in milliseconds. Can be used to calculate bullet spawn times.
+     */
+    time: Date.now(),
 
     /**
      * Holds the a* object for calculating paths
@@ -169,6 +175,9 @@ var TowerDefense = TowerDefense || {
             }
         });
         this.objects[object.id] = object;
+        if (object.type == 'ENEMY') {
+            this.enemyObjects[object.id] = object.id;
+        }
         return true;
 
     },
@@ -179,6 +188,9 @@ var TowerDefense = TowerDefense || {
             TowerDefense.scene.remove(object.object);
         }
         delete(this.objects[object.id]);
+        if (this.enemyObjects[object.id] != null) {
+            delete(this.enemyObjects[object.id]);
+        }
         delete(object);
 
     },
@@ -194,6 +206,8 @@ var TowerDefense = TowerDefense || {
         TWEEN.update();
 
         TowerDefense.Ui.update();
+
+        this.time = Date.now();
 
     },
 
@@ -225,6 +239,42 @@ var TowerDefense = TowerDefense || {
             }
 
         });
+
+    },
+
+    /**
+     * Check if two positions are in range of each other
+     * @param posA object with x, y, z
+     * @param posB object with x, y, z
+     * @param maxDistance range in units
+     * @returns {boolean}
+     */
+    inRange: function(posA, posB, maxDistance) {
+
+        var distance = Math.sqrt( Math.pow(posA.x - posB.x, 2) + Math.pow(posA.y - posB.y, 2) + Math.pow(posA.z - posB.z, 2) );
+        if (distance <= maxDistance) {
+            return true;
+        }
+        return false;
+
+    },
+
+    /**
+     * Finds the first enemy that is in range of objectPos position
+     * @param objectPos object with x, y, z
+     * @param maxDistance range in units
+     * returns (int) the index of the enemy or -1 if nothing is found
+     */
+    findEnemyInRage: function (objectPos, maxDistance) {
+
+        var returnIndex = -1;
+        this.enemyObjects.forEach( function (id) {
+            if (TowerDefense.inRange(objectPos, TowerDefense.objects[id].object.position, maxDistance)) {
+                returnIndex = id;
+                return;
+            }
+        });
+        return returnIndex;
 
     },
 

@@ -22,11 +22,13 @@ TowerDefense.Enemy = function () {
      */
     this.gridPosition = { x: -1, y: -1 };
 
-    /**
-     * The number of 3D units to move each update()
-     * @type {number}
-     */
-    this.speed = .5; // number of seconds per tile
+    this.stats = {
+        hp: 2,
+        resources: 1,
+        score: 100,
+        speed: 2
+    };
+
     this.material = new THREE.MeshLambertMaterial( { color: 0xff0000 } );
     this.geometry = new THREE.BoxGeometry( .85, .85, 2 );
     this.FindPath = ''; // Holds a Web Worker
@@ -106,7 +108,7 @@ TowerDefense.Enemy.prototype.move = function(result) {
         position.gridPosition = { x: result[i].x, y: result[i].y };
         this.path.push(position);
     }
-    var duration = (this.path.length + 1) * this.speed;
+    var duration = (this.path.length + 1) * this.stats.speed;
     duration *= 1000;
     var dummy = { p: 0, object: this };
     var spline = new TowerDefense.Spline();
@@ -120,9 +122,26 @@ TowerDefense.Enemy.prototype.move = function(result) {
           this.object.object.position.y = position.y;
       })
       .onComplete( function () {
+          TowerDefense.stats.lives--;
           this.object.endPath();
       } )
       .start();
+}
+
+/**
+ * Removing health from the current enemy. Removes the object and add stats if the enemy
+ * is destroed.
+ * @param health number of hitpoints to remove
+ */
+TowerDefense.Enemy.prototype.removeHealth = function(health) {
+
+    this.stats.hp -= health;
+    if (this.stats.hp <= 0) {
+        TowerDefense.stats.score += this.stats.score;
+        TowerDefense.stats.resources += this.stats.resources;
+        this.remove();
+    }
+
 }
 
 TowerDefense.Enemy.prototype.update = function() {

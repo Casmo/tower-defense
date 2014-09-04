@@ -47,6 +47,11 @@ TowerDefense.Ui = {
 
         TowerDefense.controls = new THREE.OrbitControls( camera );
         TowerDefense.controls.damping = 0.2;
+        TowerDefense.controls.minDistance = 50;
+        TowerDefense.controls.maxDistance = 300;
+        TowerDefense.controls.noPan = false;
+        TowerDefense.controls.minPolarAngle = 0; // radians
+        TowerDefense.controls.maxPolarAngle = 1.5; // radians
 
     },
 
