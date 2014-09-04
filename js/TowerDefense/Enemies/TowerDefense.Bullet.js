@@ -12,12 +12,12 @@ TowerDefense.Bullet = function () {
 
     this.stats = {
         damage: 1,
-        speed: 450 // Time in MS
+        speed: 250 // Time in MS
     }
 
     this.targetIndex = -1;
 
-    this.material = new THREE.MeshLambertMaterial( { color: 0xff0000 } );
+    this.material = new THREE.MeshBasicMaterial( { color: 0xff0000 } );
     this.geometry = new THREE.BoxGeometry( .5, .5, .5 );
 }
 

@@ -106,14 +106,20 @@ TowerDefense.Tower.prototype.shoot = function () {
         TowerDefense.__addObject(bullet);
         bullet.targetIndex = this.shootingTargetIndex;
         bullet.object.position = { x: this.object.parent.position.x, y: this.object.parent.position.y, z: this.object.parent.position.z };
-        bullet.tween = new TWEEN.Tween( { bulletIndex: bullet.id, x: this.object.parent.position.x, y: this.object.parent.position.y, z: this.object.parent.position.z } )
+        TowerDefense.objects[bullet.id].tween = new TWEEN.Tween( { bulletIndex: bullet.id, x: this.object.parent.position.x, y: this.object.parent.position.y, z: this.object.parent.position.z } )
           .to( { x: target.object.position.x, y: target.object.position.y, z: target.object.position.z },
           bullet.stats.speed ).easing( TWEEN.Easing.Linear.None ).onUpdate( function() {
+              if (TowerDefense.objects[this.bulletIndex] == null) {
+                  return;
+              }
               TowerDefense.objects[this.bulletIndex].object.position.x = this.x;
               TowerDefense.objects[this.bulletIndex].object.position.y = this.y;
               TowerDefense.objects[this.bulletIndex].object.position.z = this.z;
           })
           .onComplete( function () {
+              if (TowerDefense.objects[this.bulletIndex] == null) {
+                  return;
+              }
               TowerDefense.objects[this.bulletIndex].remove();
           } )
           .start();
