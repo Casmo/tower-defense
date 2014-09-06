@@ -4,15 +4,9 @@ TowerDefense.Bullet = function () {
 
     this.type = 'BULLET';
 
-    /**
-     * Current 3D position in the world
-     * @type {{x: number, y: number, z: number}}
-     */
-    this.position = { x: 0, y: 0, z: 1 };
-
     this.stats = {
         damage: 1,
-        speed: 250 // Time in MS
+        speed:.05 // Movement in units
     }
 
     this.targetIndex = -1;
@@ -31,5 +25,22 @@ TowerDefense.Bullet.prototype.remove = function () {
         TowerDefense.objects[this.targetIndex].removeHealth(this.stats.damage);
     }
     TowerDefense.__removeObject(this);
+
+}
+
+TowerDefense.Bullet.prototype.update = function() {
+
+    // Move closer to targetIndex position or delete when it hits or is already destroyed
+    if (TowerDefense.objects[this.targetIndex] == null) {
+        this.remove();
+        return;
+    }
+    var target = TowerDefense.objects[this.targetIndex];
+    var moveX = (target.object.position.x + this.object.position.x) / 2;
+    var moveY = (target.object.position.y + this.object.position.y) / 2;
+    var moveZ = (target.object.position.z + this.object.position.z) / 2;
+    this.object.position.x += moveX * this.stats.speed;
+    this.object.position.y += moveY * this.stats.speed;
+    this.object.position.z += moveZ * this.stats.speed;
 
 }

@@ -187,6 +187,9 @@ var TowerDefense = TowerDefense || {
         if (object.object != null) {
             TowerDefense.scene.remove(object.object);
         }
+        if (object.tween != null) {
+            TWEEN.remove(object.tween);
+        }
         delete(this.objects[object.id]);
         if (this.enemyObjects[object.id] != null) {
             delete(this.enemyObjects[object.id]);
@@ -248,6 +251,7 @@ var TowerDefense = TowerDefense || {
      * @param posB object with x, y, z
      * @param maxDistance range in units
      * @returns {boolean}
+     * @todo remove the sqrt function here and add Math.pow to maxDistance. = speed improvement
      */
     inRange: function(posA, posB, maxDistance) {
 

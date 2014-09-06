@@ -149,6 +149,7 @@ function level1() {
 
     var decoTile = new TowerDefense.DecoTile();
     decoTile.create();
+    decoTile.object.position.z = -.6;
     decoTile.add();
     TowerDefense.scene.add(decoTile.object);
 //    var sunGeometry = new THREE.SphereGeometry (10, 20, 20);

@@ -1,7 +1,6 @@
 TowerDefense.Tile = function () {
 
     TowerDefense.Element.call( this );
-    this.position = { x: 0, y: 0, z: 0 };
     this.gridPosition = { x: 0, y: 0 };
     this.material = new THREE.MeshPhongMaterial( { color: 0xffffff, transparent: true, opacity:0 } );
     this.squareSize = 9;
@@ -26,8 +25,6 @@ TowerDefense.Tile.prototype.select = function() {
 
 TowerDefense.Tile.prototype.deselect = function() {
 
-    this.object.rotation.z = 0;
-    this.object.position.z = this.position.z;
     this.selected = false;
     this.object.material.opacity = 0;
 

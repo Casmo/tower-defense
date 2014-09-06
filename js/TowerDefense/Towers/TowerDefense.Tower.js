@@ -6,12 +6,11 @@ TowerDefense.Tower = function () {
     this.description = ''; // Description of the tower. May contain HTML
     this.stats = {
         costs: 1,
-        speed: 1000, // Interval in ms. @todo Might wanna do this in fps 'time'
+        speed: 500, // Interval in ms. @todo Might wanna do this in fps 'time'
         range: 30
     }
     this.icon = 'default.png'; // Tower icon
 
-    this.position = { x: 0, y: 0, z: 1 };
     this.material = new THREE.MeshLambertMaterial( { color: 0x368218 } );
     this.geometry = new THREE.BoxGeometry( .85, .85, 2 );
 
@@ -99,30 +98,12 @@ TowerDefense.Tower.prototype.shoot = function () {
     }
 
     if (TowerDefense.objects[this.shootingTargetIndex] != null) {
-        var target = TowerDefense.objects[this.shootingTargetIndex];
         var bullet = this.bullet();
         bullet.create();
+        bullet.targetIndex = this.shootingTargetIndex;
+        console.log(this);
         TowerDefense.scene.add(bullet.object);
         TowerDefense.__addObject(bullet);
-        bullet.targetIndex = this.shootingTargetIndex;
-        bullet.object.position = { x: this.object.parent.position.x, y: this.object.parent.position.y, z: this.object.parent.position.z };
-        TowerDefense.objects[bullet.id].tween = new TWEEN.Tween( { bulletIndex: bullet.id, x: this.object.parent.position.x, y: this.object.parent.position.y, z: this.object.parent.position.z } )
-          .to( { x: target.object.position.x, y: target.object.position.y, z: target.object.position.z },
-          bullet.stats.speed ).easing( TWEEN.Easing.Linear.None ).onUpdate( function() {
-              if (TowerDefense.objects[this.bulletIndex] == null) {
-                  return;
-              }
-              TowerDefense.objects[this.bulletIndex].object.position.x = this.x;
-              TowerDefense.objects[this.bulletIndex].object.position.y = this.y;
-              TowerDefense.objects[this.bulletIndex].object.position.z = this.z;
-          })
-          .onComplete( function () {
-              if (TowerDefense.objects[this.bulletIndex] == null) {
-                  return;
-              }
-              TowerDefense.objects[this.bulletIndex].remove();
-          } )
-          .start();
     }
 
 }
