@@ -7,7 +7,7 @@ TowerDefense.BadAssTower = function () {
     this.meshObject = 'tower-03';
     this.meshTexture = 'tower-03';
     this.stats = {
-        costs: 7,
+        costs: 20,
         speed: 500,
         range: 75
     }

@@ -79,3 +79,7 @@ a {
 #build-options img {
     width: 64px;
 }
+
+.progress {
+    margin: 0;
+}

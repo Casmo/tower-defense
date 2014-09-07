@@ -84,7 +84,7 @@ TowerDefense.Ui = {
             TowerDefense.projector.unprojectVector(vector, TowerDefense.camera);
             var ray = new THREE.Raycaster(TowerDefense.camera.position, vector.sub(TowerDefense.camera.position).normalize());
             var intersects = ray.intersectObjects(objects, true);
-            TowerDefense.deselectAll();
+            TowerDefense.Ui.hideBuildMenu();
             if (intersects.length > 0) {
                 for (var i = 0; i < intersects.length; i++) {
                     var currentObject = TowerDefense.objects[intersects[i].object.objectIndex];
@@ -175,6 +175,12 @@ TowerDefense.Ui = {
 
         $('#build-info').innerHTML = tower.description;
 
+        var noResourcesClass = '';
+        if (tower.stats.costs > TowerDefense.stats.resources) {
+            noResourcesClass = ' class="text-danger"';
+        }
+        $('#build-info').innerHTML += '<p'+ noResourcesClass +'><img src="assets/ui/resources.png" /> ' + tower.stats.costs + '</p>';
+
         // Create stats bars
         var statsHtml = '';
         // range
@@ -216,10 +222,18 @@ TowerDefense.Ui = {
         }
         this.clearScene();
         var tower = TowerDefense.availableTowers[this.selectedTower].object();
+
+        if (tower.stats.costs > TowerDefense.stats.resources) {
+            $('#build-info').innerHTML = 'Not enough money.';
+            return;
+        }
+
         tower.create();
+
         if (tower.spawn(TowerDefense.selectedObject) === false) {
             return;
         }
+        TowerDefense.stats.resources -= tower.stats.costs;
         tower.add();
         this.hideBuildMenu();
         TowerDefense.deselectAll();

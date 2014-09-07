@@ -7,7 +7,7 @@ TowerDefense.AdvancedTower = function () {
     this.meshObject = 'tower-02';
     this.meshTexture = 'tower-02';
     this.stats = {
-        costs: 4,
+        costs: 9,
         speed: 1000,
         range: 50
     }

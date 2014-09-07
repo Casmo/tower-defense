@@ -23,10 +23,10 @@ TowerDefense.Enemy = function () {
     this.gridPosition = { x: -1, y: -1 };
 
     this.stats = {
-        hp: 2,
+        hp: 4,
         resources: 1,
         score: 100,
-        speed: 2
+        speed: 1
     };
 
     this.material = new THREE.MeshLambertMaterial( { color: 0xff0000 } );
