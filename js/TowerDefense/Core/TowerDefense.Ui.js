@@ -164,6 +164,7 @@ TowerDefense.Ui = {
         if (TowerDefense.selectedObject.id == null) {
             return;
         }
+        this.selectedTower = index;
         this.clearScene();
         var tower = TowerDefense.availableTowers[index].object();
         var bullet = tower.bullet();
@@ -197,7 +198,6 @@ TowerDefense.Ui = {
         statsHtml += '</div>';
         statsHtml += '</div>';
         $('#build-info').innerHTML += statsHtml;
-
         this.render();
     },
 
