@@ -113,7 +113,7 @@ TowerDefense.Enemy.prototype.move = function(result) {
     var dummy = { p: 0, object: this };
     var spline = new TowerDefense.Spline();
 //    var self = this;
-    TowerDefense.objects[this.id].tween = new TWEEN.Tween( dummy )
+    this.tween = new TWEEN.Tween( dummy )
       .to( { p: 1 },
       duration ).easing( TWEEN.Easing.Linear.None ).onUpdate( function() {
           var position = spline.get2DPoint( this.object.path, this.p );

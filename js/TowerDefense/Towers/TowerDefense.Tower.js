@@ -101,7 +101,9 @@ TowerDefense.Tower.prototype.shoot = function () {
         var bullet = this.bullet();
         bullet.create();
         bullet.targetIndex = this.shootingTargetIndex;
-        console.log(this);
+        bullet.object.position.x = this.object.parent.position.x;
+        bullet.object.position.y = this.object.parent.position.y;
+        bullet.object.position.z = this.object.parent.position.z;
         TowerDefense.scene.add(bullet.object);
         TowerDefense.__addObject(bullet);
     }
