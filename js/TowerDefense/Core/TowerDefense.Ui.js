@@ -167,33 +167,30 @@ TowerDefense.Ui = {
         this.clearScene();
         var tower = TowerDefense.availableTowers[index].object();
         var bullet = tower.bullet();
-//        tower.create();
-//        this.objects.push(tower);
-//        this.scene.add(tower.object);
+        tower.create();
+        this.objects.push(tower);
+        this.scene.add(tower.object);
 
         $('#build-info').innerHTML = tower.description;
 
         // Create stats bars
         var statsHtml = '';
         // range
-        var maxRange = 300;
-        var range = Math.round(100 / maxRange * tower.stats.range);
+        var range = Math.round(100 / TowerDefense.config.maxRange * tower.stats.range);
         statsHtml += 'Range';
         statsHtml += '<div class="progress">';
         statsHtml += '<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="'+ range +'" aria-valuemin="0" aria-valuemax="100" style="width: '+ range +'%">';
         statsHtml += '</div>';
         statsHtml += '</div>';
         // speed (lower = better)
-        var maxSpeed = 100;
-        var speed = Math.round(100 * maxSpeed / tower.stats.speed);
+        var speed = Math.round(100 * TowerDefense.config.maxSpeed / tower.stats.speed);
         statsHtml += 'Speed';
         statsHtml += '<div class="progress">';
         statsHtml += '<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="'+ speed +'" aria-valuemin="0" aria-valuemax="100" style="width: '+ speed +'%">';
         statsHtml += '</div>';
         statsHtml += '</div>';
         // damage
-        var maxDamage = 50;
-        var damage = Math.round(100 / maxDamage * bullet.stats.damage);
+        var damage = Math.round(100 / TowerDefense.config.maxDamage * bullet.stats.damage);
         statsHtml += 'Damage';
         statsHtml += '<div class="progress">';
         statsHtml += '<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="'+ damage +'" aria-valuemin="0" aria-valuemax="100" style="width: '+ damage +'%">';
@@ -201,7 +198,7 @@ TowerDefense.Ui = {
         statsHtml += '</div>';
         $('#build-info').innerHTML += statsHtml;
 
-        this.selectedTower = index;
+        this.render();
     },
 
     /**
@@ -243,12 +240,11 @@ TowerDefense.Ui = {
         var buildSizeHeight = buildSizeWidth / 16 * 9;
         this.scene = new THREE.Scene();
         this.camera = new THREE.PerspectiveCamera( 40, buildSizeWidth / buildSizeHeight, 0.1, 1000 );
-        this.camera.position.x = 2.5;
-        this.camera.position.y = -4;
-        this.camera.position.z = 2;
+        this.camera.position.x = 12;
+        this.camera.position.y = -22;
+        this.camera.position.z = 1;
         this.camera.up = new THREE.Vector3(0,0,1);
-        this.camera.lookAt(new THREE.Vector3(0,0,0));
-        this.renderer = new THREE.WebGLRenderer();
+        this.renderer = new THREE.CanvasRenderer();
         this.renderer.setSize( buildSizeWidth, buildSizeHeight );
 
         this.renderer.shadowMapEnabled = true;
@@ -298,24 +294,30 @@ TowerDefense.Ui = {
 
     update: function() {
         return; // @todo remove when WebGL can share resources over multiple context
+        this.render();
+    },
+
+    render: function() {
+
         if (this.scene.id != null) {
+            // Update camera
+            var x = this.camera.position.x,
+              y = this.camera.position.y,
+              rotSpeed = .01;
+
+            this.camera.position.x = x * Math.cos(rotSpeed) - y * Math.sin(rotSpeed);
+            this.camera.position.y = y * Math.cos(rotSpeed) + x * Math.sin(rotSpeed);
+
+            this.camera.lookAt(new THREE.Vector3(0,0,8));
+
+            this.renderer.render(this.scene, this.camera);
             this.objects.forEach(function(object) {
                 if (typeof object.update == 'function') {
                     object.update();
                 }
             });
-            // Update camera
-            var x = this.camera.position.x,
-              y = this.camera.position.y,
-              rotSpeed = .02;
-
-            this.camera.position.x = x * Math.cos(rotSpeed) - y * Math.sin(rotSpeed);
-            this.camera.position.y = y * Math.cos(rotSpeed) + x * Math.sin(rotSpeed);
-
-            this.camera.lookAt(this.scene.position);
-
-            this.renderer.render(this.scene, this.camera);
         }
+
     }
 
 }

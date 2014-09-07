@@ -43,6 +43,17 @@ var TowerDefense = TowerDefense || {
     },
 
     /**
+     * Global config settings and variables
+     */
+    config: {
+
+        maxRange: 300, // Max range of a tower,
+        maxSpeed: 50, // Interval in ms for shooting bullets
+        maxDamage: 50 // Max damage for bullet impact
+
+    },
+
+    /**
      * Object with game stats like score, resources, etc
      */
     stats: {

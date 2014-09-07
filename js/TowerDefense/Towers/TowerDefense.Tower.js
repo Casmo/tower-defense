@@ -80,7 +80,7 @@ TowerDefense.Tower.prototype.spawn = function(tileObject) {
 
 TowerDefense.Tower.prototype.update = function () {
 
-    if (this.lastShot + this.stats.speed < TowerDefense.time) {
+    if (this.object.parent != null && (this.lastShot + this.stats.speed < TowerDefense.time)) {
         this.shoot();
     }
 
@@ -89,7 +89,6 @@ TowerDefense.Tower.prototype.update = function () {
 TowerDefense.Tower.prototype.shoot = function () {
 
     this.lastShot = Date.now();
-
     // We need the position of the parent (the tile)
     if (TowerDefense.objects[this.shootingTargetIndex] == null || !TowerDefense.inRange(TowerDefense.objects[this.shootingTargetIndex].object.position, this.object.parent.position, this.stats.range)) {
         // find target in range
