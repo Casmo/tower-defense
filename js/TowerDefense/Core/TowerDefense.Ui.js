@@ -152,6 +152,7 @@ TowerDefense.Ui = {
     },
 
     hideBuildMenu: function() {
+        this.clearScene();
         TowerDefense.deselectAll();
         $('#build-menu').style.display = 'none';
     },
@@ -290,6 +291,7 @@ TowerDefense.Ui = {
         this.objects.forEach(function (object) {
             scene.remove(object.object);
         });
+        this.render();
     },
 
     update: function() {
