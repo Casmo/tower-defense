@@ -6,7 +6,7 @@ TowerDefense.Bullet = function () {
 
     this.stats = {
         damage: 1,
-        speed: .01 // Movement in units.
+        speed: .005 // Movement in units.
     }
 
     this.lastMovement = {};
@@ -15,6 +15,9 @@ TowerDefense.Bullet = function () {
     this.targetIndex = -1;
     this.material = new THREE.MeshBasicMaterial( { color: 0xff9900 } );
     this.geometry = new THREE.BoxGeometry( .5, .5, .5 );
+
+    this.receiveShadow = false;
+    this.castShadow = false;
 }
 
 TowerDefense.Bullet.prototype = Object.create( TowerDefense.Element.prototype );

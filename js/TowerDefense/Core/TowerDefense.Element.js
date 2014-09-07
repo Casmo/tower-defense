@@ -22,6 +22,8 @@ TowerDefense.Element = function () {
     this.meshTextureSpec = null;
     this.meshTextureNormal = null;
     this.phongMaterial = false;
+    this.receiveShadow = true;
+    this.castShadow = true;
     this.meshObject = ''; // Key with object. @see TowerDefense.meshObjects
 
     this.materialEmissive = '0x000000';
@@ -101,8 +103,12 @@ TowerDefense.Element.prototype = {
         this.geometry.computeVertexNormals();
 
         this.object = new THREE.Mesh( this.geometry, this.material );
-        this.object.receiveShadow = true;
-        this.object.castShadow = true;
+        if (TowerDefense.settings.advancedLight == true && this.receiveShadow == true) {
+            this.object.receiveShadow = true;
+        }
+        if (TowerDefense.settings.advancedLight == true && this.castShadow == true) {
+            this.object.castShadow = true;
+        }
         return this.object;
 
     },

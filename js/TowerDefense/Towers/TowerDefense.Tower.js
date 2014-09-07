@@ -13,7 +13,6 @@ TowerDefense.Tower = function () {
 
     this.material = new THREE.MeshLambertMaterial( { color: 0x368218 } );
     this.geometry = new THREE.BoxGeometry( .85, .85, 2 );
-
     /**
      * Whether an enemy can or cannot walk through it.
      * @type {boolean}
