@@ -6,6 +6,11 @@ TowerDefense.AdvancedTower = function () {
     this.description = '<p>Advanced tower. Awesome.</p>';
     this.meshObject = 'tower-02';
     this.meshTexture = 'tower-02';
+    this.stats = {
+        costs: 4,
+        speed: 1000,
+        range: 50
+    }
     this.icon = 'default.png';
     this.material = new THREE.MeshLambertMaterial( { color: 0xcccccc } );
     this.materialEmissive = '0xfffde8';

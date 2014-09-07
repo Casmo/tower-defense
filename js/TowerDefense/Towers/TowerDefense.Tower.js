@@ -6,8 +6,8 @@ TowerDefense.Tower = function () {
     this.description = ''; // Description of the tower. May contain HTML
     this.stats = {
         costs: 1,
-        speed: 500, // Interval in ms. @todo Might wanna do this in fps 'time'
-        range: 30
+        speed: 4000, // Interval in ms. @todo Might wanna do this in fps 'time'
+        range: 20
     }
     this.icon = 'default.png'; // Tower icon
 

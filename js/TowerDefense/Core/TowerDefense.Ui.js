@@ -166,11 +166,41 @@ TowerDefense.Ui = {
         }
         this.clearScene();
         var tower = TowerDefense.availableTowers[index].object();
+        var bullet = tower.bullet();
 //        tower.create();
 //        this.objects.push(tower);
 //        this.scene.add(tower.object);
 
         $('#build-info').innerHTML = tower.description;
+
+        // Create stats bars
+        var statsHtml = '';
+        // range
+        var maxRange = 300;
+        var range = Math.round(100 / maxRange * tower.stats.range);
+        statsHtml += 'Range';
+        statsHtml += '<div class="progress">';
+        statsHtml += '<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="'+ range +'" aria-valuemin="0" aria-valuemax="100" style="width: '+ range +'%">';
+        statsHtml += '</div>';
+        statsHtml += '</div>';
+        // speed (lower = better)
+        var maxSpeed = 100;
+        var speed = Math.round(100 * maxSpeed / tower.stats.speed);
+        statsHtml += 'Speed';
+        statsHtml += '<div class="progress">';
+        statsHtml += '<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="'+ speed +'" aria-valuemin="0" aria-valuemax="100" style="width: '+ speed +'%">';
+        statsHtml += '</div>';
+        statsHtml += '</div>';
+        // damage
+        var maxDamage = 50;
+        var damage = Math.round(100 / maxDamage * bullet.stats.damage);
+        statsHtml += 'Damage';
+        statsHtml += '<div class="progress">';
+        statsHtml += '<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="'+ damage +'" aria-valuemin="0" aria-valuemax="100" style="width: '+ damage +'%">';
+        statsHtml += '</div>';
+        statsHtml += '</div>';
+        $('#build-info').innerHTML += statsHtml;
+
         this.selectedTower = index;
     },
 

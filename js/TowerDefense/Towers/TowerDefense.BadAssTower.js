@@ -6,6 +6,11 @@ TowerDefense.BadAssTower = function () {
     this.description = '<p>Badass tower. Bad ass.</p>';
     this.meshObject = 'tower-03';
     this.meshTexture = 'tower-03';
+    this.stats = {
+        costs: 7,
+        speed: 500,
+        range: 75
+    }
     this.icon = 'default.png';
     this.material = new THREE.MeshLambertMaterial( { color: 0xcccccc } );
     this.materialEmissive = '0xcecece';
