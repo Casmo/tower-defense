@@ -49,6 +49,9 @@ TowerDefense.Enemy.prototype.reset = function() {
 
 TowerDefense.Enemy.prototype.create = function() {
 
+    if (TowerDefense.startTile == null || TowerDefense.startTile.object == null) {
+        return;
+    }
     this.object = new THREE.Mesh( this.geometry, this.material );
     this.object.receiveShadow = true;
     this.object.castShadow = true;

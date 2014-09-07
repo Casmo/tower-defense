@@ -99,7 +99,7 @@ TowerDefense.Ui = {
 
     keyup: function(event) {
         var key = event.keyCode || event.which;
-        if (key == KeyEvent.DOM_VK_1) {
+        if (key == KeyEvent.DOM_VK_E) {
             spawnEnemy();
         }
         if (key == KeyEvent.DOM_VK_B) {
@@ -107,6 +107,9 @@ TowerDefense.Ui = {
         }
         if (key == KeyEvent.DOM_VK_C || key == KeyEvent.DOM_VK_ESCAPE) {
             TowerDefense.Ui.hideBuildMenu();
+        }
+        if (key == KeyEvent.DOM_VK_N) {
+            newGame();
         }
     },
 
