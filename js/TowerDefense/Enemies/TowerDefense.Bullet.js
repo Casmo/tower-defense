@@ -62,17 +62,12 @@ TowerDefense.Bullet.prototype.update = function() {
     var moveY = Math.abs(moveYOrg);
     var moveZ = Math.abs(moveZOrg);
 
-    // Total (100%)
-    var total = moveX + moveY + moveZ;
-    var one = 100 / total;
+    // 1%
+    var one = 100 / (moveX + moveY + moveZ);
 
-    var moveXPercent = one * moveX;
-    var moveYPercent = one * moveY;
-    var moveZPercent = one * moveZ;
-
-    moveX = moveXPercent * this.stats.speed;
-    moveY = moveYPercent * this.stats.speed;
-    moveZ = moveZPercent * this.stats.speed;
+    moveX = one * moveX * this.stats.speed;
+    moveY = one * moveY * this.stats.speed;
+    moveZ = one * moveZ * this.stats.speed;
 
     if (moveXOrg < 0) {
         moveX = moveX-moveX-moveX;
