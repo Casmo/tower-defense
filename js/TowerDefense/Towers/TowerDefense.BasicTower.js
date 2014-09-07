@@ -4,9 +4,6 @@ TowerDefense.BasicTower = function () {
 
     this.name = 'Basic Tower';
     this.description = '<p>Most basic tower in game. Still awesome.</p>';
-    this.costs = 1;
-    this.speed = 1;
-    this.range = 1;
     this.meshObject = 'tower-01';
     this.meshTexture = 'tower-01';
     this.material = new THREE.MeshLambertMaterial( { color: 0xcccccc } );

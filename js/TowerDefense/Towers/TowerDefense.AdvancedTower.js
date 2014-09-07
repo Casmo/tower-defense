@@ -4,9 +4,6 @@ TowerDefense.AdvancedTower = function () {
 
     this.name = 'Advanced Tower';
     this.description = '<p>Advanced tower. Awesome.</p>';
-    this.costs = 1;
-    this.speed = 1;
-    this.range = 1;
     this.meshObject = 'tower-02';
     this.meshTexture = 'tower-02';
     this.icon = 'default.png';

@@ -4,9 +4,6 @@ TowerDefense.BadAssTower = function () {
 
     this.name = 'Badass Tower';
     this.description = '<p>Badass tower. Bad ass.</p>';
-    this.costs = 1;
-    this.speed = 1;
-    this.range = 1;
     this.meshObject = 'tower-03';
     this.meshTexture = 'tower-03';
     this.icon = 'default.png';

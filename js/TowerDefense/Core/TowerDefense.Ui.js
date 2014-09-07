@@ -105,7 +105,7 @@ TowerDefense.Ui = {
         if (key == KeyEvent.DOM_VK_B) {
             TowerDefense.Ui.buildTower();
         }
-        if (key == KeyEvent.DOM_VK_C) {
+        if (key == KeyEvent.DOM_VK_C || key == KeyEvent.DOM_VK_ESCAPE) {
             TowerDefense.Ui.hideBuildMenu();
         }
     },
