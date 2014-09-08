@@ -9,7 +9,7 @@ TowerDefense.BadAssTower = function () {
     this.stats = {
         costs: 20,
         speed: 500,
-        range: 75
+        range: 30
     }
     this.icon = 'tower-03.png';
     this.material = new THREE.MeshLambertMaterial( { color: 0xcccccc } );

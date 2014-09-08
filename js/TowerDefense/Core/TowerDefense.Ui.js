@@ -215,7 +215,7 @@ TowerDefense.Ui = {
         $('#build-info').innerHTML += statsHtml;
         $('#build-info').style.display = 'block';
 
-        // If new
+        // @todo update / build options here
         var buildOptionsHtml = '<div class="btn-group btn-group" id="build-buttons">';
         buildOptionsHtml += '<a onclick="TowerDefense.Ui.hideBuildMenu();" class="btn btn-default"><i class="key-code">C</i>lose</a>';
         buildOptionsHtml += '<a onclick="TowerDefense.Ui.buildTower();" class="btn btn-primary"><i class="key-code">B</i>uild</a>';
@@ -272,7 +272,7 @@ TowerDefense.Ui = {
         var buildSizeHeight = buildSizeWidth / 16 * 9;
         this.scene = new THREE.Scene();
         this.camera = new THREE.PerspectiveCamera( 40, buildSizeWidth / buildSizeHeight, 0.1, 1000 );
-        this.camera.position.x = 12;
+        this.camera.position.x = -8;
         this.camera.position.y = -22;
         this.camera.position.z = 1;
         this.camera.up = new THREE.Vector3(0,0,1);

@@ -9,7 +9,7 @@ TowerDefense.AdvancedTower = function () {
     this.stats = {
         costs: 9,
         speed: 1000,
-        range: 50
+        range: 25
     }
     this.icon = 'tower-02.png';
     this.material = new THREE.MeshLambertMaterial( { color: 0xcccccc } );
