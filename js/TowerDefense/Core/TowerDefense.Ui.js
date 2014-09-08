@@ -102,6 +102,9 @@ TowerDefense.Ui = {
         if (key == KeyEvent.DOM_VK_E) {
             spawnEnemy();
         }
+        if (key == KeyEvent.DOM_VK_U) {
+            spawnEnemy('ufo');
+        }
         if (key == KeyEvent.DOM_VK_B) {
             TowerDefense.Ui.buildTower();
         }

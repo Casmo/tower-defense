@@ -23,7 +23,7 @@ TowerDefense.Enemy = function () {
     this.gridPosition = { x: -1, y: -1 };
 
     this.stats = {
-        hp: 4,
+        hp: 2,
         resources: 1,
         score: 100,
         speed: 1
@@ -46,23 +46,6 @@ TowerDefense.Enemy.prototype.reset = function() {
     this.tween = {};
 
 }
-
-TowerDefense.Enemy.prototype.create = function() {
-
-    if (TowerDefense.startTile == null || TowerDefense.startTile.object == null) {
-        return;
-    }
-    this.object = new THREE.Mesh( this.geometry, this.material );
-    this.object.receiveShadow = true;
-    this.object.castShadow = true;
-
-    this.object.position.x = TowerDefense.startTile.object.position.x;
-    this.object.position.y = TowerDefense.startTile.object.position.y;
-    this.object.position.z = this.position.z;
-    this.add();
-    return this.object;
-
-};
 
 /**
  * Fill the movePath with all positions of tiles to walk through. The enemy then

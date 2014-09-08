@@ -70,6 +70,10 @@ function preloadLevel1(callback) {
         {
             'key': 'tower-03',
             'file': 'assets/towers/tower-03.obj'
+        },
+        {
+            'key': 'ufo',
+            'file': 'assets/enemies/ufo.obj'
         }
     ];
     TowerDefense.meshTextures = [
@@ -104,6 +108,10 @@ function preloadLevel1(callback) {
         {
             'key': 'level-01-spec',
             'file': 'assets/levels/level-01_SPEC.png'
+        },
+        {
+            'key': 'ufo-yellow',
+            'file': 'assets/enemies/ufo-yellow.jpg'
         }
     ];
     TowerDefense.loadObjects(callback);
@@ -208,12 +216,18 @@ function spawnDummy() {
 /**
  * Temporary function to add an enemy in the scene.
  */
-function spawnEnemy() {
-    var enemy = new TowerDefense.BasicEnemy();
-    var mesh = enemy.create();
-    mesh.position.x = TowerDefense.startTile.object.position.x;
-    mesh.position.y = TowerDefense.startTile.object.position.y;
-    TowerDefense.scene.add(mesh);
+function spawnEnemy(type) {
+    if (type != null && type == 'ufo') {
+        var enemy = new TowerDefense.UfoEnemy();
+    }
+    else {
+        var enemy = new TowerDefense.BasicEnemy();
+    }
+    enemy.create();
+    enemy.add();
+    enemy.object.position.x = TowerDefense.startTile.object.position.x;
+    enemy.object.position.y = TowerDefense.startTile.object.position.y;
+    TowerDefense.scene.add(enemy.object);
     enemy.setPath();
 }
 
