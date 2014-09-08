@@ -6,6 +6,7 @@ TowerDefense.BasicTower = function () {
     this.description = '<p>Most basic tower in game. Still awesome.</p>';
     this.meshObject = 'tower-01';
     this.meshTexture = 'tower-01';
+    this.icon = 'tower-01.png';
     this.stats = {
         costs: 1,
         speed: 2000,

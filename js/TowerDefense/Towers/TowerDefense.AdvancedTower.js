@@ -11,7 +11,7 @@ TowerDefense.AdvancedTower = function () {
         speed: 1000,
         range: 50
     }
-    this.icon = 'default.png';
+    this.icon = 'tower-02.png';
     this.material = new THREE.MeshLambertMaterial( { color: 0xcccccc } );
     this.materialEmissive = '0xfffde8';
 

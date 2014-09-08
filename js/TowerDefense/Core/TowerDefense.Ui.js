@@ -47,7 +47,7 @@ TowerDefense.Ui = {
 
         TowerDefense.controls = new THREE.OrbitControls( camera );
         TowerDefense.controls.damping = 0.2;
-        TowerDefense.controls.minDistance = 50;
+        TowerDefense.controls.minDistance = 30;
         TowerDefense.controls.maxDistance = 300;
         TowerDefense.controls.noPan = false;
         TowerDefense.controls.minPolarAngle = 0; // radians
@@ -142,17 +142,18 @@ TowerDefense.Ui = {
      */
     showBuildMenu: function() {
         $('#build-menu').style.display = 'block';
+        $('#build-info').style.display = 'none';
         this.createScene();
         this.clearScene();
 
-        $('#build-options').innerHTML = '';
+        $('#build-buildings').innerHTML = '';
         $('#build-info').innerHTML = '';
         if (TowerDefense.selectedObject.currentTower.id == null) {
             TowerDefense.availableTowers.forEach(function(tower, index) {
-                var object = new TowerDefense.BasicTower();
+                var object = tower.object();
                 var image = '<img class="img-circle game-stat" src="assets/towers/' + object.icon +'" />';
                 var link = '<a onclick="TowerDefense.Ui.selectTower('+ index +');">'+ image +'</a>';
-                $('#build-options').innerHTML += link;
+                $('#build-buildings').innerHTML += link;
             });
         }
     },
@@ -210,7 +211,17 @@ TowerDefense.Ui = {
         statsHtml += '<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="'+ damage +'" aria-valuemin="0" aria-valuemax="100" style="width: '+ damage +'%">';
         statsHtml += '</div>';
         statsHtml += '</div>';
+
         $('#build-info').innerHTML += statsHtml;
+        $('#build-info').style.display = 'block';
+
+        // If new
+        var buildOptionsHtml = '<div class="btn-group btn-group" id="build-buttons">';
+        buildOptionsHtml += '<a onclick="TowerDefense.Ui.hideBuildMenu();" class="btn btn-default"><i class="key-code">C</i>lose</a>';
+        buildOptionsHtml += '<a onclick="TowerDefense.Ui.buildTower();" class="btn btn-primary"><i class="key-code">B</i>uild</a>';
+        buildOptionsHtml += '</div>';
+        $('#build-options').innerHTML = buildOptionsHtml;
+
         this.render();
     },
 

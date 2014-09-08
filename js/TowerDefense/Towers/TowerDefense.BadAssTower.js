@@ -11,7 +11,7 @@ TowerDefense.BadAssTower = function () {
         speed: 500,
         range: 75
     }
-    this.icon = 'default.png';
+    this.icon = 'tower-03.png';
     this.material = new THREE.MeshLambertMaterial( { color: 0xcccccc } );
     this.materialEmissive = '0xcecece';
 
