@@ -125,7 +125,9 @@ TowerDefense.Enemy.prototype.removeHealth = function(health) {
     if (this.stats.hp <= 0) {
         TowerDefense.stats.score += this.stats.score;
         TowerDefense.stats.resources += this.stats.resources;
-        TowerDefense.objects[this.id].tween.stop();
+        if (typeof TowerDefense.objects[this.id].tween.stop == 'function') {
+            TowerDefense.objects[this.id].tween.stop();
+        }
         this.remove();
     }
 
