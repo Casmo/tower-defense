@@ -99,13 +99,29 @@ var TowerDefense = TowerDefense || {
      */
     time: Date.now(),
 
-    /**
-     * Holds the a* object for calculating paths
-     * @todo remove
-     */
+    FindPath: new Worker("js/TowerDefense/Core/Worker.PathFinder.js"),
 
 
     initialize: function() {
+
+
+        this.FindPath.addEventListener("message", function (oEvent) {
+            if (oEvent.data.returnAttributes != null && oEvent.data.returnAttributes.moveObject != null && TowerDefense.objects[oEvent.data.returnAttributes.moveObject] != null) {
+                TowerDefense.objects[oEvent.data.returnAttributes.moveObject].move(oEvent.data.path);
+            }
+            if (oEvent.data.returnAttributes != null && oEvent.data.returnAttributes.buildTower != null) {
+                var tower = TowerDefense.availableTowers[oEvent.data.returnAttributes.buildTower].object();
+                tower.create();
+                tower.spawn(TowerDefense.selectedObject);
+                TowerDefense.stats.resources -= tower.stats.costs;
+                tower.add();
+                TowerDefense.Ui.selectedTower = null;
+                TowerDefense.deselectAll();
+                TowerDefense.Ui.clearScene();
+                TowerDefense.Ui.hideBuildMenu();
+                TowerDefense.updateEnemyMovements();
+            }
+        }, false);
 
         TowerDefense.Ui.initialize();
 

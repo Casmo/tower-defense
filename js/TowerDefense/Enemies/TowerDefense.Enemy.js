@@ -66,12 +66,22 @@ TowerDefense.Enemy.prototype.setPath = function () {
         this.gridPosition.y = TowerDefense.startTile.gridPosition.y;
     }
 
-    this.FindPath = new Worker("js/TowerDefense/Core/Worker.PathFinder.js");
-    var self = this;
-    this.FindPath.addEventListener("message", function (oEvent) {
-        self.move(oEvent.data);
-    }, false);
-    this.FindPath.postMessage({grid: TowerDefense.gridPath, start: {x: this.gridPosition.x, y: this.gridPosition.y}, end: {x: TowerDefense.endTile.gridPosition.x, y: TowerDefense.endTile.gridPosition.y}});
+    TowerDefense.FindPath.postMessage(
+      {
+          grid: TowerDefense.gridPath,
+          start: {
+              x: this.gridPosition.x,
+              y: this.gridPosition.y
+          },
+          end: {
+            x: TowerDefense.endTile.gridPosition.x,
+              y: TowerDefense.endTile.gridPosition.y
+          },
+          returnAttributes: {
+              moveObject: this.id
+          }
+      }
+    );
 
 }
 

@@ -5,21 +5,29 @@
  */
 self.addEventListener('message', function(e) {
     var data = e.data; // holds a json object with nodes, start, end
+    var returnAttributes = {};
+    if (data.returnAttributes != null) {
+        returnAttributes = data.returnAttributes;
+    }
     var nodes = [];
     if (data.grid == null || data.grid.length == 0) {
         self.postMessage('');
-        self.close();
-        return;
     }
-    for (var x = 0; x < data.grid.length; x++) {
-        nodes[x] = [];
-        for (var y = 0; y < data.grid[x].length; y++) {
-            nodes[x][y] = new GraphNode(x, y, data.grid[x][y]);
+    else {
+        for (var x = 0; x < data.grid.length; x++) {
+            nodes[x] = [];
+            for (var y = 0; y < data.grid[x].length; y++) {
+                nodes[x][y] = new GraphNode(x, y, data.grid[x][y]);
+            }
+        }
+        var result = astar.search(nodes, nodes[data.start.x][data.start.y], nodes[data.end.x][data.end.y]);
+        if (result == '') {
+            self.postMessage('');
+        }
+        else {
+            self.postMessage({path: result, returnAttributes: returnAttributes});
         }
     }
-    var result = astar.search(nodes, nodes[data.start.x][data.start.y], nodes[data.end.x][data.end.y]);
-    self.postMessage(result);
-    self.close();
 });
 
 // javascript-astar

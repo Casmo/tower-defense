@@ -237,7 +237,8 @@ TowerDefense.Ui = {
         if (TowerDefense.selectedObject.id == null) {
             return;
         }
-        var tower = TowerDefense.availableTowers[this.selectedTower].object();
+        var selectedTower = this.selectedTower;
+        var tower = TowerDefense.availableTowers[selectedTower].object();
 
         if (tower.stats.costs > TowerDefense.stats.resources) {
             $('#build-info').innerHTML = 'Not enough money.';
@@ -258,20 +259,7 @@ TowerDefense.Ui = {
                 }
             }
             testGrid[TowerDefense.selectedObject.gridPosition.x][TowerDefense.selectedObject.gridPosition.y] = false;
-
-            var FindPath = new Worker("js/TowerDefense/Core/Worker.PathFinder.js?t=" + Date.now());
-//            var self = this;
-            FindPath.addEventListener("message", function (oEvent) {
-                if (oEvent.data != "") {
-                    tower.create();
-                    tower.spawn(TowerDefense.selectedObject);
-                }
-                TowerDefense.Ui.selectedTower = null;
-                TowerDefense.deselectAll();
-                TowerDefense.Ui.clearScene();
-                TowerDefense.Ui.hideBuildMenu();
-            }, false);
-            FindPath.postMessage(
+            TowerDefense.FindPath.postMessage(
               {
                   grid: testGrid,
                   start: {
@@ -281,6 +269,9 @@ TowerDefense.Ui = {
                   end: {
                       x: TowerDefense.endTile.gridPosition.x,
                       y: TowerDefense.endTile.gridPosition.y
+                  },
+                  returnAttributes: {
+                      buildTower: selectedTower
                   }
               }
             );
@@ -288,8 +279,6 @@ TowerDefense.Ui = {
         else {
             tower.create();
             tower.spawn(TowerDefense.selectedObject);
-            TowerDefense.updateEnemyMovements();
-            TowerDefense.stats.resources -= tower.stats.costs;
             tower.add();
             this.selectedTower = null;
             TowerDefense.deselectAll();
