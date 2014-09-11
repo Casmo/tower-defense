@@ -6,6 +6,11 @@
 self.addEventListener('message', function(e) {
     var data = e.data; // holds a json object with nodes, start, end
     var nodes = [];
+    if (data.grid == null || data.grid.length == 0) {
+        self.postMessage('');
+        self.close();
+        return;
+    }
     for (var x = 0; x < data.grid.length; x++) {
         nodes[x] = [];
         for (var y = 0; y < data.grid[x].length; y++) {

@@ -56,18 +56,6 @@ TowerDefense.Tower.prototype.spawn = function(tileObject) {
         return false;
     }
 
-    // @todo implement this
-    if (false && this.collisionable == true) {
-        // First check if it is allowed...
-        var testGrid = TowerDefense.grid;
-        testGrid[tileObject.gridPosition.x][tileObject.gridPosition.y].open = false;
-        //if (result == '') {
-        //  return false;
-        // }
-        TowerDefense.grid[tileObject.gridPosition.x][tileObject.gridPosition.y].open = false;
-        TowerDefense.gridPath[tileObject.gridPosition.x][tileObject.gridPosition.y] = false;
-    }
-
     if (this.collisionable == true) {
         TowerDefense.grid[tileObject.gridPosition.x][tileObject.gridPosition.y].open = false;
         TowerDefense.gridPath[tileObject.gridPosition.x][tileObject.gridPosition.y] = false;

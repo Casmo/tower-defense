@@ -237,7 +237,6 @@ TowerDefense.Ui = {
         if (TowerDefense.selectedObject.id == null) {
             return;
         }
-        this.clearScene();
         var tower = TowerDefense.availableTowers[this.selectedTower].object();
 
         if (tower.stats.costs > TowerDefense.stats.resources) {
@@ -245,17 +244,58 @@ TowerDefense.Ui = {
             return;
         }
 
-        tower.create();
+        if (tower.collisionable == true) {
+            // First check if it is allowed...
+            var testGrid = [];//TowerDefense.gridPath.slice();
+            for (var i = 0; i < TowerDefense.gridPath.length; i++) {
+                testGrid[i] = [];
+                for (var j = 0; j < TowerDefense.gridPath[i].length; j++) {
+                    var open = true;
+                    if (TowerDefense.gridPath[i][j] == false) {
+                        open = false;
+                    }
+                    testGrid[i][j] = open;
+                }
+            }
+            testGrid[TowerDefense.selectedObject.gridPosition.x][TowerDefense.selectedObject.gridPosition.y] = false;
 
-        if (tower.spawn(TowerDefense.selectedObject) === false) {
-            return;
+            var FindPath = new Worker("js/TowerDefense/Core/Worker.PathFinder.js?t=" + Date.now());
+//            var self = this;
+            FindPath.addEventListener("message", function (oEvent) {
+                if (oEvent.data != "") {
+                    tower.create();
+                    tower.spawn(TowerDefense.selectedObject);
+                }
+                TowerDefense.Ui.selectedTower = null;
+                TowerDefense.deselectAll();
+                TowerDefense.Ui.clearScene();
+                TowerDefense.Ui.hideBuildMenu();
+            }, false);
+            FindPath.postMessage(
+              {
+                  grid: testGrid,
+                  start: {
+                      x: TowerDefense.startTile.gridPosition.x,
+                      y: TowerDefense.startTile.gridPosition.y
+                  },
+                  end: {
+                      x: TowerDefense.endTile.gridPosition.x,
+                      y: TowerDefense.endTile.gridPosition.y
+                  }
+              }
+            );
         }
-        TowerDefense.stats.resources -= tower.stats.costs;
-        tower.add();
-        this.hideBuildMenu();
-        TowerDefense.deselectAll();
-        TowerDefense.updateEnemyMovements();
-        this.selectedTower = null;
+        else {
+            tower.create();
+            tower.spawn(TowerDefense.selectedObject);
+            TowerDefense.updateEnemyMovements();
+            TowerDefense.stats.resources -= tower.stats.costs;
+            tower.add();
+            this.selectedTower = null;
+            TowerDefense.deselectAll();
+            this.clearScene();
+            TowerDefense.Ui.hideBuildMenu();
+        }
     },
 
     /**
