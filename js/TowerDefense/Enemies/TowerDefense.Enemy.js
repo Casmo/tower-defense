@@ -68,7 +68,7 @@ TowerDefense.Enemy.prototype.setPath = function () {
               y: this.gridPosition.y
           },
           end: {
-            x: TowerDefense.endTile.gridPosition.x,
+              x: TowerDefense.endTile.gridPosition.x,
               y: TowerDefense.endTile.gridPosition.y
           },
           returnAttributes: {
