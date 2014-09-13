@@ -215,7 +215,8 @@ var TowerDefense = TowerDefense || {
             TowerDefense.scene.remove(object.object);
         }
         if (object.tween != null) {
-            TWEEN.remove(object.tween);
+            // This is buggy...
+            //TWEEN.remove(object.tween);
         }
         delete(this.objects[object.id]);
         if (this.enemyObjects[object.id] != null) {

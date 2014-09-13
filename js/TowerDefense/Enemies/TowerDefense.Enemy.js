@@ -90,7 +90,7 @@ TowerDefense.Enemy.prototype.move = function(result) {
     var position = { x: this.object.position.x, y: this.object.position.y };
     // Get the 3D position of the current result
     this.path.push(position);
-    for (i = 0; i < result.length; i++) {
+    for (var i = 0; i < result.length; i++) {
         position = { x: 0, y: 0 };
         // Get the 3D position of the current result
         position.x = TowerDefense.grid[result[i].x][result[i].y].object.position.x;
@@ -100,7 +100,7 @@ TowerDefense.Enemy.prototype.move = function(result) {
     }
     var duration = (this.path.length + 1) * this.stats.speed;
     duration *= 1000;
-    var dummy = { p: 0, object: this };
+    var dummy = { p: 0, object: this, objectId: this.id };
     var spline = new TowerDefense.Spline();
 //    var self = this;
     this.tween = new TWEEN.Tween( dummy )
@@ -113,7 +113,7 @@ TowerDefense.Enemy.prototype.move = function(result) {
       })
       .onComplete( function () {
           TowerDefense.stats.lives--;
-          this.object.endPath();
+          this.object.remove();
       } )
       .start();
 }
@@ -148,7 +148,8 @@ TowerDefense.Enemy.prototype.update = function() {
  */
 TowerDefense.Enemy.prototype.endPath = function() {
 
+    console.log(this.id);
     // Fix that only the current enemy will deletes it's tween.
-    this.remove();
+    //this.remove();
 
 }
