@@ -26,6 +26,7 @@ TowerDefense.Tower = function () {
     this.shootingTargetIndex = -1;
     this.lastShot = Date.now();
     this.bullet = function () { return new TowerDefense.Bullet(); };
+    this.bulletOffset = { x: 0, y: 0, z: 0 };
 
 }
 // @todo create prototype
@@ -87,9 +88,9 @@ TowerDefense.Tower.prototype.shoot = function () {
         var bullet = this.bullet();
         bullet.create();
         bullet.targetIndex = this.shootingTargetIndex;
-        bullet.object.position.x = this.object.parent.position.x;
-        bullet.object.position.y = this.object.parent.position.y;
-        bullet.object.position.z = this.object.parent.position.z;
+        bullet.object.position.x = this.object.parent.position.x + this.bulletOffset.x;
+        bullet.object.position.y = this.object.parent.position.y + this.bulletOffset.y;
+        bullet.object.position.z = this.object.parent.position.z + this.bulletOffset.z;
         TowerDefense.scene.add(bullet.object);
         TowerDefense.__addObject(bullet);
     }

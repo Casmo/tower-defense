@@ -13,8 +13,7 @@ TowerDefense.Bullet = function () {
     this.deadTimer = 120; // 120 = 120 / 60fps = 2 sec
 
     this.targetIndex = -1;
-    this.material = new THREE.MeshBasicMaterial( { color: 0xff9900 } );
-    this.geometry = new THREE.BoxGeometry( .5, .5, .5 );
+    this.meshSprite = 'bullet-01';
 
     this.receiveShadow = false;
     this.castShadow = false;

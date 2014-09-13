@@ -25,6 +25,7 @@ TowerDefense.Element = function () {
     this.receiveShadow = true;
     this.castShadow = true;
     this.meshObject = ''; // Key with object. @see TowerDefense.meshObjects
+    this.meshSprite = '';
 
     this.materialEmissive = '0x000000';
 
@@ -59,6 +60,14 @@ TowerDefense.Element.prototype = {
      * Creates the three.js mesh with this.material and this.geometry.
      */
     create: function() {
+
+        if (this.meshSprite != null && this.meshSprite != '') {
+            var texture = TowerDefense.meshTextures[this.meshSprite];
+            texture = texture.texture;
+            this.material = new THREE.SpriteMaterial( { map: texture, color: 0xffffff, fog: true } );
+            this.object = new THREE.Sprite( this.material );
+            return this.object;
+        }
 
         if (this.meshObject != null && this.meshObject != '') {
             var refObject = TowerDefense.meshObjects[this.meshObject];

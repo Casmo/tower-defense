@@ -51,6 +51,10 @@ TowerDefense.Level1 = function () {
             'file': 'assets/towers/tower-03.jpg'
         },
         {
+            'key': 'bullet-01',
+            'file': 'assets/towers/bullet-01.png'
+        },
+        {
             'key': 'level-01',
             'file': 'assets/levels/level-01_COLOR.png'
         },
