@@ -16,6 +16,7 @@ function init() {
 
 function newGame() {
 
+    TowerDefense.Ui.clearScene(TowerDefense.scene);
     TowerDefense.scene = new THREE.Scene();
     TowerDefense.camera = new THREE.PerspectiveCamera( 40, TowerDefense.gameWidth / TowerDefense.gameHeight, 0.1, 1000 );
     TowerDefense.camera.position.x = 60;
@@ -160,14 +161,6 @@ function level1() {
     decoTile.object.position.z = -.6;
     decoTile.add();
     TowerDefense.scene.add(decoTile.object);
-//    var sunGeometry = new THREE.SphereGeometry (10, 20, 20);
-//    var sunMaterial = new THREE.MeshBasicMaterial ({color: 0xffff00 });
-//    var sunMesh = new THREE.Mesh (sunGeometry, sunMaterial );
-//    var sunLight = new THREE.SpotLight (0xffffea, 1);
-//    sunMesh.add(sunLight);
-//    sunMesh.position.y = 300;
-//    sunMesh.position.z = 100;
-//    TowerDefense.scene.add(sunMesh);
 
     var hemiLight = new THREE.HemisphereLight( 0xf3fdff, 0xf7fff3, 0.6); // sky, ground, intensity
     hemiLight.position.set( 0, 0, 50 );

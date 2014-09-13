@@ -104,7 +104,7 @@ var TowerDefense = TowerDefense || {
 
     initialize: function() {
 
-
+        // FindPath WebWorker
         this.FindPath.addEventListener("message", function (oEvent) {
             if (oEvent.data.returnAttributes != null && oEvent.data.returnAttributes.moveObject != null && TowerDefense.objects[oEvent.data.returnAttributes.moveObject] != null) {
                 TowerDefense.objects[oEvent.data.returnAttributes.moveObject].move(oEvent.data.path);
@@ -123,14 +123,14 @@ var TowerDefense = TowerDefense || {
             }
         }, false);
 
-        TowerDefense.Ui.initialize();
-
         this.manager = new THREE.LoadingManager();
         this.manager.onProgress = function ( item, loaded, total ) {
 
             TowerDefense.Ui.loadingProgress(item, loaded, total);
 
         };
+
+        TowerDefense.Ui.initialize();
 
     },
 

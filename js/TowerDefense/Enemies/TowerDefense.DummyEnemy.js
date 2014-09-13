@@ -6,8 +6,8 @@
  */
 TowerDefense.DummyEnemy = function () {
 
-    this.isDummy = true;
     TowerDefense.Enemy.call( this );
+    this.isDummy = true;
     this.stats.speed = .1;
     this.geometry = new THREE.SphereGeometry(.5, 16, 8 );
 

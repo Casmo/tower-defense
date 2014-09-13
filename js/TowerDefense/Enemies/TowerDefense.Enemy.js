@@ -3,12 +3,7 @@ TowerDefense.Enemy = function () {
     TowerDefense.Element.call( this );
 
     this.type = 'ENEMY';
-
-    /**
-     * Current 3D position in the world
-     * @type {{x: number, y: number, z: number}}
-     */
-    this.position = { x: 0, y: 0, z: 1 };
+    this.isDummy = false;
 
     /**
      * Array with 3D points to move along
@@ -31,7 +26,6 @@ TowerDefense.Enemy = function () {
 
     this.material = new THREE.MeshLambertMaterial( { color: 0xff0000 } );
     this.geometry = new THREE.BoxGeometry( .85, .85, 2 );
-    this.FindPath = ''; // Holds a Web Worker
 }
 
 TowerDefense.Enemy.prototype = Object.create( TowerDefense.Element.prototype );
