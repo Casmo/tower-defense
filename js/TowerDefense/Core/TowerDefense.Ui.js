@@ -29,6 +29,8 @@ TowerDefense.Ui = {
         window.addEventListener("resize", this.windowResized, false);
         document.addEventListener('keyup', this.keyup, false);
 
+        $('#game-options').innerHTML = '<a onclick="newGame();" class="btn btn-primary"><i class="key-code">N</i>ew game</a>';
+
         /**
          * Updates game stats and related dom elements if they exists.
          * @todo do this with some sort of data binding attribute.
