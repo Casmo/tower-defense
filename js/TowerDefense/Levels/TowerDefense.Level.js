@@ -1,5 +1,7 @@
 TowerDefense.Level = function () {
 
+    this.timer = 0;
+
     /**
      * List with timing and monsters
      * @type {Array}
@@ -60,6 +62,17 @@ TowerDefense.Level = function () {
 
 TowerDefense.Level.prototype.constructor = TowerDefense.Level;
 
+TowerDefense.Level.prototype.update = function() {
+
+    this.timer++;
+
+    if (this.waves[this.timer] != null) {
+        if (typeof this.waves[this.timer].callback == 'function') {
+            this.waves[this.timer].callback();
+        }
+    }
+}
+
 /**
  * Loads all objects for this level.
  * @param callback the callback after finishing loading. Default this.start
@@ -85,6 +98,7 @@ TowerDefense.Level.prototype.start = function () {
         $('#game').appendChild( TowerDefense.renderer.domElement );
         render();
         TowerDefense.Ui.initializeControls(TowerDefense.camera);
+        TowerDefense.currentLevel = self;
     });
 
 }

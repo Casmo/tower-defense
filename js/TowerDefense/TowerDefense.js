@@ -1,9 +1,9 @@
 var TowerDefense = TowerDefense || {
 
     revision: 1,
-    __currentLevel: 1,
     __pause: true,
     __loading: false,
+    currentLevel: {}, // Holds the object of the current level
     gameWidth: window.innerWidth,
     gameHeight: window.innerHeight,
     /**
@@ -234,6 +234,10 @@ var TowerDefense = TowerDefense || {
         });
 
         TWEEN.update();
+
+        if (this.currentLevel.update != null) {
+            this.currentLevel.update();
+        }
 
         TowerDefense.Ui.update();
 
