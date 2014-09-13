@@ -14,7 +14,7 @@ or help bug testing. See CONTRIBUTE for more information.
 ## Links
 * [Working demo](http://www.fellicht.nl/games/tower-defense/)
 * [fellicht.nl](http://www.fellicht.nl)
-* [blog.fellicht.nl](http://www.fellicht.nl)
+* [blog.fellicht.nl](http://blog.fellicht.nl)
 
 ### Todo
 1. Making waves
