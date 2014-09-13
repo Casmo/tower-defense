@@ -8,40 +8,9 @@ function render() {
 
 }
 
-function init() {
-
-    TowerDefense.initialize();
-
-}
+TowerDefense.initialize();
 
 function newGame() {
-
-    TowerDefense.Ui.clearScene(TowerDefense.scene);
-    TowerDefense.scene = new THREE.Scene();
-    TowerDefense.camera = new THREE.PerspectiveCamera( 40, TowerDefense.gameWidth / TowerDefense.gameHeight, 0.1, 1000 );
-    TowerDefense.camera.position.x = 60;
-    TowerDefense.camera.position.y = -110;
-    TowerDefense.camera.position.z = 80;
-    TowerDefense.camera.up = new THREE.Vector3(0,0,1);
-    TowerDefense.camera.lookAt(new THREE.Vector3(0,0,0));
-    TowerDefense.renderer = new THREE.WebGLRenderer();
-    TowerDefense.renderer.setSize( TowerDefense.gameWidth, TowerDefense.gameHeight );
-
-    TowerDefense.renderer.shadowMapEnabled = true;
-    TowerDefense.renderer.shadowMapSoft = true;
-
-    TowerDefense.renderer.shadowCameraNear = 3;
-    TowerDefense.renderer.shadowCameraFar = TowerDefense.camera.far;
-    TowerDefense.renderer.shadowCameraFov = 50;
-
-    TowerDefense.renderer.shadowMapBias = 0.0039;
-    TowerDefense.renderer.shadowMapDarkness = 0.5;
-    TowerDefense.renderer.shadowMapWidth = 1024;
-    TowerDefense.renderer.shadowMapHeight = 1024;
-
-    TowerDefense.projector = new THREE.Projector();
-    cancelAnimationFrame(gameRender);
-    $('#game').innerHTML = '';
 
     new TowerDefense.Level1().start();
 }
@@ -63,5 +32,3 @@ function spawnEnemy(type) {
     TowerDefense.scene.add(enemy.object);
     enemy.setPath();
 }
-
-init();

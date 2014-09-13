@@ -39,7 +39,6 @@ TowerDefense.Level = function () {
      */
     this.grid = [];
     this.grid[0] = [];
-    this.grid[10] = [];
     this.grid[0][0] = {
         object: function() {
             return new TowerDefense.StartTile();
@@ -48,6 +47,7 @@ TowerDefense.Level = function () {
             TowerDefense.startTile = tile;
         }
     };
+    this.grid[10] = [];
     this.grid[10][10] = {
         object: function() {
             return new TowerDefense.EndTile();
@@ -79,7 +79,7 @@ TowerDefense.Level.prototype.start = function () {
 
     var self = this;
     this.load(function() {
-        // Do stuff
+        self.createScene();
         self.createGrid();
         self.createDecoration();
         $('#game').appendChild( TowerDefense.renderer.domElement );
@@ -89,20 +89,57 @@ TowerDefense.Level.prototype.start = function () {
 
 }
 
+TowerDefense.Level.prototype.createScene = function () {
+
+    TowerDefense.Ui.clearScene(TowerDefense.scene);
+    TowerDefense.scene = new THREE.Scene();
+    TowerDefense.camera = new THREE.PerspectiveCamera( 40, TowerDefense.gameWidth / TowerDefense.gameHeight, 0.1, 1000 );
+    TowerDefense.camera.position.x = 60;
+    TowerDefense.camera.position.y = -110;
+    TowerDefense.camera.position.z = 80;
+    TowerDefense.camera.up = new THREE.Vector3(0,0,1);
+    TowerDefense.camera.lookAt(new THREE.Vector3(0,0,0));
+    TowerDefense.renderer = new THREE.WebGLRenderer();
+    TowerDefense.renderer.setSize( TowerDefense.gameWidth, TowerDefense.gameHeight );
+
+    TowerDefense.renderer.shadowMapEnabled = true;
+    TowerDefense.renderer.shadowMapSoft = true;
+
+    TowerDefense.renderer.shadowCameraNear = 3;
+    TowerDefense.renderer.shadowCameraFar = TowerDefense.camera.far;
+    TowerDefense.renderer.shadowCameraFov = 50;
+
+    TowerDefense.renderer.shadowMapBias = 0.0039;
+    TowerDefense.renderer.shadowMapDarkness = 0.5;
+    TowerDefense.renderer.shadowMapWidth = 1024;
+    TowerDefense.renderer.shadowMapHeight = 1024;
+
+    TowerDefense.projector = new THREE.Projector();
+    cancelAnimationFrame(gameRender);
+    $('#game').innerHTML = '';
+
+}
+
 TowerDefense.Level.prototype.createGrid = function() {
 
     var x = 0;
     var y = 0;
     var tile = {};
-
     for (var i = 0; i <= this.sizes.x; i++ ) {
+
         x = i;
+        if (this.grid[x] == null) {
+            this.grid[x] = [];
+        }
         TowerDefense.grid[x] = [];
         TowerDefense.gridPath[x] = [];
         for (var j = 0; j <= this.sizes.y; j++) {
-            y = j;
 
-            if (this.grid[x] != null && this.grid[x][y] != null && typeof this.grid[x][y].object == 'function') {
+            y = j;
+            if (this.grid[x][y] == null) {
+                this.grid[x][y] = [];
+            }
+            if (typeof this.grid[x][y].object == 'function') {
                 tile = this.grid[x][y].object();
                 if (typeof this.grid[x][y].callback == 'function') {
                     this.grid[x][y].callback(tile);
@@ -111,7 +148,6 @@ TowerDefense.Level.prototype.createGrid = function() {
             else {
                 tile = new TowerDefense.BasicTile();
             }
-            console.log(tile);
             tile.gridPosition = { x: x, y: y };
             TowerDefense.grid[x][y] = tile;
             TowerDefense.gridPath[x][y] = tile.open;
@@ -122,7 +158,9 @@ TowerDefense.Level.prototype.createGrid = function() {
             tile.object.position.x = positionX;
             tile.object.position.y = positionY;
             TowerDefense.scene.add(tile.object);
+
         }
+
     }
 
 }
