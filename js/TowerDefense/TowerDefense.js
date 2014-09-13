@@ -135,7 +135,7 @@ var TowerDefense = TowerDefense || {
     },
 
     /**
-     * Loops throught this.meshObjects and this.meshTextures and loads (and fills) the
+     * Loops through this.meshObjects and this.meshTextures and loads (and fills) the
      * files.
      * @param callback
      */
@@ -157,7 +157,7 @@ var TowerDefense = TowerDefense || {
                 meshLoader.load( mesh.file, function ( object ) {
                     TowerDefense.meshObjects[key].object = object.children[0];
                     totalLoaded--;
-                    finishedLoading();
+                    finishLoading();
                 } );
             }
         });
@@ -176,12 +176,12 @@ var TowerDefense = TowerDefense || {
                     TowerDefense.meshTextures[key].texture.needsUpdate = true;
 
                     totalLoaded--;
-                    finishedLoading();
+                    finishLoading();
                 } );
             }
         });
 
-        var finishedLoading = function() {
+        var finishLoading = function() {
             if (totalLoaded <= 0 && typeof callback == 'function') {
                 callback();
             }
