@@ -29,11 +29,14 @@ TowerDefense.Bullet.prototype.remove = function () {
 
 }
 
+/**
+ * Update the bullet a little closer towards it target.
+ * @return void
+ */
 TowerDefense.Bullet.prototype.update = function() {
 
-    // Move closer to targetIndex position or delete when it hits or is already destroyed
+    // Continue moving the bullet in a straight line after the target is destroyed from another object
     if (TowerDefense.objects[this.targetIndex] == null) {
-
         this.object.position.x -= this.lastMovement.x;
         this.object.position.y -= this.lastMovement.y;
         this.object.position.z -= this.lastMovement.z;
@@ -46,8 +49,10 @@ TowerDefense.Bullet.prototype.update = function() {
         }
         return;
     }
+
     var target = TowerDefense.objects[this.targetIndex];
 
+    // Simple collision detection
     if (TowerDefense.inRange(target.object.position, this.object.position,1,false)) {
         TowerDefense.objects[this.targetIndex].removeHealth(this.stats.damage);
         this.remove();
@@ -67,19 +72,9 @@ TowerDefense.Bullet.prototype.update = function() {
     // 1%
     var one = 100 / (moveX + moveY + moveZ);
 
-    moveX = one * moveX * this.stats.speed;
-    moveY = one * moveY * this.stats.speed;
-    moveZ = one * moveZ * this.stats.speed;
-
-    if (moveXOrg < 0) {
-        moveX = moveX-moveX-moveX;
-    }
-    if (moveYOrg < 0) {
-        moveY = moveY-moveY-moveY;
-    }
-    if (moveZOrg < 0) {
-        moveZ = moveZ-moveZ-moveZ;
-    }
+    moveX = one * moveXOrg * this.stats.speed;
+    moveY = one * moveYOrg * this.stats.speed;
+    moveZ = one * moveZOrg * this.stats.speed;
 
     this.lastMovement = { x: moveX, y: moveY, z: moveZ };
 
