@@ -14,6 +14,7 @@ TowerDefense.BadAssTower = function () {
     this.icon = 'tower-03.png';
     this.material = new THREE.MeshLambertMaterial( { color: 0xcccccc } );
     this.materialEmissive = '0xcecece';
+    this.bulletOffset = { x: 0, y: 0, z: 7.8 };
 
 }
 

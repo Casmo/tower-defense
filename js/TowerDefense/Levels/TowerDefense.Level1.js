@@ -2,22 +2,17 @@ TowerDefense.Level1 = function () {
 
     TowerDefense.Level.call( this );
 
-    this.waves[500] = { callback: function() { spawnEnemy(); } };
-    this.waves[510] = { callback: function() { spawnEnemy(); } };
-    this.waves[520] = { callback: function() { spawnEnemy(); } };
-    this.waves[530] = { callback: function() { spawnEnemy(); } };
-    this.waves[540] = { callback: function() { spawnEnemy(); } };
-    this.waves[550] = { callback: function() { spawnEnemy(); } };
-    this.waves[560] = { callback: function() { spawnEnemy(); } };
-    this.waves[570] = { callback: function() { spawnEnemy(); } };
-    this.waves[580] = { callback: function() { spawnEnemy(); } };
-    this.waves[590] = { callback: function() { spawnEnemy(); } };
-    this.waves[600] = { callback: function() { spawnEnemy(); } };
-    this.waves[610] = { callback: function() { spawnEnemy(); } };
-    this.waves[620] = { callback: function() { spawnEnemy(); } };
-    this.waves[630] = { callback: function() { spawnEnemy(); } };
-    this.waves[640] = { callback: function() { spawnEnemy(); } };
-    this.waves[650] = { callback: function() { spawnEnemy(); } };
+    this.waves[100] = {
+        callback: function() {
+            spawnEnemy('dummy');
+        }
+    };
+    this.waves[1500] = {
+        callback: function() {
+            var interval = setInterval(spawnEnemy, 500);
+            setTimeout(function() { clearInterval(interval); }, 3000);
+        }
+    };
 
     this.meshes = [
         {

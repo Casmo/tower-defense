@@ -14,6 +14,7 @@ TowerDefense.AdvancedTower = function () {
     this.icon = 'tower-02.png';
     this.material = new THREE.MeshLambertMaterial( { color: 0xcccccc } );
     this.materialEmissive = '0xfffde8';
+    this.bulletOffset = { x: 0, y: 0, z: 4.8 };
 
 }
 

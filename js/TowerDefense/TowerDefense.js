@@ -353,9 +353,7 @@ var TowerDefense = TowerDefense || {
             return sorted[0][0];
         }
         else if (this.settings.enemyFinder == 'random' && returnIndex.length > 0) {
-            console.log('finding random', returnIndex);
             returnIndex = returnIndex[Math.floor(Math.random() * returnIndex.length)];
-            console.log(returnIndex);
             return returnIndex;
         }
         else {

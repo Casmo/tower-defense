@@ -119,8 +119,7 @@ TowerDefense.Enemy.prototype.move = function(result, duration) {
           this.object.object.position.y = position.y;
       })
       .onComplete( function () {
-          TowerDefense.stats.lives--;
-          this.object.remove();
+          this.object.endPath();
       } )
       .start();
 }
@@ -147,4 +146,9 @@ TowerDefense.Enemy.prototype.removeHealth = function(health) {
 TowerDefense.Enemy.prototype.update = function() {
 
 
+}
+
+TowerDefense.Enemy.prototype.endPath = function() {
+    TowerDefense.stats.lives--;
+    this.remove();
 }

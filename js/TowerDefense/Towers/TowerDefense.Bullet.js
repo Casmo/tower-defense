@@ -6,11 +6,11 @@ TowerDefense.Bullet = function () {
 
     this.stats = {
         damage: 1,
-        speed: .02 // Movement in units.
+        speed: .01 // Movement in units.
     }
 
     this.lastMovement = {};
-    this.deadTimer = 120; // 120 = 120 / 60fps = 2 sec
+    this.deadTimer = 180; // 120 = 120 / 60fps = 2 sec
 
     this.targetIndex = -1;
     this.meshSprite = 'bullet-01';
@@ -48,7 +48,7 @@ TowerDefense.Bullet.prototype.update = function() {
     }
     var target = TowerDefense.objects[this.targetIndex];
 
-    if (TowerDefense.inRange(target.object.position, this.object.position,1)) {
+    if (TowerDefense.inRange(target.object.position, this.object.position,1,false)) {
         TowerDefense.objects[this.targetIndex].removeHealth(this.stats.damage);
         this.remove();
         return;

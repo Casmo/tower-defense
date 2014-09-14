@@ -24,6 +24,9 @@ function spawnEnemy(type) {
     if (type != null && type == 'ufo') {
         var enemy = new TowerDefense.UfoEnemy();
     }
+    else if (type != null && type == 'dummy') {
+        var enemy = new TowerDefense.DummyEnemy();
+    }
     else {
         var enemy = new TowerDefense.BasicEnemy();
     }
