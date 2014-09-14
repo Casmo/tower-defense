@@ -3,8 +3,8 @@ var gameRender;
 function render() {
 
     gameRender = requestAnimationFrame(render, null);
-    TowerDefense.update();
     TowerDefense.renderer.render(TowerDefense.scene, TowerDefense.camera);
+    TowerDefense.update();
 
 }
 

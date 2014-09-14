@@ -50,8 +50,6 @@ TowerDefense.Enemy.prototype.setPath = function () {
     this.removeTween();
     // Set the path from the current position (x, y) to the end position (x,y)
     if (typeof this.gridPosition == 'undefined') {
-        console.log(this);
-        return false;
         this.gridPosition = { x: -1, y: -1 };
     }
     if (this.gridPosition.x == -1) {
@@ -60,7 +58,6 @@ TowerDefense.Enemy.prototype.setPath = function () {
     if (this.gridPosition.y == -1) {
         this.gridPosition.y = TowerDefense.startTile.gridPosition.y;
     }
-
     TowerDefense.FindPath.postMessage(
       {
           grid: TowerDefense.gridPath,
@@ -80,7 +77,13 @@ TowerDefense.Enemy.prototype.setPath = function () {
 
 }
 
-TowerDefense.Enemy.prototype.move = function(result) {
+/**
+ * Creates a bezier curve tween from the a* result
+ * @param result the a* result
+ * @param duration int duration in ms
+ * @returns {boolean}
+ */
+TowerDefense.Enemy.prototype.move = function(result, duration) {
     if (result == '') {
         console.log('Enemy path cannot be calculated.');
         return false;
@@ -99,9 +102,12 @@ TowerDefense.Enemy.prototype.move = function(result) {
         position.gridPosition = { x: result[i].x, y: result[i].y };
         this.path.push(position);
     }
-    var duration = (this.path.length + 1) * this.stats.speed;
-    duration *= 1000;
-    var dummy = { p: 0, object: this, objectId: this.id };
+    if (duration == null) {
+        duration = (this.path.length + 1) * this.stats.speed;
+        duration *= 1000;
+    }
+    // @todo To make it look more smooth we need to calculate the current position to the first position and use the difference of a tile size to adjust the duration.
+    var dummy = { p: 0, object: this };
     var spline = new TowerDefense.Spline();
 //    var self = this;
     this.tween = new TWEEN.Tween( dummy )
@@ -140,17 +146,5 @@ TowerDefense.Enemy.prototype.removeHealth = function(health) {
 
 TowerDefense.Enemy.prototype.update = function() {
 
-
-}
-
-/**
- * Callback after the end of movement.
- * @todo Remove a life or something.
- */
-TowerDefense.Enemy.prototype.endPath = function() {
-
-    console.log(this.id);
-    // Fix that only the current enemy will deletes it's tween.
-    //this.remove();
 
 }

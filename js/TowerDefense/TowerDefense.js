@@ -38,7 +38,14 @@ var TowerDefense = TowerDefense || {
 
         debug: false,
         advancedLight: true,
-        advancedMaterials: true
+        advancedMaterials: true,
+        /**
+         * The way a tower finds the enemy in range.
+         * 'first': the first in the global object array (e.g. the first that spawned)
+         * 'random': random enemy from all enemies in range
+         * 'closest': the closest enemy seen from tower
+         */
+        enemyFinder: 'random'
 
     },
 
@@ -282,13 +289,23 @@ var TowerDefense = TowerDefense || {
      * @param posA object with x, y, z
      * @param posB object with x, y, z
      * @param maxDistance range in units
-     * @returns {boolean}
+     * @param returnRange set true to return the range
+     * @returns mixed either boolean for in range or the current range if returnRange is set
      * @todo remove the sqrt function here and add Math.pow to maxDistance. = speed improvement
      */
-    inRange: function(posA, posB, maxDistance) {
+    inRange: function(posA, posB, maxDistance, returnRange) {
 
-        var distance = Math.sqrt( Math.pow(posA.x - posB.x, 2) + Math.pow(posA.y - posB.y, 2) + Math.pow(posA.z - posB.z, 2) );
+        if (returnRange == null) {
+            returnRange = false;
+        }
+
+        // Real distance: var distance = Math.sqrt( Math.pow(posA.x - posB.x, 2) + Math.pow(posA.y - posB.y, 2) + Math.pow(posA.z - posB.z, 2) );
+        var distance = Math.pow(posA.x - posB.x, 2) + Math.pow(posA.y - posB.y, 2) + Math.pow(posA.z - posB.z, 2);
+        maxDistance = Math.pow(maxDistance, 2);
         if (distance <= maxDistance) {
+            if (returnRange == true) {
+                return distance;
+            }
             return true;
         }
         return false;
@@ -304,13 +321,46 @@ var TowerDefense = TowerDefense || {
     findEnemyInRage: function (objectPos, maxDistance) {
 
         var returnIndex = -1;
+        if (this.settings.enemyFinder == 'random' || TowerDefense.settings.enemyFinder == 'closest') {
+            returnIndex = [];
+        }
+        var distance = 0;
         this.enemyObjects.forEach( function (id) {
-            if (TowerDefense.inRange(objectPos, TowerDefense.objects[id].object.position, maxDistance)) {
-                returnIndex = id;
-                return;
+            if (distance = TowerDefense.inRange(objectPos, TowerDefense.objects[id].object.position, maxDistance, true)) {
+                if (TowerDefense.settings.enemyFinder == 'closest') {
+                    returnIndex[id] = distance;
+                }
+                else if (TowerDefense.settings.enemyFinder == 'random') {
+                    returnIndex.push(id);
+                }
+                else {
+                    returnIndex = id;
+                    return;
+                }
             }
         });
-        return returnIndex;
+
+        // @url http://stackoverflow.com/questions/5199901/how-to-sort-an-associative-array-by-its-values-in-javascript
+        if (this.settings.enemyFinder == 'closest' && returnIndex.length > 0) {
+            var sorted = [];
+            for (var key in returnIndex) sorted.push([key, returnIndex[key]]);
+            sorted.sort(function(a, b) {
+                a = a[1];
+                b = b[1];
+
+                return a < b ? -1 : (a > b ? 1 : 0);
+            });
+            return sorted[0][0];
+        }
+        else if (this.settings.enemyFinder == 'random' && returnIndex.length > 0) {
+            console.log('finding random', returnIndex);
+            returnIndex = returnIndex[Math.floor(Math.random() * returnIndex.length)];
+            console.log(returnIndex);
+            return returnIndex;
+        }
+        else {
+            return returnIndex;
+        }
 
     },
 
