@@ -38,6 +38,9 @@ TowerDefense.Bullet.prototype.update = function() {
         this.object.position.y -= this.lastMovement.y;
         this.object.position.z -= this.lastMovement.z;
         this.deadTimer--;
+        if (this.deadTimer < 100) {
+            this.object.material.opacity = (this.deadTimer / 100);
+        }
         if (this.deadTimer <= 0) {
             this.remove();
         }
