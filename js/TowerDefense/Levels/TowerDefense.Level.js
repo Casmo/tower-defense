@@ -105,7 +105,7 @@ TowerDefense.Level.prototype.start = function () {
 
 TowerDefense.Level.prototype.createScene = function () {
 
-    TowerDefense.Ui.clearScene(TowerDefense.scene);
+    TowerDefense.clearScene(TowerDefense.scene);
     TowerDefense.scene = new THREE.Scene();
     TowerDefense.camera = new THREE.PerspectiveCamera( 40, TowerDefense.gameWidth / TowerDefense.gameHeight, 0.1, 1000 );
     TowerDefense.camera.position.x = 60;

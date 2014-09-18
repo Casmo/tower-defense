@@ -3,23 +3,6 @@ Logic Interaction with the game will be placed here.
 */
 TowerDefense.Ui = {
 
-    selectedTower: null,
-
-    /**
-     * Holds THREE.js objects for rendering the WebGL canvas such as scene, camera for the
-     * menu.
-     */
-    scene: {},
-    camera: {},
-    renderer: {},
-    projector: {},
-
-    /**
-     * Holds all the game objects. The .update() function will be called for each main
-     * update.
-     */
-    objects: [],
-
     /**
      * Callback after the game is started.
      */
@@ -28,8 +11,6 @@ TowerDefense.Ui = {
         $('#game').addEventListener('click', this.click, false);
         window.addEventListener("resize", this.windowResized, false);
         document.addEventListener('keyup', this.keyup, false);
-
-        $('#game-options').innerHTML = '<a onclick="newGame();" class="btn btn-primary"><i class="key-code">N</i>ew game</a>';
 
         /**
          * Updates game stats and related dom elements if they exists.
@@ -54,6 +35,42 @@ TowerDefense.Ui = {
         TowerDefense.controls.noPan = false;
         TowerDefense.controls.minPolarAngle = 0; // radians
         TowerDefense.controls.maxPolarAngle = 1.5; // radians
+
+    },
+
+    gameMenu: function () {
+
+        // hide menu
+        for (var i = 0; i < $('.status-menu').length; i++) {
+            $('.status-menu')[i].style.display = 'none';
+        }
+        // hide in-game
+        for (var i = 0; i < $('.status-in-game').length; i++) {
+            $('.status-in-game')[i].style.display = 'none';
+        }
+        // show game menu
+        for (var i = 0; i < $('.status-menu-game').length; i++) {
+            $('.status-menu-game')[i].style.display = 'block';
+        }
+
+    },
+
+    playLevel: function(level) {
+
+        // hide menu
+        for (var i = 0; i < $('.status-menu').length; i++) {
+            $('.status-menu')[i].style.display = 'none';
+        }
+        // show in-game
+        for (var i = 0; i < $('.status-in-game').length; i++) {
+            $('.status-in-game')[i].style.display = 'block';
+        }
+        // show game menu
+        for (var i = 0; i < $('.status-menu-game').length; i++) {
+            $('.status-menu-game')[i].style.display = 'none';
+        }
+
+        new TowerDefense.Level1().start();
 
     },
 
@@ -107,14 +124,17 @@ TowerDefense.Ui = {
         if (key == KeyEvent.DOM_VK_U) {
             spawnEnemy('ufo');
         }
-        if (key == KeyEvent.DOM_VK_B) {
-            TowerDefense.Ui.buildTower();
+        if (key == KeyEvent.DOM_VK_1) {
+            TowerDefense.Ui.buildTower(0);
+        }
+        if (key == KeyEvent.DOM_VK_2) {
+            TowerDefense.Ui.buildTower(1);
+        }
+        if (key == KeyEvent.DOM_VK_3) {
+            TowerDefense.Ui.buildTower(2);
         }
         if (key == KeyEvent.DOM_VK_C || key == KeyEvent.DOM_VK_ESCAPE) {
             TowerDefense.Ui.hideBuildMenu();
-        }
-        if (key == KeyEvent.DOM_VK_N) {
-            newGame();
         }
     },
 
@@ -143,107 +163,39 @@ TowerDefense.Ui = {
      * Displays available towers to place on the selected tile
      */
     showBuildMenu: function() {
-        $('#build-menu').style.display = 'block';
-        $('#build-info').style.display = 'none';
-        this.createScene();
-        this.clearScene();
-
-        $('#build-buildings').innerHTML = '';
-        $('#build-info').innerHTML = '';
         if (TowerDefense.selectedObject.currentTower.id == null) {
+            $('#build-menu').innerHTML = '';
             TowerDefense.availableTowers.forEach(function(tower, index) {
                 var object = tower.object();
-                var image = '<img class="img-circle game-stat" src="assets/towers/' + object.icon +'" />';
-                var link = '<a onclick="TowerDefense.Ui.selectTower('+ index +');">'+ image +'</a>';
-                $('#build-buildings').innerHTML += link;
+                var image = '<img src="assets/towers/' + object.icon +'" />';
+                var link = '<a class="game-stat" onclick="TowerDefense.Ui.buildTower('+ index +');">'+ image +'</a>';
+                $('#build-menu').innerHTML += link;
             });
+            $('#build-menu').style.display = 'block'; // css fade
         }
     },
 
     hideBuildMenu: function() {
-        this.clearScene();
         TowerDefense.deselectAll();
-        $('#build-menu').style.display = 'none';
-    },
-
-    /**
-     * Selects a  and display the information
-     * @param index the index of TowerDefense.availableTowers
-     */
-    selectTower: function (index) {
-        if (TowerDefense.selectedObject.id == null) {
-            return;
-        }
-        this.selectedTower = index;
-        this.clearScene();
-        var tower = TowerDefense.availableTowers[index].object();
-        var bullet = tower.bullet();
-        tower.create();
-        this.objects.push(tower);
-        this.scene.add(tower.object);
-
-        $('#build-info').innerHTML = tower.description;
-
-        var noResourcesClass = '';
-        if (tower.stats.costs > TowerDefense.stats.resources) {
-            noResourcesClass = ' class="text-danger"';
-        }
-        $('#build-info').innerHTML += '<p'+ noResourcesClass +'><img src="assets/ui/resources.png" /> ' + tower.stats.costs + '</p>';
-
-        // Create stats bars
-        var statsHtml = '';
-        // range
-        var range = Math.round(100 / TowerDefense.config.maxRange * tower.stats.range);
-        statsHtml += 'Range';
-        statsHtml += '<div class="progress">';
-        statsHtml += '<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="'+ range +'" aria-valuemin="0" aria-valuemax="100" style="width: '+ range +'%">';
-        statsHtml += '</div>';
-        statsHtml += '</div>';
-        // speed (lower = better)
-        var speed = Math.round(100 * TowerDefense.config.maxSpeed / tower.stats.speed);
-        statsHtml += 'Speed';
-        statsHtml += '<div class="progress">';
-        statsHtml += '<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="'+ speed +'" aria-valuemin="0" aria-valuemax="100" style="width: '+ speed +'%">';
-        statsHtml += '</div>';
-        statsHtml += '</div>';
-        // damage
-        var damage = Math.round(100 / TowerDefense.config.maxDamage * bullet.stats.damage);
-        statsHtml += 'Damage';
-        statsHtml += '<div class="progress">';
-        statsHtml += '<div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="'+ damage +'" aria-valuemin="0" aria-valuemax="100" style="width: '+ damage +'%">';
-        statsHtml += '</div>';
-        statsHtml += '</div>';
-
-        $('#build-info').innerHTML += statsHtml;
-        $('#build-info').style.display = 'block';
-
-        // @todo update / build options here
-        var buildOptionsHtml = '<div class="btn-group btn-group" id="build-buttons">';
-        buildOptionsHtml += '<a onclick="TowerDefense.Ui.hideBuildMenu();" class="btn btn-default"><i class="key-code">C</i>lose</a>';
-        buildOptionsHtml += '<a onclick="TowerDefense.Ui.buildTower();" class="btn btn-primary"><i class="key-code">B</i>uild</a>';
-        buildOptionsHtml += '</div>';
-        $('#build-options').innerHTML = buildOptionsHtml;
-
-        this.render();
+        $('#build-menu').style.display = 'none'; // css fade
     },
 
     /**
      * Creates a new tower on the selected tile. Returns false if the tower is failed to
      * build.
      */
-    buildTower: function () {
-        if (this.selectedTower == null) {
-            $('#build-info').innerHTML = 'Select a tower to build.';
+    buildTower: function (towerIndex) {
+        if (towerIndex == null) {
+//            $('#build-info').innerHTML = 'Select a tower to build.';
             return;
         }
         if (TowerDefense.selectedObject.id == null) {
             return;
         }
-        var selectedTower = this.selectedTower;
-        var tower = TowerDefense.availableTowers[selectedTower].object();
+        var tower = TowerDefense.availableTowers[towerIndex].object();
 
         if (tower.stats.costs > TowerDefense.stats.resources) {
-            $('#build-info').innerHTML = 'Not enough money.';
+//            $('#build-info').innerHTML = 'Not enough money.';
             return;
         }
 
@@ -273,7 +225,7 @@ TowerDefense.Ui = {
                       y: TowerDefense.endTile.gridPosition.y
                   },
                   returnAttributes: {
-                      buildTower: selectedTower
+                      buildTower: towerIndex
                   }
               }
             );
@@ -282,106 +234,9 @@ TowerDefense.Ui = {
             tower.create();
             tower.spawn(TowerDefense.selectedObject);
             tower.add();
-            this.selectedTower = null;
             TowerDefense.deselectAll();
-            this.clearScene();
             TowerDefense.Ui.hideBuildMenu();
         }
-    },
-
-    /**
-     * Creates the scene for the build menu where selected towers will be placed.
-     */
-    createScene: function() {
-        if (this.scene.id  != null) {
-            return;
-        }
-        var buildSizeWidth = $('#build-canvas').clientWidth;
-        if (buildSizeWidth < 200) {
-            buildSizeWidth = 200;
-        }
-        var buildSizeHeight = buildSizeWidth / 16 * 9;
-        this.scene = new THREE.Scene();
-        this.camera = new THREE.PerspectiveCamera( 40, buildSizeWidth / buildSizeHeight, 0.1, 1000 );
-        this.camera.position.x = -8;
-        this.camera.position.y = -22;
-        this.camera.position.z = 1;
-        this.camera.up = new THREE.Vector3(0,0,1);
-        this.renderer = new THREE.CanvasRenderer();
-        this.renderer.setSize( buildSizeWidth, buildSizeHeight );
-
-        this.renderer.shadowMapEnabled = true;
-        this.renderer.shadowMapSoft = true;
-
-        this.renderer.shadowCameraNear = 3;
-        this.renderer.shadowCameraFar = TowerDefense.camera.far;
-        this.renderer.shadowCameraFov = 50;
-
-        this.renderer.shadowMapBias = 0.0039;
-        this.renderer.shadowMapDarkness = 0.5;
-        this.renderer.shadowMapWidth = 1024;
-        this.renderer.shadowMapHeight = 1024;
-
-        // Light
-        var light = new THREE.PointLight( 0xffffff );
-        light.position.x = 1;
-        light.position.y = 1;
-        light.position.z = 2;
-        this.scene.add(light);
-
-        var hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 );
-        hemiLight.color.setHSL( 0.6, 1, 0.6 );
-        hemiLight.groundColor.setHSL( 0.095, 1, 0.75 );
-        hemiLight.position.set( 0, 500, 0 );
-        this.scene.add( hemiLight );
-
-        $('#build-canvas').innerHTML = '';
-        $('#build-canvas').appendChild( this.renderer.domElement );
-    },
-
-    /**
-     * Clears all objects from a scene
-     * @param scene (optional) the scene to clear. Will use this.scene by default
-     */
-    clearScene: function(scene) {
-        if (scene == null && this.scene != null && this.scene.id != null) {
-            scene = this.scene;
-        }
-        if (scene == null || scene.id == null) {
-            return;
-        }
-        this.objects.forEach(function (object) {
-            scene.remove(object.object);
-        });
-        this.render();
-    },
-
-    update: function() {
-        return; // @todo remove when WebGL can share resources over multiple context
-        this.render();
-    },
-
-    render: function() {
-
-        if (this.scene.id != null) {
-            // Update camera
-            var x = this.camera.position.x,
-              y = this.camera.position.y,
-              rotSpeed = .01;
-
-            this.camera.position.x = x * Math.cos(rotSpeed) - y * Math.sin(rotSpeed);
-            this.camera.position.y = y * Math.cos(rotSpeed) + x * Math.sin(rotSpeed);
-
-            this.camera.lookAt(new THREE.Vector3(0,0,8));
-
-            this.renderer.render(this.scene, this.camera);
-            this.objects.forEach(function(object) {
-                if (typeof object.update == 'function') {
-                    object.update();
-                }
-            });
-        }
-
     }
 
 }

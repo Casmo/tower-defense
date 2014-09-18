@@ -124,7 +124,6 @@ var TowerDefense = TowerDefense || {
                 tower.add();
                 TowerDefense.Ui.selectedTower = null;
                 TowerDefense.deselectAll();
-                TowerDefense.Ui.clearScene();
                 TowerDefense.Ui.hideBuildMenu();
                 TowerDefense.updateEnemyMovements();
             }
@@ -247,8 +246,6 @@ var TowerDefense = TowerDefense || {
             this.currentLevel.update();
         }
 
-        TowerDefense.Ui.update();
-
         this.time = Date.now();
 
     },
@@ -310,6 +307,24 @@ var TowerDefense = TowerDefense || {
         }
         return false;
 
+    },
+
+    /**
+     * Clears all objects from a scene
+     * @param scene (optional) the scene to clear. Will use this.scene by default
+     * @todo move to TowerDefense
+     */
+    clearScene: function(scene) {
+        if (scene == null && this.scene != null && this.scene.id != null) {
+            scene = this.scene;
+        }
+        if (scene == null || scene.id == null) {
+            return;
+        }
+        this.objects.forEach(function (object) {
+            scene.remove(object.object);
+        });
+        this.render();
     },
 
     /**

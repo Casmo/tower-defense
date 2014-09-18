@@ -10,13 +10,6 @@ function render() {
 
 TowerDefense.initialize();
 
-function newGame() {
-
-    new TowerDefense.Level1().start();
-
-    $('#game-options').innerHTML = '<a onclick="spawnEnemy();" class="btn btn-default">Spawn <i class="key-code">e</i>nemy</a><a onclick="spawnEnemy(\'ufo\');" class="btn btn-default">Spawn <i class="key-code">u</i>fo enemy</a>';
-}
-
 /**
  * Temporary function to add an enemy in the scene.
  */
