@@ -1,18 +1,18 @@
 TowerDefense.Level1 = function () {
 
     TowerDefense.Level.call( this );
-
-    this.waves[100] = {
-        callback: function() {
-            spawnEnemy('dummy');
-        }
-    };
-    this.waves[1500] = {
-        callback: function() {
-            var interval = setInterval(spawnEnemy, 500);
-            setTimeout(function() { clearInterval(interval); }, 3000);
-        }
-    };
+//
+//    this.waves[10] = {
+//        callback: function() {
+//            spawnEnemy('dummy');
+//        }
+//    };
+//    this.waves[1500] = {
+//        callback: function() {
+//            var interval = setInterval(spawnEnemy, 500);
+//            setTimeout(function() { clearInterval(interval); }, 3000);
+//        }
+//    };
 
     this.meshes = [
         {

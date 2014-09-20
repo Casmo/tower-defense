@@ -21,6 +21,14 @@ TowerDefense.Ui = {
                 if ($('#game-' + change.name) != null) {
                     $('#game-' + change.name).innerHTML = change.object[change.name];
                 }
+                // Remove the 'insufficient' class from elements that might be visible
+                for (var i = 0; i < $('.'+ change.name).length; i++) {
+                    var el = $('.'+ change.name)[i];
+                    var statsCosts = el.innerHTML;
+                    if (statsCosts <= change.object[change.name]) {
+                        el.className = el.className.replace(/insufficient/, '');
+                    }
+                }
             });
         });
 
@@ -166,9 +174,14 @@ TowerDefense.Ui = {
         if (TowerDefense.selectedObject.currentTower.id == null) {
             $('#build-menu').innerHTML = '';
             TowerDefense.availableTowers.forEach(function(tower, index) {
+                var extraClass = '';
                 var object = tower.object();
+                if (object.stats.costs > TowerDefense.stats.resources) {
+                    extraClass = ' insufficient';
+                }
                 var image = '<img src="assets/towers/' + object.icon +'" />';
-                var link = '<a class="game-stat" onclick="TowerDefense.Ui.buildTower('+ index +');">'+ image +'</a>';
+                var currencyDiv = '<div class="overlay overlay-black bottom text-center resources'+ extraClass +'">'+ object.stats.costs +'</div>';
+                var link = '<a class="game-stat'+ extraClass +'" onclick="TowerDefense.Ui.buildTower('+ index +');">'+ currencyDiv + image +'</a>';
                 $('#build-menu').innerHTML += link;
             });
             $('#build-menu').style.display = 'block'; // css fade
