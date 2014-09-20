@@ -96,6 +96,14 @@ TowerDefense.Level.prototype.start = function () {
         self.createGrid();
         self.createDecoration();
         $('#game').appendChild( TowerDefense.renderer.domElement );
+        handleWebGlErrors(
+          TowerDefense.renderer.domElement,
+          function (event) {
+              event.preventDefault();
+              cancelAnimationFrame(gameRender);
+              console.log('WebGL context lost.', event);
+          }
+        );
         render();
         TowerDefense.Ui.initializeControls(TowerDefense.camera);
         TowerDefense.currentLevel = self;
