@@ -132,15 +132,20 @@ TowerDefense.Ui = {
             TowerDefense.projector.unprojectVector(vector, TowerDefense.camera);
             var ray = new THREE.Raycaster(TowerDefense.camera.position, vector.sub(TowerDefense.camera.position).normalize());
             var intersects = ray.intersectObjects(objects, true);
-            TowerDefense.deselectAll();
+            var objectSelected = false;
             if (intersects.length > 0) {
                 for (var i = 0; i < intersects.length; i++) {
                     var currentObject = TowerDefense.objects[intersects[i].object.objectIndex];
                     if (currentObject != null && currentObject.selectable == true && typeof currentObject.select == 'function' && currentObject.selected == false) {
+                        TowerDefense.deselectAll();
                         currentObject.select();
+                        objectSelected = true;
                         break;
                     }
                 }
+            }
+            if (objectSelected == false) {
+                TowerDefense.Ui.hideBuildMenu();
             }
         }
     },
