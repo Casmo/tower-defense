@@ -3,6 +3,8 @@ Logic Interaction with the game will be placed here.
 */
 TowerDefense.Ui = {
 
+    level: {},
+
     /**
      * Callback after the game is started.
      */
@@ -63,7 +65,8 @@ TowerDefense.Ui = {
 
     },
 
-    playLevel: function(level) {
+    // @todo save level
+    playLevel: function() {
 
         // hide menu
         for (var i = 0; i < $('.status-menu').length; i++) {
@@ -78,7 +81,8 @@ TowerDefense.Ui = {
             $('.status-menu-game')[i].style.display = 'none';
         }
 
-        new TowerDefense.Level1().start();
+        this.level = new TowerDefense.Level1();
+        this.level.start();
 
     },
 
@@ -144,6 +148,9 @@ TowerDefense.Ui = {
         if (key == KeyEvent.DOM_VK_C || key == KeyEvent.DOM_VK_ESCAPE) {
             TowerDefense.Ui.hideBuildMenu();
         }
+        if (key == KeyEvent.DOM_VK_W) {
+            TowerDefense.Ui.startWave();
+        }
     },
 
     loadingProgress: function (item, loaded, total) {
@@ -165,6 +172,13 @@ TowerDefense.Ui = {
 
         }
 
+    },
+
+    startWave: function() {
+
+        if (this.level != null && typeof this.level.startWave == 'function') {
+            this.level.startWave();
+        }
     },
 
     /**

@@ -1,12 +1,16 @@
 TowerDefense.Level = function () {
 
-    this.timer = 0;
-
     /**
-     * List with timing and monsters
+     * List with monsters
      * @type {Array}
      */
     this.waves = [];
+
+    /**
+     * Current wave
+     * @type {number}
+     */
+    this.currentWave = 0;
 
     /**
      * List of meshes to load on the current level
@@ -64,13 +68,6 @@ TowerDefense.Level.prototype.constructor = TowerDefense.Level;
 
 TowerDefense.Level.prototype.update = function() {
 
-    this.timer++;
-
-    if (this.waves[this.timer] != null) {
-        if (typeof this.waves[this.timer].callback == 'function') {
-            this.waves[this.timer].callback();
-        }
-    }
 }
 
 /**
@@ -108,6 +105,19 @@ TowerDefense.Level.prototype.start = function () {
         TowerDefense.Ui.initializeControls(TowerDefense.camera);
         TowerDefense.currentLevel = self;
     });
+    $('#game-maxwave').innerHTML = this.waves.length;
+    $('#game-wave').innerHTML = this.currentWave;
+}
+
+TowerDefense.Level.prototype.startWave = function() {
+
+    if (this.waves[this.currentWave] != null) {
+        if (typeof this.waves[this.currentWave].callback == 'function') {
+            this.waves[this.currentWave].callback();
+        }
+        this.currentWave++;
+        $('#game-wave').innerHTML = this.currentWave;
+    }
 
 }
 

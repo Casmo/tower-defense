@@ -43,7 +43,7 @@
         <div class="container-fluid status-menu-game" style="display: none;">
             <div class="row top-buffer">
                 <div class="col-xs-12">
-                    <a onclick="TowerDefense.Ui.playLevel(1);" class="btn btn-primary">Play level 1</a>
+                    <a onclick="TowerDefense.Ui.playLevel();" class="btn btn-primary">Play level 1</a>
                 </div>
             </div>
             <div class="bottom-buffer text-center navbar-fixed-bottom">Update your towers</div>
@@ -52,10 +52,11 @@
             <div id="game"></div>
             <div class="row top-buffer game-ui">
                 <div class="col-sm-push-9 col-md-push-10 col-lg-push-11 col-sm-3 col-md-2 col-lg-1">
-                    <div class="game-stat"><img src="assets/ui/resources.png" /> <span id="game-resources" class="pull-right">0</span></div>
-                    <div class="game-stat"><img src="assets/ui/points.png" /> <span id="game-score" class="pull-right">0</span></div>
-                    <div class="game-stat"><img src="assets/ui/lives.png" /> <span id="game-lives" class="pull-right">0</span></div>
-                    <div class="game-stat"><img src="assets/ui/wave.png" /> <div class="pull-right"><span id="game-wave">1</span>/<span id="game-maxwave">1</span></div></div>
+                    <div class="game-stat" title="Money for buying tower"><img src="assets/ui/resources.png" /> <span id="game-resources" class="pull-right">0</span></div>
+                    <div class="game-stat" title="Score for upgrading towers"><img src="assets/ui/points.png" /> <span id="game-score" class="pull-right">0</span></div>
+                    <div class="game-stat" title="Lives"><img src="assets/ui/lives.png" /> <span id="game-lives" class="pull-right">0</span></div>
+                    <div class="game-stat" title="Wave"><img src="assets/ui/wave.png" /> <div class="pull-right"><span id="game-wave">1</span>/<span id="game-maxwave">1</span></div></div>
+                    <a onclick="TowerDefense.Ui.startWave();" class="btn btn-default btn-block top-buffer">Next <i class="key-code">w</i>ave</a>
                 </div>
             </div>
             <div class="bottom-buffer text-center navbar-fixed-bottom game-ui" id="build-menu"></div>
