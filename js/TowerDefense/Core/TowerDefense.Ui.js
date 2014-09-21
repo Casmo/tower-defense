@@ -48,6 +48,23 @@ TowerDefense.Ui = {
 
     },
 
+    menu: function() {
+
+        // show menu
+        for (var i = 0; i < $('.status-menu').length; i++) {
+            $('.status-menu')[i].style.display = 'block';
+        }
+        // hide in-game
+        for (var i = 0; i < $('.status-in-game').length; i++) {
+            $('.status-in-game')[i].style.display = 'none';
+        }
+        // hide game menu
+        for (var i = 0; i < $('.status-menu-game').length; i++) {
+            $('.status-menu-game')[i].style.display = 'none';
+        }
+
+    },
+
     gameMenu: function () {
 
         // hide menu
@@ -115,7 +132,7 @@ TowerDefense.Ui = {
             TowerDefense.projector.unprojectVector(vector, TowerDefense.camera);
             var ray = new THREE.Raycaster(TowerDefense.camera.position, vector.sub(TowerDefense.camera.position).normalize());
             var intersects = ray.intersectObjects(objects, true);
-            TowerDefense.Ui.hideBuildMenu();
+            TowerDefense.deselectAll();
             if (intersects.length > 0) {
                 for (var i = 0; i < intersects.length; i++) {
                     var currentObject = TowerDefense.objects[intersects[i].object.objectIndex];
@@ -179,6 +196,7 @@ TowerDefense.Ui = {
         if (this.level != null && typeof this.level.startWave == 'function') {
             this.level.startWave();
         }
+
     },
 
     /**
@@ -198,13 +216,17 @@ TowerDefense.Ui = {
                 var link = '<a class="game-stat'+ extraClass +'" onclick="TowerDefense.Ui.buildTower('+ index +');">'+ currencyDiv + image +'</a>';
                 $('#build-menu').innerHTML += link;
             });
-            $('#build-menu').style.display = 'block'; // css fade
+            $('#build-menu').className = $('#build-menu').className.replace(/(\s)?slide-up/, '');
+            $('#build-menu').className = $('#build-menu').className.replace(/(\s)?slide-down/, '');
+            $('#build-menu').className += ' slide-up';
         }
     },
 
     hideBuildMenu: function() {
         TowerDefense.deselectAll();
-        $('#build-menu').style.display = 'none'; // css fade
+        $('#build-menu').className = $('#build-menu').className.replace(/(\s)?slide-up/, '');
+        $('#build-menu').className = $('#build-menu').className.replace(/(\s)?slide-down/, '');
+        $('#build-menu').className += ' slide-down';
     },
 
     /**

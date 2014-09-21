@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
 }
-html, body, #game {
+html, body, #game, .status-menu {
     width: 100%;
     height: 100%;
 }
@@ -23,6 +23,10 @@ a {
 }
 .game-ui {
     z-index: 1;
+}
+.status-menu {
+    background-image: url(../assets/ui/background.jpg);
+    background-size: cover;
 }
 .loading-container {
     display: none;
@@ -95,4 +99,92 @@ a {
 
 .progress {
     margin: 0;
+}
+
+/* Animations */
+@keyframes slide-up {
+    0% {
+        opacity: 1;
+        transform: translateY(100%);
+    }
+
+    80% {
+        opacity: .8;
+        transform: translateY(-10%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+@-webkit-keyframes slide-up {
+     0% {
+         opacity: 0;
+         transform: translateY(100%);
+     }
+
+    80% {
+        opacity: .8;
+        transform: translateY(-10%);
+    }
+
+     100% {
+         opacity: 1;
+         transform: translateY(0);
+     }
+ }
+
+.slide-up {
+    animation-name: slide-up;
+    animation-duration: .3s;
+    animation-fill-mode: both;
+
+    -webkit-animation-name: slide-up;
+    -webkit-animation-duration: .3s;
+    -webkit-animation-fill-mode: both;
+}
+
+
+@keyframes slide-down {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    20% {
+        opacity: .8;
+        transform: translateY(-10%);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+}
+@-webkit-keyframes slide-down {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    20% {
+        opacity: .8;
+        transform: translateY(-10%);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+}
+
+.slide-down {
+    animation-name: slide-down;
+    animation-duration: .3s;
+    animation-fill-mode: both;
+
+    -webkit-animation-name: slide-down;
+    -webkit-animation-duration: .3s;
+    -webkit-animation-fill-mode: both;
 }
