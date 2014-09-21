@@ -79,7 +79,8 @@ TowerDefense.Tower.prototype.shoot = function () {
 
     this.lastShot = Date.now();
     // We need the position of the parent (the tile)
-    if (TowerDefense.objects[this.shootingTargetIndex] == null || !TowerDefense.inRange(TowerDefense.objects[this.shootingTargetIndex].object.position, this.object.parent.position, this.stats.range)) {
+    if (TowerDefense.objects[this.shootingTargetIndex] == null ||
+      !TowerDefense.inRange(TowerDefense.objects[this.shootingTargetIndex].object.position, this.object.parent.position, this.stats.range)) {
         // find target in range
         this.shootingTargetIndex = TowerDefense.findEnemyInRage(this.object.parent.position, this.stats.range);
     }

@@ -1,39 +1,33 @@
-TowerDefense.Bullet = function () {
+TowerDefense.RocketBullet = function () {
 
-    TowerDefense.Element.call( this );
+    TowerDefense.Bullet.call( this );
 
     this.type = 'BULLET';
+    this.meshSprite = 'bullet-02';
 
     this.stats = {
-        damage: 1,
-        speed: .01 // Movement in units.
+        damage: 3,
+        speed: .005 // Movement in units.
     }
 
-    this.lastMovement = {};
-    this.deadTimer = 180; // 120 = 120 / 60fps = 2 sec
-
-    this.targetIndex = -1;
-    this.meshSprite = 'bullet-01';
-
-    this.receiveShadow = false;
-    this.castShadow = false;
-}
-
-TowerDefense.Bullet.prototype = Object.create( TowerDefense.Element.prototype );
-
-TowerDefense.Bullet.prototype.constructor = TowerDefense.Bullet;
-
-TowerDefense.Bullet.prototype.remove = function () {
-
-    TowerDefense.__removeObject(this);
+    this.additionalSpeed = {
+        x: 0,
+        y: 0,
+        z: 1.5
+    }
+    this.velocity = .8;
 
 }
+
+TowerDefense.RocketBullet.prototype = Object.create( TowerDefense.Bullet.prototype );
+
+TowerDefense.RocketBullet.prototype.constructor = TowerDefense.RocketBullet;
 
 /**
- * Update the bullet a little closer towards it target.
+ * Update the bullet a little closer towards it target, with increasing speed
  * @return void
  */
-TowerDefense.Bullet.prototype.update = function() {
+TowerDefense.RocketBullet.prototype.update = function() {
 
     if (this.object.position.z < -1) {
         this.remove();
@@ -52,10 +46,12 @@ TowerDefense.Bullet.prototype.update = function() {
         if (this.deadTimer <= 0) {
             this.remove();
         }
+        this.lastMovement.z += 0.01;
         return;
     }
 
     var target = TowerDefense.objects[this.targetIndex];
+    this.speedTimer++;
 
     // Simple collision detection
     if (TowerDefense.inRange(target.object.position, this.object.position,1,false)) {
@@ -81,10 +77,18 @@ TowerDefense.Bullet.prototype.update = function() {
     moveY = one * moveYOrg * this.stats.speed;
     moveZ = one * moveZOrg * this.stats.speed;
 
+    moveX -= this.additionalSpeed.x;
+    moveY -= this.additionalSpeed.y;
+    moveZ -= this.additionalSpeed.z;
+
     this.lastMovement = { x: moveX, y: moveY, z: moveZ };
 
     this.object.position.x -= moveX;
     this.object.position.y -= moveY;
     this.object.position.z -= moveZ;
+
+    this.additionalSpeed.x *= this.velocity;
+    this.additionalSpeed.y *= this.velocity;
+    this.additionalSpeed.z *= this.velocity;
 
 }
