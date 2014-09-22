@@ -69,6 +69,7 @@ TowerDefense.Tower.prototype.spawn = function(tileObject) {
 
 TowerDefense.Tower.prototype.update = function () {
 
+    // @todo remove time and use counter
     if (this.object.parent != null && (this.lastShot + this.stats.speed < TowerDefense.time)) {
         this.shoot();
     }

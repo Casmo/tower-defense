@@ -7,15 +7,12 @@ TowerDefense.RocketBullet = function () {
 
     this.stats = {
         damage: 3,
-        speed: .005 // Movement in units.
+        speed: .02 // Movement in units.
     }
 
-    this.additionalSpeed = {
-        x: 0,
-        y: 0,
-        z: 1.5
-    }
-    this.velocity = .8;
+    this.path = []; // Holds information of the movement
+    this.p = 0;
+    this.spline = new TowerDefense.Spline();
 
 }
 
@@ -36,9 +33,6 @@ TowerDefense.RocketBullet.prototype.update = function() {
 
     // Continue moving the bullet in a straight line after the target is destroyed from another object
     if (TowerDefense.objects[this.targetIndex] == null) {
-        this.object.position.x -= this.lastMovement.x;
-        this.object.position.y -= this.lastMovement.y;
-        this.object.position.z -= this.lastMovement.z;
         this.deadTimer--;
         if (this.deadTimer < 100) {
             this.object.material.opacity = (this.deadTimer / 100);
@@ -46,49 +40,51 @@ TowerDefense.RocketBullet.prototype.update = function() {
         if (this.deadTimer <= 0) {
             this.remove();
         }
-        this.lastMovement.z += 0.01;
-        return;
+    }
+    else {
+
+        var target = TowerDefense.objects[this.targetIndex];
+
+        // Simple collision detection
+        if (TowerDefense.inRange(target.object.position, this.object.position,1,false)) {
+            TowerDefense.objects[this.targetIndex].removeHealth(this.stats.damage);
+            this.remove();
+            return;
+        }
+
+        if (this.path[0] == null) {
+            this.path[0] = { x: this.object.position.x, y: this.object.position.y, z: this.object.position.z };
+            this.path[1] = {
+                x: (target.object.position.x + this.object.position.x) / 2,
+                y: (target.object.position.y + this.object.position.y) / 2,
+                z: (this.object.position.z + 6)
+            };
+        }
+        this.path[2] = target.object.position;
+
     }
 
-    var target = TowerDefense.objects[this.targetIndex];
-    this.speedTimer++;
-
-    // Simple collision detection
-    if (TowerDefense.inRange(target.object.position, this.object.position,1,false)) {
-        TowerDefense.objects[this.targetIndex].removeHealth(this.stats.damage);
+    if (this.path[0] == null) {
         this.remove();
         return;
     }
 
-    // Distance of each
-    var moveXOrg = this.object.position.x - target.object.position.x;
-    var moveYOrg = this.object.position.y - target.object.position.y;
-    var moveZOrg = this.object.position.z - target.object.position.z;
+    var position = this.spline.get2DPoint( this.path, this.p );
 
-    // Positive number of distance
-    var moveX = Math.abs(moveXOrg);
-    var moveY = Math.abs(moveYOrg);
-    var moveZ = Math.abs(moveZOrg);
+    this.object.position.x = position.x;
+    this.object.position.y = position.y;
+    this.object.position.z = position.z;
 
-    // 1%
-    var one = 100 / (moveX + moveY + moveZ);
+    this.p += this.stats.speed;
 
-    moveX = one * moveXOrg * this.stats.speed;
-    moveY = one * moveYOrg * this.stats.speed;
-    moveZ = one * moveZOrg * this.stats.speed;
-
-    moveX -= this.additionalSpeed.x;
-    moveY -= this.additionalSpeed.y;
-    moveZ -= this.additionalSpeed.z;
-
-    this.lastMovement = { x: moveX, y: moveY, z: moveZ };
-
-    this.object.position.x -= moveX;
-    this.object.position.y -= moveY;
-    this.object.position.z -= moveZ;
-
-    this.additionalSpeed.x *= this.velocity;
-    this.additionalSpeed.y *= this.velocity;
-    this.additionalSpeed.z *= this.velocity;
+    if (TowerDefense.counter%5 == 1) {
+        var smoke = new TowerDefense.Decoration.Smoke();
+        smoke.create();
+        smoke.object.position.x = this.object.position.x;
+        smoke.object.position.y = this.object.position.y;
+        smoke.object.position.z = this.object.position.z;
+        smoke.add();
+        TowerDefense.scene.add(smoke.object);
+    }
 
 }

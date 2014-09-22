@@ -26,6 +26,13 @@ TowerDefense.Element = function () {
     this.castShadow = true;
     this.meshObject = ''; // Key with object. @see TowerDefense.meshObjects
     this.meshSprite = '';
+    this.animationSprite = {
+        texture: '',
+        tilesHorizontal: 1,
+        tilesVertical: 1,
+        tileDispDuration: 75
+    };
+    this.AnimationUpdater = {};
 
     this.materialEmissive = '0x000000';
 
@@ -64,7 +71,22 @@ TowerDefense.Element.prototype = {
         if (this.meshSprite != null && this.meshSprite != '') {
             var texture = TowerDefense.meshTextures[this.meshSprite];
             texture = texture.texture;
-            this.material = new THREE.SpriteMaterial( { map: texture, color: 0xffffff, fog: true } );
+            this.material = new THREE.SpriteMaterial( { map: texture, color: 0xffffff } );
+            this.object = new THREE.Sprite( this.material );
+            return this.object;
+        }
+
+        if (this.animationSprite.texture != null && this.animationSprite.texture != '') {
+
+            var texture = TowerDefense.meshTextures[this.animationSprite.texture];
+            texture = texture.texture;
+            this.AnimationUpdater = new TextureAnimator(
+              texture,
+              this.animationSprite.tilesHorizontal,
+              this.animationSprite.tilesVertical,
+              this.animationSprite.tileDispDuration
+            );
+            this.material = new THREE.SpriteMaterial( { map: texture, color: 0xffffff } );
             this.object = new THREE.Sprite( this.material );
             return this.object;
         }

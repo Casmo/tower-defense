@@ -31,6 +31,8 @@ var TowerDefense = TowerDefense || {
     meshObjects: [], // List with key => array(file, key, mesh)
     meshTextures: [], // list with key => array(file, key, texture)
 
+    clock: new THREE.Clock(),
+
     /**
      * Settings for the game/objects
      */
@@ -103,8 +105,10 @@ var TowerDefense = TowerDefense || {
 
     /**
      * Current time in milliseconds. Can be used to calculate bullet spawn times.
+     * @todo might just wanna use a counter so slower pcs still have the same gameplay
      */
     time: Date.now(),
+    counter: 0,
 
     FindPath: new Worker("js/TowerDefense/Core/Worker.PathFinder.js"),
 
@@ -247,6 +251,7 @@ var TowerDefense = TowerDefense || {
         }
 
         this.time = Date.now();
+        this.counter++;
 
     },
 

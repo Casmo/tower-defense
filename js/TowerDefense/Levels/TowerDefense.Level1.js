@@ -69,6 +69,10 @@ TowerDefense.Level1 = function () {
         {
             'key': 'ufo-yellow',
             'file': 'assets/enemies/ufo-yellow.jpg'
+        },
+        {
+            'key': 'smoke-40-128',
+            'file': 'assets/towers/smoke_1_40_128_corrected.png'
         }
     ];
 
