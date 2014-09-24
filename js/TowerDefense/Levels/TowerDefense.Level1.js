@@ -73,6 +73,10 @@ TowerDefense.Level1 = function () {
         {
             'key': 'smoke-40-128',
             'file': 'assets/towers/smoke_1_40_128_corrected.png'
+        },
+        {
+            'key': 'smoke-particle',
+            'file': 'assets/towers/smoke-particle.png'
         }
     ];
 

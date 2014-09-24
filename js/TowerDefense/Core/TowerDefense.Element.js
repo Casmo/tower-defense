@@ -78,14 +78,16 @@ TowerDefense.Element.prototype = {
 
         if (this.animationSprite.texture != null && this.animationSprite.texture != '') {
 
-            var texture = TowerDefense.meshTextures[this.animationSprite.texture];
-            texture = texture.texture;
+            // http://stackoverflow.com/questions/16705399/cant-clone-texture
+            var texture = TowerDefense.meshTextures[this.animationSprite.texture].texture.clone();
+            texture.needsUpdate = true;
             this.AnimationUpdater = new TextureAnimator(
               texture,
               this.animationSprite.tilesHorizontal,
               this.animationSprite.tilesVertical,
               this.animationSprite.tileDispDuration
             );
+
             this.material = new THREE.SpriteMaterial( { map: texture, color: 0xffffff } );
             this.object = new THREE.Sprite( this.material );
             return this.object;

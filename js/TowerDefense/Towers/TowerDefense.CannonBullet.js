@@ -1,4 +1,4 @@
-TowerDefense.RocketBullet = function () {
+TowerDefense.CannonBullet = function () {
 
     TowerDefense.Bullet.call( this );
 
@@ -7,7 +7,7 @@ TowerDefense.RocketBullet = function () {
 
     this.stats = {
         damage: 3,
-        speed: .008 // Movement in units.
+        speed: .03 // Movement in units.
     }
 
     this.path = []; // Holds information of the movement
@@ -16,15 +16,15 @@ TowerDefense.RocketBullet = function () {
 
 }
 
-TowerDefense.RocketBullet.prototype = Object.create( TowerDefense.Bullet.prototype );
+TowerDefense.CannonBullet.prototype = Object.create( TowerDefense.Bullet.prototype );
 
-TowerDefense.RocketBullet.prototype.constructor = TowerDefense.RocketBullet;
+TowerDefense.CannonBullet.prototype.constructor = TowerDefense.CannonBullet;
 
 /**
  * Update the bullet a little closer towards it target, with increasing speed
  * @return void
  */
-TowerDefense.RocketBullet.prototype.update = function() {
+TowerDefense.CannonBullet.prototype.update = function() {
 
     if (this.object.position.z < -1) {
         this.remove();
@@ -54,25 +54,16 @@ TowerDefense.RocketBullet.prototype.update = function() {
 
         if (this.path[0] == null) {
             this.path[0] = { x: this.object.position.x, y: this.object.position.y, z: this.object.position.z };
-            var lastPos = {};
-            for (var i = 1; i < 2; i++) {
-                lastPos = {
-                    x: this.object.position.x + (Math.random() * 24 - 12),
-                    y: this.object.position.y + (Math.random() * 24 - 12),
-                    z: this.object.position.z + (Math.random() * 24)
-                };
-                this.path[i] = lastPos;
-            }
-            this.path[2] = {
-                x: lastPos.x + (Math.random() * 4 - 2),
-                y: lastPos.y + (Math.random() * 4 - 2),
-                z: lastPos.z + (Math.random() * 4)
+            this.path[1] = {
+                x: (target.object.position.x + this.object.position.x) / 2,
+                y: (target.object.position.y + this.object.position.y) / 2,
+                z: (this.object.position.z + 6)
             };
         }
-        this.path[3] = target.object.position;
+        this.path[2] = target.object.position;
 
     }
-    if (this.path == null || this.path[0] == null || this.path[0].x == null || this.p >= 1) {
+    if (this.path == null || this.path.length < 3 || this.path[0].x == null || this.p >= 1) {
         this.remove();
         return;
     }
@@ -85,7 +76,7 @@ TowerDefense.RocketBullet.prototype.update = function() {
 
     this.p += this.stats.speed;
 
-    if (1==2 && TowerDefense.counter%6 == 1) {
+    if (TowerDefense.counter%7 == 1) {
         var smoke = new TowerDefense.Decoration.SimpleSmoke();
         smoke.position.x = this.object.position.x - 1 + (Math.random() * 2);
         smoke.position.y = this.object.position.y - 1 + (Math.random() * 2);

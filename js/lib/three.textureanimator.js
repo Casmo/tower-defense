@@ -1,21 +1,15 @@
-function TextureAnimator(texture, tilesHoriz, tilesVert, tileDispDuration)
+TextureAnimator = function (texture, tilesHorizontal, tilesVertical)
 {
     // note: texture passed by reference, will be updated by the update function.
 
-    this.tilesHorizontal = tilesHoriz;
-    this.tilesVertical = tilesVert;
+    this.tilesHorizontal = tilesHorizontal;
+    this.tilesVertical = tilesVertical;
     // how many images does this spritesheet contain?
     //  usually equals tilesHoriz * tilesVert, but not necessarily,
     //  if there at blank tiles at the bottom of the spritesheet.
-    this.numberOfTiles = tilesHoriz * tilesVert;
+    this.numberOfTiles = tilesHorizontal * tilesVertical;
     texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
     texture.repeat.set( 1 / this.tilesHorizontal, 1 / this.tilesVertical );
-
-    // how long should each image be displayed?
-    this.tileDisplayDuration = tileDispDuration;
-
-    // how long has the current image been displayed?
-    this.currentDisplayTime = 0;
 
     // which image is currently being displayed?
     this.currentTile = 0;
@@ -24,8 +18,8 @@ function TextureAnimator(texture, tilesHoriz, tilesVert, tileDispDuration)
     this.maxLoops = 0;
     this.finished = false;
 
-    this.update = function(  )
-    {
+    this.update = function() {
+
         this.currentTile++;
         if (this.currentTile == this.numberOfTiles) {
             this.currentTile = 0;
