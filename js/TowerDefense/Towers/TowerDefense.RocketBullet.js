@@ -13,7 +13,9 @@ TowerDefense.RocketBullet = function () {
     this.path = []; // Holds information of the movement
     this.p = 0;
     this.spline = new TowerDefense.Spline();
-
+    this.recheckedEnemy = false;
+    this.parentPosition = { x: 0, y: 0, z: 0 }; // Tower position
+    this.parentRange = 0; // Tower range
 }
 
 TowerDefense.RocketBullet.prototype = Object.create( TowerDefense.Bullet.prototype );
@@ -31,14 +33,24 @@ TowerDefense.RocketBullet.prototype.update = function() {
         return;
     }
 
-    // Continue moving the bullet in a straight line after the target is destroyed from another object
+    // find another target after first try else move till end.
     if (TowerDefense.objects[this.targetIndex] == null) {
-        this.deadTimer--;
-        if (this.deadTimer < 100) {
-            this.object.material.opacity = (this.deadTimer / 100);
+        var remove = true;
+        if (this.recheckedEnemy == false) {
+            this.recheckedEnemy = true;
+            this.shootingTargetIndex = TowerDefense.findEnemyInRage(this.parentPosition, this.parentRange);
+            if (TowerDefense.objects[this.shootingTargetIndex] != null) {
+                remove = false;
+            }
         }
-        if (this.deadTimer <= 0) {
-            this.remove();
+        if (remove == true) {
+            this.deadTimer--;
+            if (this.deadTimer < 100) {
+                this.object.material.opacity = (this.deadTimer / 100);
+            }
+            if (this.deadTimer <= 0) {
+                this.remove();
+            }
         }
     }
     else {
@@ -85,14 +97,14 @@ TowerDefense.RocketBullet.prototype.update = function() {
 
     this.p += this.stats.speed;
 
-    if (1==2 && TowerDefense.counter%6 == 1) {
-        var smoke = new TowerDefense.Decoration.SimpleSmoke();
-        smoke.position.x = this.object.position.x - 1 + (Math.random() * 2);
-        smoke.position.y = this.object.position.y - 1 + (Math.random() * 2);
-        smoke.position.z = this.object.position.z - 1 + (Math.random() * 2);
-        smoke.create();
-        smoke.add();
-        TowerDefense.scene.add(smoke.object);
+    if (TowerDefense.counter%12 == 1) {
+//        var smoke = new TowerDefense.Decoration.SimpleSmoke();
+//        smoke.position.x = this.object.position.x - 1 + (Math.random() * 2);
+//        smoke.position.y = this.object.position.y - 1 + (Math.random() * 2);
+//        smoke.position.z = this.object.position.z - 1 + (Math.random() * 2);
+//        smoke.create();
+//        smoke.add();
+//        TowerDefense.scene.add(smoke.object);
     }
 
 }

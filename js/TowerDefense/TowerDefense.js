@@ -66,7 +66,7 @@ var TowerDefense = TowerDefense || {
      * Object with game stats like score, resources, etc
      */
     stats: {
-        resources: 55,
+        resources: 555,
         score: 0,
         lives: 50
     },

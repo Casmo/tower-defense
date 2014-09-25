@@ -5,7 +5,7 @@
 TowerDefense.EndTile = function () {
 
     TowerDefense.Tile.call( this );
-    this.material = new THREE.MeshBasicMaterial( { transparent: true, opacity:.2, color: 0xff0000 } );
+    this.material = new THREE.MeshBasicMaterial( { transparent: true, opacity:.4, color: 0xff0000 } );
 
 }
 

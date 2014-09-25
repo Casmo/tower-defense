@@ -35,12 +35,14 @@ TowerDefense.BadAssTower.prototype.shoot = function () {
 
     this.lastShot = Date.now();
 
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < 3; i++) {
         // We need the position of the parent (the tile)
         this.shootingTargetIndex = TowerDefense.findEnemyInRage(this.object.parent.position, this.stats.range);
         if (TowerDefense.objects[this.shootingTargetIndex] != null) {
             var bullet = this.bullet();
             bullet.create();
+            bullet.parentPosition = this.object.parent.position;
+            bullet.parentRange = this.stats.range;
             bullet.targetIndex = this.shootingTargetIndex;
             bullet.object.position.x = this.object.parent.position.x + this.bulletOffset.x;
             bullet.object.position.y = this.object.parent.position.y + this.bulletOffset.y;

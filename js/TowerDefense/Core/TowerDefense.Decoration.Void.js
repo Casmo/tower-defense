@@ -1,4 +1,4 @@
-TowerDefense.Decoration.SimpleSmoke = function () {
+TowerDefense.Decoration.Void = function () {
 
     TowerDefense.Decoration.call( this );
 
@@ -9,22 +9,18 @@ TowerDefense.Decoration.SimpleSmoke = function () {
     };
 
     this.particleCount = 100;
-    this.moveX = (Math.random() * .1 - .05);
-    this.moveY = (Math.random() * .1 - .05);
-    this.moveZ =  Math.random() * .1;
-    this.live = 30;
 
 }
 
-TowerDefense.Decoration.SimpleSmoke.prototype = Object.create( TowerDefense.Decoration.prototype );
+TowerDefense.Decoration.Void.prototype = Object.create( TowerDefense.Decoration.prototype );
 
-TowerDefense.Decoration.SimpleSmoke.prototype.constructor = TowerDefense.Decoration.SimpleSmoke;
+TowerDefense.Decoration.Void.prototype.constructor = TowerDefense.Decoration.Void;
 
 TowerDefense.Decoration.prototype.create = function() {
 
       var particles = new THREE.Geometry(),
       pMaterial = new THREE.PointCloudMaterial({
-          color: 0xff0000,
+          color: 0x000000,
           transparent: true,
           size:1
       });
@@ -37,6 +33,10 @@ TowerDefense.Decoration.prototype.create = function() {
         var particle = new THREE.Vector3(this.position.x, this.position.y, this.position.z);
 
         // add it to the geometry
+        particle.life = Math.random() * 60;
+        particle.moveX = (Math.random() * .1 - .05);
+        particle.moveY = (Math.random() * .1 - .05);
+        particle.moveZ = (Math.random() * .1 - .05);
         particles.vertices.push(particle);
     }
 
@@ -50,21 +50,23 @@ TowerDefense.Decoration.prototype.create = function() {
 
 }
 
-TowerDefense.Decoration.SimpleSmoke.prototype.update = function () {
+TowerDefense.Decoration.Void.prototype.update = function () {
     var pCount = this.particleCount;
     while (pCount--) {
         // get the particle
         var particle = this.object.geometry.vertices[pCount];
         // update the velocity with
         // a splat of randomniz
-        particle.x += this.moveX;
-        particle.y += this.moveY;
-        particle.z += this.moveZ;
-    }
-    this.live--;
-//    this.object.material.opacity -= 0.075;
-    if (this.live < 1) {
-        this.remove();
+        particle.x += particle.moveX;
+        particle.y += particle.moveY;
+        particle.z += particle.moveZ;
+        particle.life--;
+        if (particle.life < 0) {
+            particle.life = 60;
+            particle.x = (Math.random() * 4 - 2);
+            particle.y = (Math.random() * 4 - 2);
+            particle.z = Math.random() * 6;
+        }
     }
 
 }
