@@ -112,7 +112,6 @@ var TowerDefense = TowerDefense || {
 
     FindPath: new Worker("js/TowerDefense/Core/Worker.PathFinder.js"),
 
-
     initialize: function() {
 
         // FindPath WebWorker
@@ -397,7 +396,9 @@ var TowerDefense = TowerDefense || {
             v2.y = interpolate( points[ c[ 0 ] ].y, points[ c[ 1 ] ].y, points[ c[ 2 ] ].y, points[ c[ 3 ] ].y, weight );
             v2.z = interpolate( points[ c[ 0 ] ].z, points[ c[ 1 ] ].z, points[ c[ 2 ] ].z, points[ c[ 3 ] ].z, weight );
             // Get current point
-            v2.gridPosition = points[c[1]].gridPosition;
+            if (points[c[1]].gridPosition != null) {
+                v2.gridPosition = points[c[1]].gridPosition;
+            }
             return v2;
         }
         // Catmull-Rom

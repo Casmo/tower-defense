@@ -9,7 +9,7 @@ TowerDefense.UfoEnemy = function () {
         hp: 4,
         resources: 3,
         score: 300,
-        speed: 1.5
+        speed: .025
     };
 
     this.timer = Date.now();

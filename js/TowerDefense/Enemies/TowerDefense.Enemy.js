@@ -21,8 +21,12 @@ TowerDefense.Enemy = function () {
         hp: 2,
         resources: 1,
         score: 100,
-        speed: 1
+        speed: .025 // / number of tiles = p
     };
+
+    this.pSpeed = 0;
+    this.p = 0;
+    this.spline = new TowerDefense.Spline();
 
     this.material = new THREE.MeshLambertMaterial( { color: 0xff0000 } );
     this.geometry = new THREE.BoxGeometry( .85, .85, 2 );
@@ -74,13 +78,11 @@ TowerDefense.Enemy.prototype.setPath = function () {
           }
       }
     );
-
 }
 
 /**
  * Creates a bezier curve tween from the a* result
  * @param result the a* result
- * @param duration int duration in ms
  * @returns {boolean}
  */
 TowerDefense.Enemy.prototype.move = function(result, duration) {
@@ -90,8 +92,9 @@ TowerDefense.Enemy.prototype.move = function(result, duration) {
     }
 
     this.path = [];
+    this.p = 0;
 
-    var position = { x: this.object.position.x, y: this.object.position.y };
+    var position = { x: this.object.position.x, y: this.object.position.y, z: this.object.position.z };
     // Get the 3D position of the current result
     this.path.push(position);
     for (var i = 0; i < result.length; i++) {
@@ -99,29 +102,11 @@ TowerDefense.Enemy.prototype.move = function(result, duration) {
         // Get the 3D position of the current result
         position.x = TowerDefense.grid[result[i].x][result[i].y].object.position.x;
         position.y = TowerDefense.grid[result[i].x][result[i].y].object.position.y;
+        position.z = TowerDefense.grid[result[i].x][result[i].y].object.position.z;
         position.gridPosition = { x: result[i].x, y: result[i].y };
         this.path.push(position);
     }
-    if (duration == null) {
-        duration = (this.path.length + 1) * this.stats.speed;
-        duration *= 1000;
-    }
-    // @todo To make it look more smooth we need to calculate the current position to the first position and use the difference of a tile size to adjust the duration.
-    var dummy = { p: 0, object: this };
-    var spline = new TowerDefense.Spline();
-//    var self = this;
-    this.tween = new TWEEN.Tween( dummy )
-      .to( { p: 1 },
-      duration ).easing( TWEEN.Easing.Linear.None ).onUpdate( function() {
-          var position = spline.get2DPoint( this.object.path, this.p );
-          this.object.gridPosition = position.gridPosition;
-          this.object.object.position.x = position.x;
-          this.object.object.position.y = position.y;
-      })
-      .onComplete( function () {
-          this.object.endPath();
-      } )
-      .start();
+    this.pSpeed = this.stats.speed / (this.path.length + 1);
 }
 
 /**
@@ -144,6 +129,20 @@ TowerDefense.Enemy.prototype.removeHealth = function(health) {
 }
 
 TowerDefense.Enemy.prototype.update = function() {
+
+    if (this.path.length < 1) {
+        return;
+    }
+    if (this.p >= 1) {
+        this.endPath();
+        return;
+    }
+    var position = this.spline.get2DPoint( this.path, this.p );
+    this.object.position.x = position.x;
+    this.object.position.y = position.y;
+    this.object.position.z = position.z;
+    this.gridPosition = position.gridPosition;
+    this.p += this.pSpeed;
 
 
 }
