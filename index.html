@@ -3,8 +3,8 @@
     <head>
         <meta charset="UTF-8" />
         <title>Tower Defense</title>
-        <link rel="stylesheet" href="css/bootstrap.min.css" />
-        <link rel="stylesheet" href="css/application.css" />
+        <link rel="stylesheet" href="assets/ui/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="assets/ui/css/application.css" />
         <script src="js/lib/dom.js"></script>
         <script src="js/lib/webgl.tools.js"></script>
         <script src="js/lib/three.min.js"></script>
@@ -39,14 +39,22 @@
         <script src="js/TowerDefense/Enemies/TowerDefense.DummyEnemy.js"></script>
     </head>
     <body>
+
         <div class="container-fluid status-menu">
             <div class="row top-buffer">
-                <div class="col-xs-12">
+                <div class="col-xs-12 text-center">
+                    <h1>Tower Defense</h1>
+                </div>
+            </div>
+            <div class="row top-buffer">
+                <div class="col-xs-12 text-center">
                     <a onclick="TowerDefense.Ui.gameMenu();" class="btn btn-primary">Play</a>
                 </div>
             </div>
+
             <div class="bottom-buffer text-center navbar-fixed-bottom">Created by Mathieu de Ruiter (<a href="http://www.fellicht.nl" target="_blank">Fellicht.nl</a>)</div>
         </div>
+
         <div class="container-fluid status-menu-game" style="display: none;">
             <div class="row top-buffer">
                 <div class="col-xs-12">
@@ -56,6 +64,7 @@
             </div>
             <div class="bottom-buffer text-center navbar-fixed-bottom">Update your towers, buy new weapons, etc here...</div>
         </div>
+
         <div class="container-fluid status-in-game" style="display: none;">
             <div id="game"></div>
             <div class="row top-buffer game-ui">
@@ -69,6 +78,7 @@
             </div>
             <div class="bottom-buffer text-center navbar-fixed-bottom game-ui" id="build-menu"></div>
         </div>
+
         <div class="loading-container" id="loading-container"><div id="loading"></div></div>
         <script src="js/application.js"></script>
     </body>
