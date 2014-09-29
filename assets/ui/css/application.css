@@ -28,7 +28,7 @@ body {
     color: #fff;
     overflow: hidden;
 }
-a, .btn {
+a, .btn, a * {
     cursor:  url(../cursor-active.png) 5 1, auto;
 }
 #game {
