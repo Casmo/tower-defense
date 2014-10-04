@@ -63,6 +63,8 @@ TowerDefense.Ui = {
             $('.status-menu-game')[i].style.display = 'none';
         }
 
+        TowerDefense.reset();
+
     },
 
     gameMenu: function () {
@@ -80,10 +82,14 @@ TowerDefense.Ui = {
             $('.status-menu-game')[i].style.display = 'block';
         }
 
+        TowerDefense.reset();
+
     },
 
     // @todo save level
     playLevel: function() {
+
+        TowerDefense.reset();
 
         // hide menu
         for (var i = 0; i < $('.status-menu').length; i++) {

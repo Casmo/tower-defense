@@ -31,6 +31,10 @@ TowerDefense.Level1 = function () {
         {
             'key': 'ufo',
             'file': 'assets/enemies/ufo.obj'
+        },
+        {
+            'key': 'ghost',
+            'file': 'assets/enemies/ghost.obj'
         }
     ];
     this.textures = [
@@ -77,6 +81,10 @@ TowerDefense.Level1 = function () {
         {
             'key': 'smoke-particle',
             'file': 'assets/towers/smoke-particle.png'
+        },
+        {
+            'key': 'ghost',
+            'file': 'assets/enemies/ghost.png'
         }
     ];
 

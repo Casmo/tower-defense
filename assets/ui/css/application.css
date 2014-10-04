@@ -14,9 +14,6 @@
     padding: 0;
     cursor:  url(../cursor-default.png) 5 1, auto;
 }
-*:active, a:active, .btn:active {
-    cursor:  url(../cursor-click.png) 5 1, auto;
-}
 html, body, #game, .status-menu {
     width: 100%;
     height: 100%;

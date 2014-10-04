@@ -143,6 +143,24 @@ var TowerDefense = TowerDefense || {
 
     },
 
+    reset: function() {
+
+        this.objects.forEach( function(object) {
+
+            object.remove();
+
+        });
+        this.objects = [];
+        if (gameRender != null) {
+            window.cancelAnimationFrame(gameRender);
+        }
+        TowerDefense.scene = null;
+        TowerDefense.renderer = null;
+        TowerDefense.projector = null;
+        TowerDefense.camera = null;
+
+    },
+
     /**
      * Loops through this.meshObjects and this.meshTextures and loads (and fills) the
      * files.
@@ -163,7 +181,7 @@ var TowerDefense = TowerDefense || {
             if (mesh.object == null || mesh.object == '') {
                 totalLoaded++;
                 TowerDefense.meshObjects[key].object = '';
-                meshLoader.load( mesh.file, function ( object ) {
+                meshLoader.load( mesh.file + '?t=' + Date.now(), function ( object ) {
                     TowerDefense.meshObjects[key].object = object.children[0];
                     totalLoaded--;
                     finishLoading();
@@ -328,7 +346,6 @@ var TowerDefense = TowerDefense || {
         this.objects.forEach(function (object) {
             scene.remove(object.object);
         });
-        this.render();
     },
 
     /**
