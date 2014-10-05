@@ -123,7 +123,7 @@ TowerDefense.Enemy.prototype.removeHealth = function(health) {
         if (typeof TowerDefense.objects[this.id].tween.stop == 'function') {
             TowerDefense.objects[this.id].tween.stop();
         }
-        this.remove();
+        this.kill();
     }
 
 }
@@ -145,6 +145,10 @@ TowerDefense.Enemy.prototype.update = function() {
     this.p += this.pSpeed;
 
 
+}
+
+TowerDefense.Enemy.prototype.kill = function() {
+    this.remove();
 }
 
 TowerDefense.Enemy.prototype.endPath = function() {

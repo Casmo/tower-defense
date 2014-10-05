@@ -85,6 +85,10 @@ TowerDefense.Level1 = function () {
         {
             'key': 'ghost',
             'file': 'assets/enemies/ghost.png'
+        },
+        {
+            'key': 'blood-128',
+            'file': 'assets/enemies/blood-128.png'
         }
     ];
 

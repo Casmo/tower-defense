@@ -37,3 +37,16 @@ TowerDefense.BasicEnemy.prototype.update = function () {
     }
 
 }
+
+TowerDefense.BasicEnemy.prototype.kill = function () {
+
+    var blood = new TowerDefense.Blood();
+    blood.create();
+    blood.object.position.x = this.object.position.x + (Math.random() * 2) - 1;
+    blood.object.position.y = this.object.position.y + (Math.random() * 2) - 1;
+    blood.object.position.z = .1;
+    TowerDefense.scene.add(blood.object);
+    blood.add();
+    TowerDefense.Enemy.prototype.kill.call(this);
+
+}

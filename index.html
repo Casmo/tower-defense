@@ -19,6 +19,7 @@
         <script src="js/TowerDefense/Core/TowerDefense.Decoration.Smoke.js"></script>
         <script src="js/TowerDefense/Core/TowerDefense.Decoration.SimpleSmoke.js"></script>
         <script src="js/TowerDefense/Core/TowerDefense.Decoration.Void.js"></script>
+        <script src="js/TowerDefense/Core/TowerDefense.Decoration.Blood.js"></script>
         <script src="js/TowerDefense/Levels/TowerDefense.Level.js"></script>
         <script src="js/TowerDefense/Levels/TowerDefense.Level1.js"></script>
         <script src="js/TowerDefense/Towers/TowerDefense.Tower.js"></script>
@@ -49,6 +50,34 @@
             <div class="row top-buffer">
                 <div class="col-xs-12 text-center">
                     <a onclick="TowerDefense.Ui.gameMenu();" class="btn btn-primary">Play</a>
+                    <a onclick="$('#credits').className = 'modal fade in';$('#credits').style.display = 'block';" class="btn btn-default">Credits</a>
+                </div>
+            </div>
+
+            <div class="modal fade" id="credits">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <a onclick="$('#credits').className = 'modal fade in';$('#credits').style.display = 'none';" class="pull-right">&times;</a>
+                            <h4 class="modal-title">Credits</h4>
+                        </div>
+                        <div class="modal-body">
+                            <dl class="dl-horizontal">
+                                <dt>Programmer</dt>
+                                <dd>Mathieu de Ruiter</dd>
+
+                                <dt>Designer</dt>
+                                <dd>Mathieu de Ruiter</dd>
+                                <dd>Timothy</dd>
+
+                                <dt>Thanks to</dt>
+                                <dd>Pracalic (<a href="http://pracalic.ugu.pl" target="_blank">pracalic.ugu.pl</a>)</dd>
+                            </dl>
+                        </div>
+                        <div class="modal-footer">
+                            <a onclick="$('#credits').className = 'modal fade in';$('#credits').style.display = 'none';" class="btn btn-default">close</a>
+                        </div>
+                    </div>
                 </div>
             </div>
 

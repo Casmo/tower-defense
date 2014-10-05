@@ -33,6 +33,7 @@ TowerDefense.Element = function () {
         tileDispDuration: 75
     };
     this.AnimationUpdater = {};
+    this.materialTransparent = false;
 
     this.materialEmissive = '0x000000';
 
@@ -118,7 +119,8 @@ TowerDefense.Element.prototype = {
                       emissive: parseInt(this.materialEmissive),
                       specularMap: spec,
                       normalMap: normal,
-                      shininess: 0
+                      shininess: 0,
+                      transparent: this.materialTransparent
                   }
                 );
             }
@@ -127,9 +129,13 @@ TowerDefense.Element.prototype = {
                   {
                       map: texture,
                       emissive: parseInt(this.materialEmissive),
-                      specularMap: spec
+                      specularMap: spec,
+                      transparent: this.materialTransparent
                   }
                 );
+            }
+            if (this.materialTransparent == true) {
+                this.material.depthWrite = false;
             }
         }
 

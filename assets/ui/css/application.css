@@ -28,6 +28,12 @@ body {
 a, .btn, a * {
     cursor:  url(../cursor-active.png) 5 1, auto;
 }
+a:hover {
+    text-decoration: none;
+}
+.modal {
+    color: #222222;
+}
 #game {
     position: absolute;
     top:0;
