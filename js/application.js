@@ -1,5 +1,7 @@
 /* comment */
 
+/* another comment */
+
 var gameRender;
 
 function render() {
