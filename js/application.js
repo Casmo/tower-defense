@@ -1,3 +1,5 @@
+/* comment */
+
 var gameRender;
 
 function render() {
