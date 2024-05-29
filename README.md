@@ -12,9 +12,8 @@ Help us designing the interface, create 3D models (.obj) for towers and enemies,
 or help bug testing. See CONTRIBUTE for more information.
 
 ## Links
-* [Working demo](http://www.fellicht.nl/games/tower-defense/)
-* [fellicht.nl](http://www.fellicht.nl)
-* [blog.fellicht.nl](http://blog.fellicht.nl)
+* [Working demo](https://couchfriends.com/src/games/tower-defense/index.html)
+* [Couchfriends.com](https://couchfriends.com/src/games/tower-defense/index.html)
 
 ### Todo
 1. Making waves
