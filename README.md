@@ -13,7 +13,7 @@ or help bug testing. See CONTRIBUTE for more information.
 
 ## Links
 * [Working demo](https://couchfriends.com/src/games/tower-defense/index.html)
-* [Couchfriends.com](https://couchfriends.com/src/games/tower-defense/index.html)
+* [Couchfriends.com](https://couchfriends.com)
 
 ### Todo
 1. Making waves
